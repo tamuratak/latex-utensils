@@ -81,16 +81,36 @@ number "number"
   / a:num+ "." {return a.join("") + "."}
 
 special_macro "special macro" // for the special macros like \[ \] and \begin{} \end{} etc.
-  = escape "verb" e:. x:(!(end:. & {return end == e}) x:. {return x})* (end:. & {return end == e})  {return {kind:"verb", escape:e, content:x.join("")}}  // \verb|xxx|
-  / escape "begin{verbatim}" x:(!(escape "end{verbatim}") x:. {return x})* escape "end{verbatim}" {return {kind:"verbatim", content:x.join("")}}  // verbatim environment
-  / escape "begin{comment}" x:(!(escape "end{comment}") x:. {return x})* escape "end{comment}" {return {kind:"commentenv", content:x.join("")}}  // comment environment provided by \usepackage{verbatim}
-  / begin_display_math x:(!end_display_math x:math_token {return x})+ end_display_math {return {kind:"displaymath", content:x}}   //display math with \[\]
-  / begin_inline_math x:(!end_inline_math x:math_token {return x})+ end_inline_math {return {kind:"inlinemath", content:x}}       //inline math with \(\)
-  / math_shift math_shift x:(!(math_shift math_shift) x:math_token {return x})+ math_shift math_shift {return {kind:"displaymath", content:x}}   //display math with $$ $$
+  = verb
+  / verbatim
+  / commentenv
+  / displaymath
+  / inlinemath
   / math_environment
   / environment
-  
-  
+
+// \verb|xxx|
+verb = 
+  escape "verb" e:. x:(!(end:. & {return end == e}) x:. {return x})* (end:. & {return end == e})  {return {kind:"verb", escape:e, content:x.join("")}}  
+
+// verbatim environment
+verbatim = 
+  escape "begin{verbatim}" x:(!(escape "end{verbatim}") x:. {return x})* escape "end{verbatim}" {return {kind:"verbatim", content:x.join("")}}  
+
+// comment environment provided by \usepackage{verbatim}
+commentenv =
+  escape "begin{comment}" x:(!(escape "end{comment}") x:. {return x})* escape "end{comment}" {return {kind:"commentenv", content:x.join("")}}
+
+//inline math with \(\)
+inlinemath =
+  begin_inline_math x:(!end_inline_math x:math_token {return x})+ end_inline_math {return {kind:"inlinemath", content:x}}
+
+//display math with \[\]
+//display math with $$ $$
+displaymath =
+  begin_display_math x:(!end_display_math x:math_token {return x})+ end_display_math {return {kind:"displaymath", content:x}}
+  / math_shift math_shift x:(!(math_shift math_shift) x:math_token {return x})+ math_shift math_shift {return {kind:"displaymath", content:x}}
+
 macro "macro" 
   = m:(escape n:char+ {return n.join("")}
   / escape n:. {return n}) {return {kind:"macro", content:m}}
@@ -110,7 +130,7 @@ environment "environment"
     
 math_environment "math environment"
   = begin_env begin_group env:math_env_name end_group
-  			body: (!(end_env end_env:group & {console.log(env, end_env,  compare_env({content:[env]},end_env));return compare_env({content:[env]},end_env)}) x:math_token {return x})* 
+  			body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})* 
     end_env begin_group math_env_name end_group {return {kind:"mathenv", env:env, content:body}}
 
 
