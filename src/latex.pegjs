@@ -25,7 +25,10 @@ token_
   / number
   / x:(!nonchar_token x:. {return x})+ {return x.join("")}
 
-math_token "math token"
+math_token =
+  whitespace* x:math_token_ whitespace* { return x }
+
+math_token_
   = special_macro
   / macro
   / x:full_comment {return x}
@@ -115,8 +118,8 @@ math_group "math group"  // group that assumes you're in math mode.  If you use 
   = begin_group x:(!end_group c:math_token {return c})* end_group {return {kind:"group", content:x}}
 
 full_comment "full comment" 		// comment that detects whether it is at the end of a line or on a new line
-  = nl x:comment {return {kind:"comment", content:x, sameline:false}} 
-  / x:comment {return {kind:"comment", content:x, sameline:true}}
+  = nl x:comment {return {kind:"comment", content:x, sameline:false, location: location()}} 
+  / x:comment {return {kind:"comment", content:x, sameline:true, location: location()}}
 
 
 begin_display_math = escape "["
