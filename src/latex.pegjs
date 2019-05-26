@@ -118,25 +118,56 @@ special_macro "special macro" // for the special macros like \[ \] and \begin{} 
 
 // \verb|xxx|
 verb = 
-  escape "verb" e:. x:(!(end:. & {return end == e}) x:. {return x})* (end:. & {return end == e})  {return {kind:"verb", escape:e, content:x.join("")}}  
+  escape "verb" e:.
+    x:(!(end:. & {return end == e}) x:. {return x})*
+  (end:. & {return end == e})
+  {
+    return { kind: "verb", escape: e, content: x.join("") }
+  }
 
 // verbatim environment
-verbatim = 
-  escape "begin{verbatim}" x:(!(escape "end{verbatim}") x:. {return x})* escape "end{verbatim}" {return {kind:"verbatim", content:x.join("")}}  
+verbatim =
+  escape "begin{verbatim}"
+    x:(!(escape "end{verbatim}") x:. {return x})*
+  escape "end{verbatim}"
+  {
+    return { kind: "verbatim", content: x.join("") }
+  }
 
 // comment environment provided by \usepackage{verbatim}
 commentenv =
-  escape "begin{comment}" x:(!(escape "end{comment}") x:. {return x})* escape "end{comment}" {return {kind:"commentenv", content:x.join("")}}
+  escape "begin{comment}"
+    x:(!(escape "end{comment}") x:. {return x})*
+  escape "end{comment}"
+  {
+    return { kind: "commentenv", content: x.join("") }
+  }
 
 //inline math with \(\)
 inlinemath =
-  begin_inline_math x:(!end_inline_math x:math_token {return x})+ end_inline_math {return {kind:"inlinemath", content:x}}
+  begin_inline_math
+    x:(!end_inline_math x:math_token {return x})+
+  end_inline_math
+  {
+    return { kind: "inlinemath", content: x }
+  }
 
 //display math with \[\]
 //display math with $$ $$
 displaymath =
-  begin_display_math x:(!end_display_math x:math_token {return x})+ end_display_math {return {kind:"displaymath", content:x}}
-  / math_shift math_shift x:(!(math_shift math_shift) x:math_token {return x})+ math_shift math_shift {return {kind:"displaymath", content:x}}
+  begin_display_math
+    x:(!end_display_math x:math_token {return x})+
+  end_display_math
+  {
+    return { kind: "displaymath", content: x }
+  }
+  /
+  math_shift math_shift
+    x:(!(math_shift math_shift) x:math_token {return x})+
+  math_shift math_shift
+  {
+    return { kind: "displaymath", content: x }
+  }
 
 macro "macro" 
   = m:(escape n:char+ {return n.join("")}
