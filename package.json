@@ -1,0 +1,27 @@
+{
+  "name": "latex-utensil",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "LaTeX utilities",
+  "homepage": "https://github.com/tamuratak/latex-utensils",
+  "main": "./out/src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tamuratak/latex-utensils.git"
+  },
+  "bin": {
+    "luparse": "./bin/luparse.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.12.12",
+    "mocha": "^6.1.4",
+    "pegjs": "^0.10.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "scripts": {
+    "build": "tsc -p ./",
+    "test": "mocha"
+  }
+}
