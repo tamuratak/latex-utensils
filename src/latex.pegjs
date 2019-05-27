@@ -154,14 +154,19 @@ inlinemath =
 
 //display math with \[\]
 //display math with $$ $$
-displaymath =
+displaymath
+  = displaymath_square_bracket
+  / displaymath_shift_shift
+
+displaymath_square_bracket =
   begin_display_math
     x:(!end_display_math x:math_token {return x})+
   end_display_math
   {
     return { kind: "displaymath", content: x }
   }
-  /
+
+displaymath_shift_shift =
   math_shift math_shift
     x:(!(math_shift math_shift) x:math_token {return x})+
   math_shift math_shift
@@ -190,25 +195,25 @@ argument_list "argument list" =
   }
 
 
-environment "environment"
-  = begin_env env:group args:argument_list?
-      body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
-    end_env group
-    {
-      return { kind: "environment", env: env.content, args: args, content: body }
-    }
+environment "environment" =
+  begin_env env:group args:argument_list?
+    body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
+  end_env group
+  {
+    return { kind: "environment", env: env.content, args: args, content: body }
+  }
 
-math_environment "math environment"
-  = begin_env begin_group env:math_env_name end_group
-      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
-    end_env begin_group math_env_name end_group
-    {
-      return { kind: "mathenv", env: env, content: body }
-    }
+math_environment "math environment" =
+  begin_env begin_group env:math_env_name end_group
+    body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
+  end_env begin_group math_env_name end_group
+  {
+    return { kind: "mathenv", env: env, content: body }
+  }
 
 // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
-math_group "math group"
-  = begin_group x:(!end_group c:math_token {return c})* end_group
+math_group "math group" =
+  begin_group x:(!end_group c:math_token {return c})* end_group
   {
     return { kind: "group", content: x }
   }
