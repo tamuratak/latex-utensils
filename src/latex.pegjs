@@ -169,35 +169,54 @@ displaymath =
     return { kind: "displaymath", content: x }
   }
 
-macro "macro" 
+macro "macro"
   = m:(escape n:char+ {return n.join("")}
-  / escape n:. {return n}) {return {kind:"macro", content:m}}
+  / escape n:. {return n})
+  {
+    return { kind: "macro", content: m }
+  }
 
-group "group"
-  = begin_group x:(!end_group c:token {return c})* end_group {return {kind:"group", content:x}}
+group "group" =
+  begin_group x:(!end_group c:token {return c})* end_group
+  {
+    return { kind:"group", content:x }
+  }
 
 
-argument_list "argument list"
-  = whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]" {return {kind:"arglist", content:body}}
+argument_list "argument list" =
+  whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]"
+  {
+    return { kind: "arglist", content: body }
+  }
 
 
 environment "environment"
   = begin_env env:group args:argument_list?
-  			  body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})* 
-    end_env group {return {kind:"environment", env:env.content, args:args, content:body}}
-    
+      body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
+    end_env group
+    {
+      return { kind: "environment", env: env.content, args: args, content: body }
+    }
+
 math_environment "math environment"
   = begin_env begin_group env:math_env_name end_group
-  			body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})* 
-    end_env begin_group math_env_name end_group {return {kind:"mathenv", env:env, content:body}}
+      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
+    end_env begin_group math_env_name end_group
+    {
+      return { kind: "mathenv", env: env, content: body }
+    }
 
+// group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
+math_group "math group"
+  = begin_group x:(!end_group c:math_token {return c})* end_group
+  {
+    return { kind: "group", content: x }
+  }
 
-math_group "math group"  // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
-  = begin_group x:(!end_group c:math_token {return c})* end_group {return {kind:"group", content:x}}
-
-full_comment "full comment" 		// comment that detects whether it is at the end of a line or on a new line
-  = nl x:comment {return {kind:"comment", content:x, sameline:false, location: location()}} 
-  / x:comment {return {kind:"comment", content:x, sameline:true, location: location()}}
+// comment that detects whether it is at the end of a line or on a new line
+full_comment "full comment"
+  = nl x:comment { return { kind: "comment", content: x, sameline: false, location: location() } }
+  / x:comment { return { kind: "comment", content: x, sameline: true, location: location() } }
 
 
 begin_display_math = escape "["
