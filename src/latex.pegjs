@@ -34,8 +34,8 @@ https://github.com/siefkenj/latex-parser
 document "document"
   = (token)*
 
-token "token" =
-  whitespace* x:token_ whitespace* { return x }
+token "token"
+  = whitespace* x:token_ whitespace* { return x }
 
 token_
   = special_macro
@@ -117,37 +117,37 @@ special_macro "special macro" // for the special macros like \[ \] and \begin{} 
   / environment
 
 // \verb|xxx|
-verb = 
-  escape "verb" e:.
-    x:(!(end:. & {return end == e}) x:. {return x})*
-  (end:. & {return end == e})
+verb
+  = escape "verb" e:.
+      x:(!(end:. & {return end == e}) x:. {return x})*
+    (end:. & {return end == e})
   {
     return { kind: "verb", escape: e, content: x.join("") }
   }
 
 // verbatim environment
-verbatim =
-  escape "begin{verbatim}"
-    x:(!(escape "end{verbatim}") x:. {return x})*
-  escape "end{verbatim}"
+verbatim
+  = escape "begin{verbatim}"
+      x:(!(escape "end{verbatim}") x:. {return x})*
+    escape "end{verbatim}"
   {
     return { kind: "verbatim", content: x.join("") }
   }
 
 // comment environment provided by \usepackage{verbatim}
-commentenv =
-  escape "begin{comment}"
-    x:(!(escape "end{comment}") x:. {return x})*
-  escape "end{comment}"
+commentenv
+  = escape "begin{comment}"
+      x:(!(escape "end{comment}") x:. {return x})*
+    escape "end{comment}"
   {
     return { kind: "commentenv", content: x.join("") }
   }
 
 //inline math with \(\)
-inlinemath =
-  begin_inline_math
-    x:(!end_inline_math x:math_token {return x})+
-  end_inline_math
+inlinemath
+  = begin_inline_math
+      x:(!end_inline_math x:math_token {return x})+
+    end_inline_math
   {
     return { kind: "inlinemath", content: x }
   }
@@ -158,18 +158,18 @@ displaymath
   = displaymath_square_bracket
   / displaymath_shift_shift
 
-displaymath_square_bracket =
-  begin_display_math
-    x:(!end_display_math x:math_token {return x})+
-  end_display_math
+displaymath_square_bracket
+  = begin_display_math
+      x:(!end_display_math x:math_token {return x})+
+    end_display_math
   {
     return { kind: "displaymath", content: x }
   }
 
-displaymath_shift_shift =
-  math_shift math_shift
-    x:(!(math_shift math_shift) x:math_token {return x})+
-  math_shift math_shift
+displaymath_shift_shift
+  = math_shift math_shift
+      x:(!(math_shift math_shift) x:math_token {return x})+
+    math_shift math_shift
   {
     return { kind: "displaymath", content: x }
   }
@@ -181,39 +181,39 @@ macro "macro"
     return { kind: "macro", content: m }
   }
 
-group "group" =
-  begin_group x:(!end_group c:token {return c})* end_group
+group "group"
+  = begin_group x:(!end_group c:token {return c})* end_group
   {
     return { kind:"group", content:x }
   }
 
 
-argument_list "argument list" =
-  whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]"
+argument_list "argument list"
+  = whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]"
   {
     return { kind: "arglist", content: body }
   }
 
 
-environment "environment" =
-  begin_env env:group args:argument_list?
-    body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
-  end_env group
+environment "environment"
+  = begin_env env:group args:argument_list?
+      body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
+    end_env group
   {
     return { kind: "environment", env: env.content, args: args, content: body }
   }
 
-math_environment "math environment" =
-  begin_env begin_group env:math_env_name end_group
-    body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
-  end_env begin_group math_env_name end_group
+math_environment "math environment"
+  = begin_env begin_group env:math_env_name end_group
+      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
+    end_env begin_group math_env_name end_group
   {
     return { kind: "mathenv", env: env, content: body }
   }
 
 // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
-math_group "math group" =
-  begin_group x:(!end_group c:math_token {return c})* end_group
+math_group "math group"
+  = begin_group x:(!end_group c:math_token {return c})* end_group
   {
     return { kind: "group", content: x }
   }
