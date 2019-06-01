@@ -38,10 +38,11 @@ document "document"
   = (token)*
 
 token "token"
-  = whitespace* x:token_ whitespace* { return x }
+  = skip_space x:token_ skip_space { return x }
 
 token_
   = special_macro
+  / break { return { kind: "parbreak" }; }
   / macro
   / full_comment
   / group
@@ -56,7 +57,7 @@ token_
   / x:(!nonchar_token x:. {return x})+ {return x.join("")}
 
 math_token =
-  whitespace* x:math_token_ whitespace* { return x }
+  skip_space x:math_token_ skip_space { return x }
 
 math_token_
   = special_macro
@@ -68,7 +69,6 @@ math_token_
   / superscript x:math_token {return {kind:"superscript", content:x}}
   / subscript x:math_token {return {kind:"subscript", content:x}}
   / ignore
-  / whitespace
   / .
 
 args_token "args token"
@@ -308,9 +308,12 @@ skip_all_space  "spaces"
 
 break "paragraph break"
   = (skip_all_space escape "par" skip_all_space)+
-  / sp* (nl comment* / comment+) ((sp* nl)+ / &end_doc / EOF) (sp / nl / comment)* 
-  { 
-    return true
+  {
+    return true;
+  }
+  / sp* (nl comment* / comment+) ((sp* nl)+ / &end_doc / EOF) (sp / nl / comment)*
+  {
+    return true;
   }
 
 EOF             = !.
