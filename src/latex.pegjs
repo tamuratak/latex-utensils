@@ -28,14 +28,17 @@ https://github.com/siefkenj/latex-parser
 */
 
 {
-  var commnetArray = [];
+  const commentArray = [];
   function compare_env(g1,g2) {
       return g1.content.join("") == g2.content.join("");
   }
 }
 
 document "document"
-  = (token)*
+  = x:(token)*
+  { 
+    return { content: x, comment: commentArray };
+  }
 
 token "token"
   = skip_space x:token_ skip_space
@@ -310,7 +313,13 @@ sp  "whitespace"
   = [ \t]
 
 skip_space "spaces"
-  = (!break (nl / sp / comment))*
+  = (!break (nl / sp / skip_comment))*
+
+skip_comment
+  = c:comment
+  { 
+    commentArray.push( { kind: "comment", content: c, location: location() } );
+  }
 
 skip_all_space  "spaces"
   = (nl / sp / comment)*
