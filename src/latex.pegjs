@@ -1,4 +1,5 @@
 /*
+
 MIT License
 
 Copyright (c) 2015-2017 Michael Brade, Jason Siefken
@@ -21,14 +22,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+https://github.com/michael-brade/LaTeX.js
 https://github.com/siefkenj/latex-parser
 
 */
 
 {
-    function compare_env(g1,g2) {
-        return g1.content.join("") == g2.content.join("");
-    }
+  var commnetArray = [];
+  function compare_env(g1,g2) {
+      return g1.content.join("") == g2.content.join("");
+  }
 }
 
 document "document"
@@ -194,17 +197,17 @@ argument_list "argument list"
 
 
 environment "environment"
-  = begin_env env:group args:argument_list?
+  = begin_env skip_space env:group args:argument_list?
       body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
-    end_env group
+    end_env skip_space group
   {
     return { kind: "environment", env: env.content, args: args, content: body }
   }
 
 math_environment "math environment"
-  = begin_env begin_group env:math_env_name end_group
+  = begin_env skip_space begin_group env:math_env_name end_group
       body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
-    end_env begin_group math_env_name end_group
+    end_env skip_space begin_group math_env_name end_group
   {
     return { kind: "mathenv", env: env, content: body }
   }
