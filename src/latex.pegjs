@@ -68,7 +68,8 @@ math_element =
   }
 
 math_element_
-  = special_macro
+  = math_aligned_environment
+  / special_macro
   / macro
   / full_comment
   / group
@@ -218,7 +219,7 @@ environment "environment"
       body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:element {return x})*
     end_env skip_space group
   {
-    return { kind: "environment", env: env.content, args: args, content: body };
+    return { kind: "environment", name: env.content[0], args: args, content: body };
   }
 
 math_environment "math environment"
@@ -226,7 +227,15 @@ math_environment "math environment"
       body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
-    return { kind: "mathenv", env: env, content: body };
+    return { kind: "math_env", name: env, content: body };
+  }
+
+math_aligned_environment "math aligned environment"
+  = begin_env skip_space begin_group env:maht_aligned_env_name end_group
+      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:element {return x})*
+    end_env skip_space begin_group maht_aligned_env_name end_group
+  {
+    return { kind: "math_aligned_env", name: env, content: body };
   }
 
 // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
@@ -263,10 +272,16 @@ math_env_name
   / "multline"
   / "flalign*"
   / "flalign"
-  / "split"
   / "math"
   / "displaymath"
 
+maht_aligned_env_name
+  = "aligned"
+  / "alignedat"
+  / "cases"
+  / "cases*"
+  / "gathered"
+  / "split"
 
 escape "escape" = "\\"                             // catcode 0
 begin_group     = "{"                              // catcode 1
