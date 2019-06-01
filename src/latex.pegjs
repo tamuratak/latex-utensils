@@ -38,7 +38,10 @@ document "document"
   = (token)*
 
 token "token"
-  = skip_space x:token_ skip_space { return x }
+  = skip_space x:token_ skip_space
+  { 
+    return x;
+  }
 
 token_
   = special_macro
@@ -46,18 +49,20 @@ token_
   / macro
   / full_comment
   / group
-  / math_shift eq:(!math_shift t:math_token {return t})+ math_shift {return {kind:"inlinemath", content: eq}}
+  / inlinemath_shift
   / alignment_tab
-  / sp* nl sp* nl+ sp* {return {kind:"parbreak"}}
   / macro_parameter
   / superscript
   / subscript
   / ignore
   / number
-  / x:(!nonchar_token x:. {return x})+ {return x.join("")}
+  / x:(!nonchar_token x:. {return x})+ { return x.join(""); }
 
 math_token =
-  skip_space x:math_token_ skip_space { return x }
+  skip_space x:math_token_ skip_space
+  { 
+    return x;
+  }
 
 math_token_
   = special_macro
@@ -66,8 +71,8 @@ math_token_
   / group
   / alignment_tab
   / macro_parameter
-  / superscript x:math_token {return {kind:"superscript", content:x}}
-  / subscript x:math_token {return {kind:"subscript", content:x}}
+  / superscript x:math_token { return { kind: "superscript", content: x }; }
+  / subscript x:math_token { return { kind: "subscript", content: x }; }
   / ignore
   / .
 
@@ -76,7 +81,7 @@ args_token "args token"
   / macro
   / full_comment
   / group
-  / math_shift eq:(!math_shift t:math_token {return t})+ math_shift {return {kind:"inlinemath", content: eq}}
+  / inlinemath_shift
   / alignment_tab
   / sp* nl sp* nl+ sp* {return {kind:"parbreak"}}
   / macro_parameter
@@ -85,7 +90,7 @@ args_token "args token"
   / ignore
   / number
   / whitespace
-  / x:(!(nonchar_token / "," / "]") x:. {return x})+ {return x.join("")}
+  / x:(!(nonchar_token / "," / "]") x:. {return x})+ { return x.join(""); }
 
 nonchar_token "nonchar token"
   = escape
@@ -123,7 +128,7 @@ verb
       x:(!(end:. & {return end == e}) x:. {return x})*
     (end:. & {return end == e})
   {
-    return { kind: "verb", escape: e, content: x.join("") }
+    return { kind: "verb", escape: e, content: x.join("") };
   }
 
 // verbatim environment
@@ -132,7 +137,7 @@ verbatim
       x:(!(escape "end{verbatim}") x:. {return x})*
     escape "end{verbatim}"
   {
-    return { kind: "verbatim", content: x.join("") }
+    return { kind: "verbatim", content: x.join("") };
   }
 
 // comment environment provided by \usepackage{verbatim}
@@ -141,7 +146,16 @@ commentenv
       x:(!(escape "end{comment}") x:. {return x})*
     escape "end{comment}"
   {
-    return { kind: "commentenv", content: x.join("") }
+    return { kind: "commentenv", content: x.join("") };
+  }
+
+
+inlinemath_shift
+  = math_shift
+     eq:(!math_shift t:math_token {return t})+
+    math_shift
+  {
+    return { kind: "inlinemath", content: eq };
   }
 
 //inline math with \(\)
@@ -150,7 +164,7 @@ inlinemath
       x:(!end_inline_math x:math_token {return x})+
     end_inline_math
   {
-    return { kind: "inlinemath", content: x }
+    return { kind: "inlinemath", content: x };
   }
 
 //display math with \[\]
@@ -164,7 +178,7 @@ displaymath_square_bracket
       x:(!end_display_math x:math_token {return x})+
     end_display_math
   {
-    return { kind: "displaymath", content: x }
+    return { kind: "displaymath", content: x };
   }
 
 displaymath_shift_shift
@@ -172,27 +186,27 @@ displaymath_shift_shift
       x:(!(math_shift math_shift) x:math_token {return x})+
     math_shift math_shift
   {
-    return { kind: "displaymath", content: x }
+    return { kind: "displaymath", content: x };
   }
 
 macro "macro"
   = m:(escape n:char+ {return n.join("")}
   / escape n:. {return n})
   {
-    return { kind: "macro", content: m }
+    return { kind: "macro", content: m };
   }
 
 group "group"
   = begin_group x:(!end_group c:token {return c})* end_group
   {
-    return { kind:"group", content:x }
+    return { kind:"group", content:x };
   }
 
 
 argument_list "argument list"
   = whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]"
   {
-    return { kind: "arglist", content: body }
+    return { kind: "arglist", content: body };
   }
 
 
@@ -201,7 +215,7 @@ environment "environment"
       body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
     end_env skip_space group
   {
-    return { kind: "environment", env: env.content, args: args, content: body }
+    return { kind: "environment", env: env.content, args: args, content: body };
   }
 
 math_environment "math environment"
@@ -209,14 +223,14 @@ math_environment "math environment"
       body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
-    return { kind: "mathenv", env: env, content: body }
+    return { kind: "mathenv", env: env, content: body };
   }
 
 // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
 math_group "math group"
   = begin_group x:(!end_group c:math_token {return c})* end_group
   {
-    return { kind: "group", content: x }
+    return { kind: "group", content: x };
   }
 
 // comment that detects whether it is at the end of a line or on a new line
