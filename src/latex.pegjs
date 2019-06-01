@@ -99,15 +99,13 @@ nonchar_token "nonchar token"
   / sp
   / EOF
 
-whitespace "whitespace"
-  = (nl sp*/ sp+ nl sp* !nl/ sp+)
-  
 number "number"
   = a:num+ "." b:num+ {return a.join("") + "." + b.join("")}
   / "." b:num+ {return "." + b.join("")}
   / a:num+ "." {return a.join("") + "."}
 
-special_macro "special macro" // for the special macros like \[ \] and \begin{} \end{} etc.
+// for the special macros like \[ \] and \begin{} \end{} etc.
+special_macro "special macro"
   = verb
   / verbatim
   / commentenv
@@ -255,15 +253,61 @@ begin_group     = "{"                              // catcode 1
 end_group       = "}"                              // catcode 2
 math_shift      = "$"                              // catcode 3
 alignment_tab   = "&"                              // catcode 4
-nl    "newline" = !'\r''\n' / '\r' / '\r\n'        // catcode 5 (linux, os x, windows)
 macro_parameter = "#"                              // catcode 6
 superscript     = "^"                              // catcode 7
 subscript       = "_"                              // catcode 8
 ignore          = "\0"                             // catcode 9
-sp          "whitespace"   =   [ \t]+ { return " "}// catcode 10
 char        "letter"       = c:[a-zA-Z]            // catcode 11
 num         "digit"        = n:[0-9]               // catcode 12 (other)
 punctuation "punctuation" = p:[.,;:\-\*/()!?=+<>\[\]]   // catcode 12
-comment        = "%"  c:(!nl c:. {return c})* (nl / EOF) {return c.join("")}          // catcode 14, including the newline
+
+// space handling
+
+_ = skip_space
+
+end_doc = end_env _ begin_group "document" end_group
+
+// nl    "newline" = !'\r''\n' / '\r' / '\r\n'        // catcode 5 (linux, os x, windows)
+// sp          "whitespace"   =   [ \t]+ { return " "}// catcode 10
+
+// catcode 14, including the newline
+comment 
+  = "%"  c:(!nl c:. {return c})* (nl / EOF) 
+  {
+    return c.join("");
+  }
+
+whitespace "whitespace"
+  = (nl sp*/ sp+ nl sp* !nl/ sp+)
+
+// catcode 5 (linux, os x, windows, unicode)
+nl  "newline"
+  = "\n"
+  / "\r\n"
+  / "\r"
+  / "\u2028"
+  / "\u2029"
+
+// catcode 10
+sp  "whitespace"
+  = [ \t]
+
+skip_space "spaces"
+  = (!break (nl / sp / comment))*
+
+skip_all_space  "spaces"
+  = (nl / sp / comment)*
+  {
+    return undefined;
+  }
+
+// ctrl_space  "control space" = escape (&nl &break / nl / sp)     { return g.brsp; }          // latex.ltx, line 540
+
+break "paragraph break"
+  = (skip_all_space escape "par" skip_all_space)+
+  / sp* (nl comment* / comment+) ((sp* nl)+ / &end_doc / EOF) (sp / nl / comment)* 
+  { 
+    return true
+  }
 
 EOF             = !.
