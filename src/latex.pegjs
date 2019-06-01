@@ -35,18 +35,18 @@ https://github.com/siefkenj/latex-parser
 }
 
 document "document"
-  = x:(token)*
+  = x:(element)*
   { 
     return { content: x, comment: commentArray };
   }
 
-token "token"
-  = skip_space x:token_ skip_space
+element "element"
+  = skip_space x:element_ skip_space
   { 
     return x;
   }
 
-token_
+element_
   = special_macro
   / break { return { kind: "parbreak" }; }
   / macro
@@ -61,21 +61,21 @@ token_
   / number
   / x:(!nonchar_token x:. {return x})+ { return x.join(""); }
 
-math_token =
-  skip_space x:math_token_ skip_space
+math_element =
+  skip_space x:math_element_ skip_space
   { 
     return x;
   }
 
-math_token_
+math_element_
   = special_macro
   / macro
   / full_comment
   / group
   / alignment_tab
   / macro_parameter
-  / superscript x:math_token { return { kind: "superscript", content: x }; }
-  / subscript x:math_token { return { kind: "subscript", content: x }; }
+  / superscript x:math_element { return { kind: "superscript", content: x }; }
+  / subscript x:math_element { return { kind: "subscript", content: x }; }
   / ignore
   / .
 
@@ -155,7 +155,7 @@ commentenv
 
 inlinemath_shift
   = math_shift
-     eq:(!math_shift t:math_token {return t})+
+     eq:(!math_shift t:math_element {return t})+
     math_shift
   {
     return { kind: "inlinemath", content: eq };
@@ -164,7 +164,7 @@ inlinemath_shift
 //inline math with \(\)
 inlinemath
   = begin_inline_math
-      x:(!end_inline_math x:math_token {return x})+
+      x:(!end_inline_math x:math_element {return x})+
     end_inline_math
   {
     return { kind: "inlinemath", content: x };
@@ -178,7 +178,7 @@ displaymath
 
 displaymath_square_bracket
   = begin_display_math
-      x:(!end_display_math x:math_token {return x})+
+      x:(!end_display_math x:math_element {return x})+
     end_display_math
   {
     return { kind: "displaymath", content: x };
@@ -186,7 +186,7 @@ displaymath_square_bracket
 
 displaymath_shift_shift
   = math_shift math_shift
-      x:(!(math_shift math_shift) x:math_token {return x})+
+      x:(!(math_shift math_shift) x:math_element {return x})+
     math_shift math_shift
   {
     return { kind: "displaymath", content: x };
@@ -200,7 +200,7 @@ macro "macro"
   }
 
 group "group"
-  = begin_group x:(!end_group c:token {return c})* end_group
+  = begin_group x:(!end_group c:element {return c})* end_group
   {
     return { kind:"group", content:x };
   }
@@ -215,7 +215,7 @@ argument_list "argument list"
 
 environment "environment"
   = begin_env skip_space env:group args:argument_list?
-      body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:token {return x})*
+      body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:element {return x})*
     end_env skip_space group
   {
     return { kind: "environment", env: env.content, args: args, content: body };
@@ -223,7 +223,7 @@ environment "environment"
 
 math_environment "math environment"
   = begin_env skip_space begin_group env:math_env_name end_group
-      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_token {return x})*
+      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
     return { kind: "mathenv", env: env, content: body };
@@ -231,7 +231,7 @@ math_environment "math environment"
 
 // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
 math_group "math group"
-  = begin_group x:(!end_group c:math_token {return c})* end_group
+  = begin_group x:(!end_group c:math_element {return c})* end_group
   {
     return { kind: "group", content: x };
   }
