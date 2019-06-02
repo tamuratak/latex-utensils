@@ -203,7 +203,7 @@ macro "macro"
 group "group"
   = begin_group x:(!end_group c:element {return c})* end_group
   {
-    return { kind:"group", content:x };
+    return { kind: "group", content: x };
   }
 
 
@@ -232,7 +232,7 @@ math_environment "math environment"
 
 math_aligned_environment "math aligned environment"
   = begin_env skip_space begin_group env:maht_aligned_env_name end_group
-      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:element {return x})*
+      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
     return { kind: "math_aligned_env", name: env, content: body };
@@ -298,9 +298,7 @@ punctuation "punctuation" = p:[.,;:\-\*/()!?=+<>\[\]]   // catcode 12
 
 // space handling
 
-_ = skip_space
-
-end_doc = end_env _ begin_group "document" end_group
+end_doc = end_env skip_space begin_group "document" end_group
 
 // nl    "newline" = !'\r''\n' / '\r' / '\r\n'        // catcode 5 (linux, os x, windows)
 // sp          "whitespace"   =   [ \t]+ { return " "}// catcode 10
@@ -354,4 +352,4 @@ break "paragraph break"
     return true;
   }
 
-EOF             = !.
+EOF = !.
