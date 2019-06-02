@@ -49,14 +49,14 @@ element "element"
   }
 
 element_
-  = special_macro
+  = special_command
   / break { return { kind: "parbreak" }; }
-  / macro
+  / command
   / full_comment
   / group
   / inlinemath_shift
   / alignment_tab
-  / macro_parameter
+  / command_parameter
   / superscript
   / subscript
   / ignore
@@ -71,26 +71,26 @@ math_element =
 
 math_element_
   = math_aligned_environment
-  / special_macro
-  / macro
+  / special_command
+  / command
   / full_comment
   / group
   / alignment_tab
-  / macro_parameter
+  / command_parameter
   / superscript x:math_element { return { kind: "superscript", content: x }; }
   / subscript x:math_element { return { kind: "subscript", content: x }; }
   / ignore
   / .
 
 args_token "args token"
-  = special_macro
-  / macro
+  = special_command
+  / command
   / full_comment
   / group
   / inlinemath_shift
   / alignment_tab
   / sp* nl sp* nl+ sp* {return {kind:"parbreak"}}
-  / macro_parameter
+  / command_parameter
   / superscript
   / subscript
   / ignore
@@ -106,7 +106,7 @@ nonchar_token "nonchar token"
   / math_shift
   / alignment_tab
   / nl
-  / macro_parameter
+  / command_parameter
   / superscript
   / subscript
   / ignore
@@ -118,8 +118,8 @@ number "number"
   / "." b:num+ {return "." + b.join("")}
   / a:num+ "." {return a.join("") + "."}
 
-// for the special macros like \[ \] and \begin{} \end{} etc.
-special_macro "special macro"
+// for the special commands like \[ \] and \begin{} \end{} etc.
+special_command "special command"
   = verb
   / verbatim
   / commentenv
@@ -195,12 +195,17 @@ displaymath_shift_shift
     return { kind: "displaymath", content: x };
   }
 
-macro "macro"
-  = m:(escape n:char+ {return n.join("")}
-  / escape n:. {return n})
+command "command"
+  = escape n:command_name
   {
-    return { kind: "macro", content: m };
+    return { kind: "command", name: n };
   }
+
+command_name
+  = n:$(char+) skip_space '*' { return n + '*'; }
+  / $(char+)
+  / "\\*"
+  / .
 
 group "group"
   = begin_group x:(!end_group c:element {return c})* end_group
@@ -290,7 +295,7 @@ begin_group     = "{"                              // catcode 1
 end_group       = "}"                              // catcode 2
 math_shift      = "$"                              // catcode 3
 alignment_tab   = "&"                              // catcode 4
-macro_parameter = "#"                              // catcode 6
+command_parameter = "#"                              // catcode 6
 superscript     = "^"                              // catcode 7
 subscript       = "_"                              // catcode 8
 ignore          = "\0"                             // catcode 9
