@@ -143,7 +143,7 @@ verbatim
       x:(!(escape "end{verbatim}") x:. {return x})*
     escape "end{verbatim}"
   {
-    return { kind: "verbatim", content: x.join("") };
+    return { kind: "env.verbatim", content: x.join("") };
   }
 
 // comment environment provided by \usepackage{verbatim}
@@ -152,7 +152,7 @@ commentenv
       x:(!(escape "end{comment}") x:. {return x})*
     escape "end{comment}"
   {
-    return { kind: "commentenv", content: x.join("") };
+    return { kind: "env.comment", content: x.join("") };
   }
 
 
@@ -161,7 +161,7 @@ inlinemath_shift
      eq:(!math_shift t:math_element {return t})+
     math_shift
   {
-    return { kind: "inlinemath", content: eq };
+    return { kind: "math.inline", content: eq };
   }
 
 //inline math with \(\)
@@ -170,7 +170,7 @@ inlinemath
       x:(!end_inline_math x:math_element {return x})+
     end_inline_math
   {
-    return { kind: "inlinemath", content: x };
+    return { kind: "math.inline", content: x };
   }
 
 //display math with \[\]
@@ -184,7 +184,7 @@ displaymath_square_bracket
       x:(!end_display_math x:math_element {return x})+
     end_display_math
   {
-    return { kind: "displaymath", content: x };
+    return { kind: "math.display", content: x };
   }
 
 displaymath_shift_shift
@@ -217,7 +217,7 @@ group "group"
 argument_list "argument list"
   = whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]"
   {
-    return { kind: "arglist", content: body };
+    return { kind: "arglist.optional", content: body };
   }
 
 
@@ -226,7 +226,7 @@ environment "environment"
       body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:element {return x})*
     end_env skip_space group
   {
-    return { kind: "environment", name: env.content[0], args: args, content: body };
+    return { kind: "env", name: env.content[0], args: args, content: body };
   }
 
 math_environment "math environment"
@@ -234,7 +234,7 @@ math_environment "math environment"
       body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
-    return { kind: "math_env", name: env, content: body };
+    return { kind: "env.math.align", name: env, content: body };
   }
 
 math_aligned_environment "math aligned environment"
@@ -242,7 +242,7 @@ math_aligned_environment "math aligned environment"
       body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
-    return { kind: "math_aligned_env", name: env, content: body };
+    return { kind: "env.math.aligned", name: env, content: body };
   }
 
 // group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
