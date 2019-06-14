@@ -1,4 +1,4 @@
-import * as parser from '../latex.js'
+import * as parser from '../latex_parser'
 import * as fs from 'fs'
 import * as util from 'util'
 
