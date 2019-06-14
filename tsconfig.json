@@ -3,7 +3,7 @@
         "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [
-            "es2017", "dom"
+            "es2019", "dom"
         ],
         "module": "commonjs",
         "noFallthroughCasesInSwitch": true,
@@ -15,7 +15,7 @@
         "rootDir": ".",
         "sourceMap": true,
         "strictNullChecks": true,
-        "target": "es6"
+        "target": "es2019"
     },
     "exclude": [
         "node_modules"
