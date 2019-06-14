@@ -1,7 +1,80 @@
-type Node = {
-    kind: string;
+type Command = {
+    kind: "command";
+    name: string;
+}
+
+type Environment = {
+    kind: "env";
+    name: string;
+    args: (string | Node)[];
     content: (string | Node)[];
 }
+
+type MathEnv = {
+    kind: "env.math.align";
+    name: string;
+    content: (string | Node)[];
+}
+
+type MathEnvAligned = {
+    kind: "env.math.aligned";
+    name: string;
+    content: (string | Node)[];
+}
+
+type Group = {
+    kind: "group";
+    content: (string | Node)[];
+}
+
+type Pagebreak = {
+    kind: "parbreak";
+}
+
+type Supescript = {
+    kind: "superscript";
+    content: (string | Node)[];
+}
+
+type Subscript = {
+    kind: "subscript";
+    content: (string | Node)[];
+}
+
+type Verb = {
+    kind: "verb";
+    escape: string;
+    content: string;
+}
+
+type Verbatim = {
+    kind: "env.verbatim";
+    content: string;
+}
+
+type InlienMath = {
+    kind: "math.inline";
+    content: (string | Node)[];
+}
+
+type DisplayMath = {
+    kind: "math.display";
+    content: (string | Node)[];
+}
+
+type Node
+= Command
+| Environment
+| Group
+| MathEnv
+| MathEnvAligned
+| Pagebreak
+| Supescript
+| Subscript
+| Verb
+| Verbatim
+| InlienMath
+| DisplayMath
 
 type Location = {
     start: { 
@@ -24,7 +97,7 @@ type Comment = {
 
 type AST = {
     content: (string | Node)[];
-    comment: Comment;
+    comment: Comment[];
 }
 
 type ParserOptions = {

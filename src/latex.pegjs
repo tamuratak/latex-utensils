@@ -192,7 +192,7 @@ displaymath_shift_shift
       x:(!(math_shift math_shift) x:math_element {return x})+
     math_shift math_shift
   {
-    return { kind: "displaymath", content: x };
+    return { kind: "math.display", content: x };
   }
 
 command "command"
@@ -254,8 +254,8 @@ math_group "math group"
 
 // comment that detects whether it is at the end of a line or on a new line
 full_comment "full comment"
-  = nl x:comment { return { kind: "comment", content: x, sameline: false, location: location() } }
-  / x:comment { return { kind: "comment", content: x, sameline: true, location: location() } }
+  = nl x:comment { return { kind: "comment", content: x, location: location() } }
+  / x:comment { return { kind: "comment", content: x, location: location() } }
 
 
 begin_display_math = escape "["
