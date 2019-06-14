@@ -21,7 +21,9 @@
     "typescript": "^3.4.5"
   },
   "scripts": {
-    "build": "tsc -p ./",
+    "generate": "./node_modules/.bin/pegjs -o out/src/latex_parser.js src/latex.pegjs",
+    "build": "npm run generate && tsc -p ./",
+    "clean": "rm -rf out/src/* out/test/*",
     "test": "mocha"
   }
 }
