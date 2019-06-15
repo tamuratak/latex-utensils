@@ -11,6 +11,12 @@ type Command = {
     location: Location;
 }
 
+type AmsMathTextCommand = {
+    kind: "command.text";
+    arg: Group;
+    location: Location;
+}
+
 type Environment = {
     kind: "env";
     name: string;
@@ -75,6 +81,13 @@ type Verbatim = {
     location: Location;
 }
 
+type Minted = {
+    kind: "env.minted";
+    args: (OptionalArg | Group)[];
+    content: string;
+    location: Location;
+}
+
 type InlienMath = {
     kind: "math.inline";
     content: (string | Node)[];
@@ -89,6 +102,7 @@ type DisplayMath = {
 
 type Node
 = Command
+| AmsMathTextCommand
 | Environment
 | Group
 | InlienMath
@@ -100,6 +114,7 @@ type Node
 | Subscript
 | Verb
 | Verbatim
+| Minted
 
 type Location = {
     start: { 
