@@ -71,6 +71,7 @@ math_element =
 
 math_element_
   = math_aligned_environment
+  / amsmath_text_command
   / special_command
   / command
   / full_comment
@@ -260,6 +261,12 @@ math_group "math group"
   = begin_group x:(!end_group c:math_element {return c})* end_group
   {
     return { kind: "group", content: x };
+  }
+
+amsmath_text_command
+  = escape "text" arg:group
+  {
+    return { kind: "command.text", arg: arg, location: location() };
   }
 
 // comment that detects whether it is at the end of a line or on a new line
