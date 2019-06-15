@@ -8,6 +8,7 @@ type Command = {
     kind: "command";
     name: string;
     args: (OptionalArg | Group)[];
+    location: Location;
 }
 
 type Environment = {
@@ -15,63 +16,75 @@ type Environment = {
     name: string;
     args: (OptionalArg | Group)[];
     content: (string | Node)[];
+    location: Location;
 }
 
 type MathEnv = {
     kind: "env.math.align";
     name: string;
     content: (string | Node)[];
+    location: Location;
 }
 
 type MathEnvAligned = {
     kind: "env.math.aligned";
     name: string;
     content: (string | Node)[];
+    location: Location;
 }
 
 type Group = {
     kind: "arg.group";
     content: (string | Node)[];
+    location: Location;
 }
 
 type OptionalArg = {
     kind: "arg.optional";
     content: (string | Node)[];
+    location: Location;
 }
 
 type Pagebreak = {
     kind: "parbreak";
+    location: Location;
 }
 
 type Supescript = {
     kind: "superscript";
     content: (string | Node)[];
+    location: Location;
 }
 
 type Subscript = {
     kind: "subscript";
     content: (string | Node)[];
+    location: Location;
 }
 
 type Verb = {
     kind: "verb";
     escape: string;
     content: string;
+    location: Location;
 }
 
 type Verbatim = {
     kind: "env.verbatim";
     content: string;
+    location: Location;
 }
 
 type InlienMath = {
     kind: "math.inline";
     content: (string | Node)[];
+    location: Location;
 }
 
 type DisplayMath = {
     kind: "math.display";
     content: (string | Node)[];
+    location: Location;
 }
 
 type Node
