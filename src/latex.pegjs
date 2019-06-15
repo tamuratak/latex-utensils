@@ -121,6 +121,7 @@ number "number"
 special_command "special command"
   = verb
   / verbatim
+  / minted
   / commentenv
   / displaymath
   / inlinemath
@@ -143,6 +144,16 @@ verbatim
     escape "end{verbatim}"
   {
     return { kind: "env.verbatim", content: x.join(""), location: location() };
+  }
+
+
+// minted environment
+minted
+  = escape "begin{minted}" args:(argument_list? group)
+      x:(!(escape "end{minted}") x:. {return x})*
+    escape "end{minted}"
+  {
+    return { kind: "env.minted", args: args, content: x.join(""), location: location() };
   }
 
 // comment environment provided by \usepackage{verbatim}
@@ -207,7 +218,7 @@ command_name
   / .
 
 group "group"
-  = begin_group x:(!end_group c:element {return c})* end_group
+  = skip_space begin_group x:(!end_group c:element {return c})* end_group
   {
     return { kind: "arg.group", content: x };
   }
