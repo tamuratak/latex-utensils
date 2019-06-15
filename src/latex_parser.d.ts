@@ -1,12 +1,19 @@
+type AnyNode = {
+    kind: string;
+    content?: any;
+    name?: string;
+}
+
 type Command = {
     kind: "command";
     name: string;
+    args: (OptionalArg | Group)[];
 }
 
 type Environment = {
     kind: "env";
     name: string;
-    args: (string | Node)[];
+    args: (OptionalArg | Group)[];
     content: (string | Node)[];
 }
 
@@ -23,7 +30,12 @@ type MathEnvAligned = {
 }
 
 type Group = {
-    kind: "group";
+    kind: "arg.group";
+    content: (string | Node)[];
+}
+
+type OptionalArg = {
+    kind: "arg.optional";
     content: (string | Node)[];
 }
 
@@ -66,6 +78,8 @@ type Node
 = Command
 | Environment
 | Group
+| InlienMath
+| DisplayMath
 | MathEnv
 | MathEnvAligned
 | Pagebreak
@@ -73,8 +87,6 @@ type Node
 | Subscript
 | Verb
 | Verbatim
-| InlienMath
-| DisplayMath
 
 type Location = {
     start: { 
@@ -95,7 +107,7 @@ type Comment = {
     location: Location;
 }
 
-type AST = {
+type LatexAst = {
     content: (string | Node)[];
     comment: Comment[];
 }
@@ -113,4 +125,4 @@ export declare class SyntaxError extends Error {
   name : 'SyntaxError';
 }
 
-export declare function parse(input: string, options?: ParserOptions): AST;
+export declare function parse(input: string, options?: ParserOptions): LatexAst;

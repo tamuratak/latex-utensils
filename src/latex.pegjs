@@ -95,7 +95,6 @@ args_token "args token"
   / subscript
   / ignore
   / number
-  / whitespace
   / x:(!(nonchar_token / "," / "]") x:. {return x})+ { return x.join(""); }
 
 nonchar_token "nonchar token"
@@ -196,9 +195,9 @@ displaymath_shift_shift
   }
 
 command "command"
-  = escape n:command_name
+  = escape n:command_name args:(argument_list / group)*
   {
-    return { kind: "command", name: n };
+    return { kind: "command", name: n, args: args };
   }
 
 command_name
@@ -210,19 +209,19 @@ command_name
 group "group"
   = begin_group x:(!end_group c:element {return c})* end_group
   {
-    return { kind: "group", content: x };
+    return { kind: "arg.group", content: x };
   }
 
 
-argument_list "argument list"
-  = whitespace* "[" body:(!"]" x:("," / args_token) {return x})* "]"
+argument_list "optional argument"
+  = skip_space "[" body:(!"]" x:("," / args_token) {return x})* "]"
   {
-    return { kind: "arglist.optional", content: body };
+    return { kind: "arg.optional", content: body };
   }
 
 
 environment "environment"
-  = begin_env skip_space env:group args:argument_list?
+  = begin_env skip_space env:group args:(argument_list / group)*
       body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:element {return x})*
     end_env skip_space group
   {
