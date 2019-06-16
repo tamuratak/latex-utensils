@@ -1,6 +1,5 @@
 import * as assert from 'assert'
 import {latexParser} from '../src/main'
-// import * as util from 'util'
 
 function equalOnlyOnExpectedOwnedProperties(actual: any, expected: any, message?: string) {
     if (expected === null || typeof expected !== 'object') {
@@ -46,13 +45,15 @@ lmn
             `
             const doc = latexParser.parse(tex) as any
             const expected = {
-                content: [{
+                content: [ {
                     kind: 'env',
-                    content: [{
+                    content: [ {
                         kind: 'text.string',
                         content: 'lmn',
-                        location: {start: {line: 3, column: 1}, end: {line: 3, column: 4}}
-                }]}]}
+                        location: { start: {line: 3, column: 1}, end: {line: 3, column: 4} }
+                    } ] 
+                } ] 
+            }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
@@ -63,9 +64,11 @@ lmn
             `
             const doc = latexParser.parse(tex) as any
             const expected = {
-                content: [ { kind: 'command',
-                             name: 'newenvironment',
-                             args: [{kind: 'arg.group'}, {kind: 'arg.group'}, {kind: 'arg.group'}] } ]
+                content: [ { 
+                    kind: 'command',
+                    name: 'newenvironment',
+                    args: [ {kind: 'arg.group'}, {kind: 'arg.group'}, {kind: 'arg.group'} ] 
+                } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -73,22 +76,20 @@ lmn
         test('parse invalid commands without error', () => {
             const tex = `\\begin{abc}`
             const doc = latexParser.parse(tex)
-            const command = doc.content[0]
-            if (command === undefined) {
-                assert.fail()
-                return
+            const expected = {
+                content: [ { 
+                    kind: 'command',
+                    name: 'begin',
+                    args: [ { 
+                        kind: 'arg.group',
+                        content: [ {
+                            kind: 'text.string',
+                            content: 'abc'
+                        } ] 
+                    } ] 
+                } ]
             }
-            if (command.kind !== 'command') {
-                assert.fail()
-                return
-            }
-            const arg = command.args[0]
-            const textString = arg.content[0]
-            if (textString.kind !== 'text.string') {
-                assert.fail()
-                return
-            }
-            assert.equal(textString.content, 'abc')
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
         test('should throw SyntaxError', () => {
