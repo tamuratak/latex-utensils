@@ -14,6 +14,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
     "@types/node": "^10.12.12",
     "mocha": "^6.1.4",
     "pegjs": "^0.10.0",
@@ -23,8 +24,9 @@
   "scripts": {
     "init": "mkdir -p out/src",
     "generate": "./node_modules/.bin/pegjs -o out/src/latex_parser.js src/latex.pegjs",
-    "build": "npm run init; npm run generate && tsc -p ./",
+    "compile": "tsc -p ./",
+    "build": "npm run init; npm run generate && npm run compile",
     "clean": "rm -rf out/src/* out/test/*",
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha --ui tdd out/test/**/*.js"
   }
 }
