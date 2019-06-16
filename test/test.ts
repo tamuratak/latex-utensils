@@ -22,11 +22,15 @@ lmn
                 return
             }
             if (center.kind !== 'env') {
-                assert.fail('content is empty.')
+                assert.fail()
                 return
             }
             const e = center.content[0]
-            assert.equal(e.kind, 'text.string')
+            if (e.kind !== 'text.string') {
+                assert.fail()
+                return
+            }
+            assert.equal(e.content, 'lmn')
         })
         
     })
