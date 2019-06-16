@@ -49,7 +49,8 @@ element "element"
   }
 
 element_
-  = special_command
+  = result:
+  ( special_command
   / break { return { kind: "parbreak", location: location() }; }
   / command
   / full_comment
@@ -62,6 +63,14 @@ element_
   / ignore
   / number
   / x:(!nonchar_token x:. {return x})+ { return x.join(""); }
+  )
+  {
+    if (typeof result === "string") {
+      return { kind: "text.string", content: result, location: location() };
+    } else {
+      return result;
+    }
+  }
 
 math_element =
   skip_space x:math_element_ skip_space
@@ -70,7 +79,8 @@ math_element =
   }
 
 math_element_
-  = math_aligned_environment
+  = result:
+  ( math_aligned_environment
   / amsmath_text_command
   / special_command
   / command
@@ -82,6 +92,14 @@ math_element_
   / subscript x:math_element { return { kind: "subscript", content: x, location: location() }; }
   / ignore
   / .
+  )
+  {
+    if (typeof result === "string") {
+      return { kind: "text.string", content: result, location: location() };
+    } else {
+      return result;
+    }
+  }
 
 args_token "args token"
   = special_command
@@ -221,7 +239,18 @@ command_name
 group "group"
   = skip_space begin_group x:(!end_group c:element {return c})* end_group
   {
-    return { kind: "arg.group", content: x };
+    return { kind: "arg.group", content: x, location: location() };
+  }
+
+
+group_envname "envname group"
+  = skip_space begin_group x:(!end_group c:element {return c})* end_group
+  {
+    if (x.length === 1 && x[0].kind === "text.string") {
+      return { kind: "arg.group", content: [x[0].content] };
+    } else {
+      return { kind: "arg.group", content: x };
+    }
   }
 
 
@@ -233,16 +262,16 @@ argument_list "optional argument"
 
 
 environment "environment"
-  = begin_env skip_space env:group args:(argument_list / group)*
-      body:(!(end_env end_env:group & {return compare_env(env,end_env)}) x:element {return x})*
-    end_env skip_space group
+  = begin_env skip_space env:group_envname args:(argument_list / group)*
+      body:(!(end_env end_env:group_envname & {return compare_env(env,end_env)}) x:element {return x})*
+    end_env skip_space group_envname
   {
     return { kind: "env", name: env.content[0], args: args, content: body, location: location() };
   }
 
 math_environment "math environment"
   = begin_env skip_space begin_group env:math_env_name end_group
-      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
+      body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
     return { kind: "env.math.align", name: env, content: body, location: location() };
@@ -250,17 +279,17 @@ math_environment "math environment"
 
 math_aligned_environment "math aligned environment"
   = begin_env skip_space begin_group env:maht_aligned_env_name end_group
-      body: (!(end_env end_env:group & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
+      body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
     return { kind: "env.math.aligned", name: env, content: body, location: location() };
   }
 
-// group that assumes you're in math mode.  If you use "\text{}" this isn't a good idea....
+// group that assumes you're in math mode.
 math_group "math group"
   = begin_group x:(!end_group c:math_element {return c})* end_group
   {
-    return { kind: "group", content: x };
+    return { kind: "arg.group", content: x, location: location() };
   }
 
 amsmath_text_command

@@ -4,6 +4,11 @@ type AnyNode = {
     name?: string;
 }
 
+type TextString = {
+    kind: "text.string";
+    content: string;
+}
+
 type Command = {
     kind: "command";
     name: string;
@@ -21,33 +26,33 @@ type Environment = {
     kind: "env";
     name: string;
     args: (OptionalArg | Group)[];
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type MathEnv = {
     kind: "env.math.align";
     name: string;
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type MathEnvAligned = {
     kind: "env.math.aligned";
     name: string;
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type Group = {
     kind: "arg.group";
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type OptionalArg = {
     kind: "arg.optional";
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
@@ -58,13 +63,13 @@ type Pagebreak = {
 
 type Supescript = {
     kind: "superscript";
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type Subscript = {
     kind: "subscript";
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
@@ -90,18 +95,19 @@ type Minted = {
 
 type InlienMath = {
     kind: "math.inline";
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type DisplayMath = {
     kind: "math.display";
-    content: (string | Node)[];
+    content: Node[];
     location: Location;
 }
 
 type Node
-= Command
+= TextString
+| Command
 | AmsMathTextCommand
 | Environment
 | Group
@@ -136,13 +142,24 @@ type Comment = {
 }
 
 type LatexAst = {
-    content: (string | Node)[];
+    content: Node[];
     comment: Comment[];
 }
 
 type ParserOptions = {
     startRule?: string;
-    tracer: any;
+    tracer?: Tracer;
+}
+
+type TraceArg = {
+    type: "rule.enter" | "rule.match" | "rule.fail";
+    rule: string;
+    result: string | Node;
+    location: Location;
+}
+
+type Tracer = {
+    trace: (e: TraceArg) => any;
 }
 
 export declare class SyntaxError extends Error {
