@@ -7,6 +7,7 @@ type AnyNode = {
 type TextString = {
     kind: "text.string";
     content: string;
+    location: Location;
 }
 
 type Command = {
