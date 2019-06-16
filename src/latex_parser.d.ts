@@ -112,6 +112,7 @@ type Node
 | AmsMathTextCommand
 | Environment
 | Group
+| OptionalArg
 | InlienMath
 | DisplayMath
 | MathEnv
