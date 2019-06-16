@@ -2,7 +2,7 @@ import * as assert from 'assert'
 import {latexParser} from '../src/main'
 // import * as util from 'util'
 
-function equalOnlyOnExpectedOwnProperties(actual: any, expected: any, message?: string) {
+function equalOnlyOnExpectedOwnedProperties(actual: any, expected: any, message?: string) {
     if (expected === null || typeof expected !== 'object') {
         if (actual !== expected) {
             throw new assert.AssertionError({actual, expected, message})
@@ -15,12 +15,12 @@ function equalOnlyOnExpectedOwnProperties(actual: any, expected: any, message?: 
                 throw new assert.AssertionError({actual, expected, message})
             }
             for (let i = 0; i < expected.length; i++) {
-                equalOnlyOnExpectedOwnProperties(actual[i], expected[i])
+                equalOnlyOnExpectedOwnedProperties(actual[i], expected[i])
             }
             return
         }
         for (const key in expected) {
-            equalOnlyOnExpectedOwnProperties(actual[key], expected[key])
+            equalOnlyOnExpectedOwnedProperties(actual[key], expected[key])
         }
     } catch (e) {
         if (e instanceof assert.AssertionError) {
@@ -53,7 +53,7 @@ lmn
                         content: 'lmn',
                         location: {start: {line: 3, column: 1}, end: {line: 3, column: 4}}
                 }]}]}
-            equalOnlyOnExpectedOwnProperties(doc, expected)
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
         test('parse newenvironment command', () => {
@@ -67,7 +67,7 @@ lmn
                              name: 'newenvironment',
                              args: [{kind: 'arg.group'}, {kind: 'arg.group'}, {kind: 'arg.group'}] } ]
             }
-            equalOnlyOnExpectedOwnProperties(doc, expected)
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
         test('parse invalid commands without error', () => {
