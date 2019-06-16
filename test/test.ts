@@ -72,6 +72,22 @@ lmn
             }
             assert.equal(textString.content, 'abc')
         })
+
+        test('should throw errors', () => {
+            const invalid_texts = [
+                `{`,
+                `$`,
+                `$$`
+            ]
+            for (const tex of invalid_texts) {
+                assert.throws(() => {
+                    latexParser.parse(tex)
+                }, (e: any) => {
+                    return e && e instanceof latexParser.SyntaxError
+                },`parsing ${tex}`)
+            }
+        })
+
     })
 
   })
