@@ -2,6 +2,35 @@ import * as assert from 'assert'
 import {latexParser} from '../src/main'
 // import * as util from 'util'
 
+function equalOnlyOnExpectedOwnProperties(actual: any, expected: any, message?: string) {
+    if (expected === null || typeof expected !== 'object') {
+        if (actual !== expected) {
+            throw new assert.AssertionError({actual, expected, message})
+        }
+        return
+    }
+    try {
+        if (expected instanceof Array) {
+            if (!(actual instanceof Array) || actual.length !== expected.length) {
+                throw new assert.AssertionError({actual, expected, message})
+            }
+            for (let i = 0; i < expected.length; i++) {
+                equalOnlyOnExpectedOwnProperties(actual[i], expected[i])
+            }
+            return
+        }
+        for (const key in expected) {
+            equalOnlyOnExpectedOwnProperties(actual[key], expected[key])
+        }
+    } catch (e) {
+        if (e instanceof assert.AssertionError) {
+            throw new assert.AssertionError({actual, expected, message})
+        } else {
+            throw e
+        }
+    }
+}
+
 suite('latexParser', () => {
 
     setup(() => {
@@ -15,26 +44,16 @@ suite('latexParser', () => {
 lmn
 \\end{center}
             `
-            const doc = latexParser.parse(tex)
-            const center = doc.content[0]
-            if (center === undefined) {
-                assert.fail('content is empty.')
-                return
-            }
-            if (center.kind !== 'env') {
-                assert.fail()
-                return
-            }
-            const e = center.content[0]
-            if (e.kind !== 'text.string') {
-                assert.fail()
-                return
-            }
-            assert.equal(e.content, 'lmn')
-            assert.equal(e.location.start.line, 3)
-            assert.equal(e.location.start.column, 1)
-            assert.equal(e.location.end.line, 3)
-            assert.equal(e.location.end.column, 4)
+            const doc = latexParser.parse(tex) as any
+            const expected = {
+                content: [{
+                    kind: 'env',
+                    content: [{
+                        kind: 'text.string',
+                        content: 'lmn',
+                        location: {start: {line: 3, column: 1}, end: {line: 3, column: 4}}
+                }]}]}
+            equalOnlyOnExpectedOwnProperties(doc, expected)
         })
 
         test('parse newenvironment command', () => {
@@ -42,14 +61,13 @@ lmn
 {\\begin{abc}}
 {\\end{abc}}
             `
-            const doc = latexParser.parse(tex)
-            const command = doc.content[0]
-            if (command.kind !== 'command') {
-                assert.fail()
-                return
+            const doc = latexParser.parse(tex) as any
+            const expected = {
+                content: [ { kind: 'command',
+                             name: 'newenvironment',
+                             args: [{kind: 'arg.group'}, {kind: 'arg.group'}, {kind: 'arg.group'}] } ]
             }
-            assert.equal(command.name, 'newenvironment')
-            assert.equal(command.args.length, 3)
+            equalOnlyOnExpectedOwnProperties(doc, expected)
         })
 
         test('parse invalid commands without error', () => {
@@ -74,12 +92,12 @@ lmn
         })
 
         test('should throw SyntaxError', () => {
-            const invalid_texts = [
+            const invalidTexts = [
                 `{`,
                 `$`,
                 `$$`
             ]
-            for (const tex of invalid_texts) {
+            for (const tex of invalidTexts) {
                 assert.throws(
                     () => {
                         latexParser.parse(tex)
