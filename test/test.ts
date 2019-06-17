@@ -51,8 +51,8 @@ lmn
                         kind: 'text.string',
                         content: 'lmn',
                         location: { start: {line: 3, column: 1}, end: {line: 3, column: 4} }
-                    } ] 
-                } ] 
+                    } ]
+                } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -64,10 +64,10 @@ lmn
             `
             const doc = latexParser.parse(tex) as any
             const expected = {
-                content: [ { 
+                content: [ {
                     kind: 'command',
                     name: 'newenvironment',
-                    args: [ {kind: 'arg.group'}, {kind: 'arg.group'}, {kind: 'arg.group'} ] 
+                    args: [ {kind: 'arg.group'}, {kind: 'arg.group'}, {kind: 'arg.group'} ]
                 } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
@@ -77,16 +77,16 @@ lmn
             const tex = `\\begin{abc}`
             const doc = latexParser.parse(tex)
             const expected = {
-                content: [ { 
+                content: [ {
                     kind: 'command',
                     name: 'begin',
-                    args: [ { 
+                    args: [ {
                         kind: 'arg.group',
                         content: [ {
                             kind: 'text.string',
                             content: 'abc'
-                        } ] 
-                    } ] 
+                        } ]
+                    } ]
                 } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
