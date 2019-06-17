@@ -81,6 +81,18 @@ lmn
             }
         })
 
+        test('test parsing elements including only spaces', () => {
+            const tex = '{ }'
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'arg.group',
+                    content: []
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
     })
 
   })
