@@ -7,7 +7,7 @@ function deleteLocation(node: any) {
     if (node.hasOwnProperty('location')) {
         delete node.location
     }
-    for(const key of Object.getOwnPropertyNames(node)) {
+    for (const key of Object.getOwnPropertyNames(node)) {
         const val = node[key]
         if (typeof val === 'object') {
             deleteLocation(val)
@@ -16,7 +16,7 @@ function deleteLocation(node: any) {
 }
 
 commander
-.option('--disable-location', "delete locations")
+.option('--disable-location', 'delete locations')
 .parse(process.argv)
 const filename = commander.args[0]
 console.log(filename)
