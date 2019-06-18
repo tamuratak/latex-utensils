@@ -1,6 +1,7 @@
 import * as parser from '../latex_parser'
 import * as fs from 'fs'
 import * as util from 'util'
+import * as commander from 'commander'
 
 function deleteLocation(node: any) {
     if (node.hasOwnProperty('location')) {
@@ -14,13 +15,15 @@ function deleteLocation(node: any) {
     }
 }
 
-const argv = require('yargs').boolean('disable-location').argv
-const filename = argv._[0]
+commander
+.option('--disable-location', "delete locations")
+.parse(process.argv)
+const filename = commander.args[0]
 console.log(filename)
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
 const ret = parser.parse(s)
 
-if (argv['disable-location']) {
+if (commander.disableLocation) {
     deleteLocation(ret)
 }
 
