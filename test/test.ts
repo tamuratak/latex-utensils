@@ -12,7 +12,7 @@ suite('latexParser', () => {
 lmn
 \\end{center}
             `
-            const doc = latexParser.parse(tex) as any
+            const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
                     kind: 'env',
@@ -32,7 +32,7 @@ lmn
 {\\begin{abc}}
 {\\end{abc}}
             `
-            const doc = latexParser.parse(tex) as any
+            const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
                     kind: 'command',
@@ -63,11 +63,7 @@ lmn
         })
 
         test('should throw SyntaxError', () => {
-            const invalidTexts = [
-                `{`,
-                `$`,
-                `$$`
-            ]
+            const invalidTexts = [ `{`, `$`, `$$` ]
             for (const tex of invalidTexts) {
                 assert.throws(
                     () => {
@@ -81,7 +77,7 @@ lmn
             }
         })
 
-        test('test parsing elements including only spaces', () => {
+        test('parse elements including only spaces', () => {
             const tex = '{ }'
             const root = latexParser.parse(tex)
             const expected = {
