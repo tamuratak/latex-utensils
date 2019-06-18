@@ -12,10 +12,13 @@
   "bin": {
     "luparse": "./bin/luparse.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "yargs": "^13.2.4"
+  },
   "devDependencies": {
     "@types/mocha": "^5.2.7",
     "@types/node": "^10.12.12",
+    "@types/yargs": "^13.0.0",
     "mocha": "^6.1.4",
     "pegjs": "^0.10.0",
     "tslint": "^5.16.0",
