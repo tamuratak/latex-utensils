@@ -269,7 +269,7 @@ argument_list "optional argument"
 
 environment "environment"
   = begin_env skip_space env:group_envname args:(argument_list / group)*
-      body:(!(end_env end_env:group_envname & {return compare_env(env,end_env)}) x:element {return x})*
+      skip_space body:(!(end_env end_env:group_envname & {return compare_env(env,end_env)}) x:element {return x})*
     end_env skip_space group_envname
   {
     return { kind: "env", name: env.content[0], args: args, content: body, location: location() };
@@ -277,7 +277,7 @@ environment "environment"
 
 math_environment "math environment"
   = begin_env skip_space begin_group env:math_env_name end_group
-      body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
+      skip_space body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
     return { kind: "env.math.align", name: env, content: body, location: location() };
@@ -285,7 +285,7 @@ math_environment "math environment"
 
 math_aligned_environment "math aligned environment"
   = begin_env skip_space begin_group env:maht_aligned_env_name end_group
-      body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
+      skip_space body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
     return { kind: "env.math.aligned", name: env, content: body, location: location() };
