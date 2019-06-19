@@ -110,6 +110,24 @@ lmn
             }
         })
 
+        test('parse math elements', () => {
+            const tex = `$ a ^ b $`
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'math.inline',
+                    content: [
+                        { kind: 'text.string', content: 'a'},
+                        {
+                            kind: 'superscript',
+                            content: { kind: 'text.string', content: 'b' }
+                        }
+                    ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
         test('parse elements including only spaces', () => {
             const tex = '{ }'
             const root = latexParser.parse(tex)

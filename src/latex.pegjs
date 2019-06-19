@@ -88,8 +88,8 @@ math_element_p
   / group
   / alignment_tab
   / command_parameter
-  / superscript x:math_element { return { kind: "superscript", content: x, location: location() }; }
-  / subscript x:math_element { return { kind: "subscript", content: x, location: location() }; }
+  / superscript skip_space x:math_element { return { kind: "superscript", content: x, location: location() }; }
+  / subscript skip_space x:math_element { return { kind: "subscript", content: x, location: location() }; }
   / ignore
   / .
   )
