@@ -6,7 +6,7 @@ import {equalOnlyOnExpectedOwnedProperties} from './assert_partially'
 suite('latexParser', () => {
 
     suite('parse', () => {
-        test('basic parse test', () => {
+        test('parse \\begin{center}...', () => {
             const tex = `
 \\begin{center}
 lmn
@@ -26,7 +26,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
-        test('basic parse test', () => {
+        test('parse $1$', () => {
             const tex = `$1$`
             const doc = latexParser.parse(tex)
             const expected = {
@@ -41,12 +41,8 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
-        test('basic parse test', () => {
-            const tex = `
-\\begin{align}
-1
-\\end{align}
-            `
+        test('parse \\begin{align}...', () => {
+            const tex = '\\begin{align}\n 1 \n\\end{align}'
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
@@ -110,7 +106,7 @@ lmn
             }
         })
 
-        test('parse math elements', () => {
+        test('parse $ a ^ b $', () => {
             const tex = `$ a ^ b $`
             const root = latexParser.parse(tex)
             const expected = {
@@ -128,7 +124,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse { }, including only spaces', () => {
             const tex = '{ }'
             const root = latexParser.parse(tex)
             const expected = {
@@ -140,7 +136,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse $ $, including only spaces', () => {
             const tex = '$ $'
             const root = latexParser.parse(tex)
             const expected = {
@@ -152,7 +148,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse \\( \\)', () => {
             const tex = '\\( \\)'
             const root = latexParser.parse(tex)
             const expected = {
@@ -164,7 +160,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse \\[ \\]', () => {
             const tex = '\\[ \\]'
             const root = latexParser.parse(tex)
             const expected = {
@@ -176,7 +172,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse $$ $$', () => {
             const tex = '$$ $$'
             const root = latexParser.parse(tex)
             const expected = {
@@ -188,7 +184,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse \\begin{align} \\end{align}', () => {
             const tex = `\\begin{align} \\end{align}`
             const doc = latexParser.parse(tex)
             const expected: any = {
@@ -200,7 +196,7 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
-        test('parse elements including only spaces', () => {
+        test('parse \\begin{align} \\begin{aligned} \\end{aligned} \\end{align}', () => {
             const tex = `\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}`
             const doc = latexParser.parse(tex)
             const expected: any = {
