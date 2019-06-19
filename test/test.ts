@@ -94,7 +94,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'arg.group',
+                    kind: 'math.inline',
                     content: []
                 } ]
             }
