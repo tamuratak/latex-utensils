@@ -41,6 +41,24 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('basic parse test', () => {
+            const tex = `
+\\begin{align}
+1
+\\end{align}
+            `
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: [ {
+                        kind: 'text.string'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse newenvironment command', () => {
             const tex = `
 \\newenvironment{newabc}
@@ -114,6 +132,36 @@ lmn
                 } ]
             }
             equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
+        test('parse elements including only spaces', () => {
+            const tex = `
+\\begin{align} \\end{align}
+            `
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: []
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse elements including only spaces', () => {
+            const tex = `
+\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}
+            `
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: [ {
+                        kind: 'env.math.aligned'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
     })
