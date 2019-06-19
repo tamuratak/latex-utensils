@@ -36,19 +36,19 @@ https://github.com/siefkenj/latex-parser
   }
 }
 
-document "document"
-  = x:(element)*
+root
+  = skip_space x:(element)*
   { 
     return { content: x, comment: commentArray };
   }
 
 element "element"
-  = skip_space x:element_ skip_space
+  = x:element_p skip_space
   { 
     return x;
   }
 
-element_
+element_p
   = result:
   ( special_command
   / break { return { kind: "parbreak", location: location() }; }
@@ -73,12 +73,12 @@ element_
   }
 
 math_element =
-  skip_space x:math_element_ skip_space
+  x:math_element_p skip_space
   { 
     return x;
   }
 
-math_element_
+math_element_p
   = result:
   ( math_aligned_environment
   / amsmath_text_command
