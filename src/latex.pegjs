@@ -184,10 +184,16 @@ commentenv
     return { kind: "env.comment", content: x.join(""), location: location() };
   }
 
-
+// inline math $...$
 inlinemath_shift
   = math_shift
-     eq:(!math_shift t:math_element {return t})+
+     skip_space eq:(!math_shift t:math_element {return t})+
+    math_shift
+  {
+    return { kind: "math.inline", content: eq, location: location() };
+  }
+  / math_shift
+     whitespace eq:(!math_shift t:math_element {return t})*
     math_shift
   {
     return { kind: "math.inline", content: eq, location: location() };
@@ -237,7 +243,7 @@ command_name
   / .
 
 group "group"
-  = skip_space begin_group x:(!end_group c:element {return c})* end_group
+  = skip_space begin_group skip_space x:(!end_group c:element {return c})* end_group
   {
     return { kind: "arg.group", content: x, location: location() };
   }
@@ -363,7 +369,7 @@ comment
     return c.join("");
   }
 
-whitespace "whitespace"
+whitespace
   = (nl sp*/ sp+ nl sp* !nl/ sp+)
 
 // catcode 5 (linux, os x, windows, unicode)
