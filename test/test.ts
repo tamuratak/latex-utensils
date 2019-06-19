@@ -7,19 +7,32 @@ suite('latexParser', () => {
 
     suite('parse', () => {
         test('basic parse test', () => {
-            const tex = `
+            let tex = `
 \\begin{center}
 lmn
 \\end{center}
             `
-            const doc = latexParser.parse(tex)
-            const expected = {
+            let doc = latexParser.parse(tex)
+            let expected: any = {
                 content: [ {
                     kind: 'env',
                     content: [ {
                         kind: 'text.string',
                         content: 'lmn',
                         location: { start: {line: 3, column: 1}, end: {line: 3, column: 4} }
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+
+            tex = `$1$`
+            doc = latexParser.parse(tex)
+            expected = {
+                content: [ {
+                    kind: 'math.inline',
+                    content: [ {
+                        kind: 'text.string',
+                        content: '1'
                     } ]
                 } ]
             }
