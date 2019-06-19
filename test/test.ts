@@ -1,6 +1,6 @@
 import * as assert from 'assert'
 import {latexParser} from '../src/main'
-import {equalOnlyOnExpectedOwnedProperties} from './equal_patially'
+import {equalOnlyOnExpectedOwnedProperties} from './assert_partially'
 
 
 suite('latexParser', () => {
