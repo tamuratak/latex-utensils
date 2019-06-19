@@ -7,13 +7,13 @@ suite('latexParser', () => {
 
     suite('parse', () => {
         test('basic parse test', () => {
-            let tex = `
+            const tex = `
 \\begin{center}
 lmn
 \\end{center}
             `
-            let doc = latexParser.parse(tex)
-            let expected: any = {
+            const doc = latexParser.parse(tex)
+            const expected: any = {
                 content: [ {
                     kind: 'env',
                     content: [ {
@@ -24,10 +24,12 @@ lmn
                 } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
 
-            tex = `$1$`
-            doc = latexParser.parse(tex)
-            expected = {
+        test('basic parse test', () => {
+            const tex = `$1$`
+            const doc = latexParser.parse(tex)
+            const expected = {
                 content: [ {
                     kind: 'math.inline',
                     content: [ {
