@@ -143,7 +143,7 @@ special_command "special command"
   / minted
   / commentenv
   / displaymath
-  / inlinemath
+  / inlinemath_paren
   / math_environment
   / environment
 
@@ -200,7 +200,7 @@ inlinemath_shift
   }
 
 //inline math with \(\)
-inlinemath
+inlinemath_paren
   = begin_inline_math
       skip_space x:(!end_inline_math x:math_element {return x})*
     end_inline_math
