@@ -202,7 +202,7 @@ inlinemath_shift
 //inline math with \(\)
 inlinemath
   = begin_inline_math
-      x:(!end_inline_math x:math_element {return x})+
+      skip_space x:(!end_inline_math x:math_element {return x})*
     end_inline_math
   {
     return { kind: "math.inline", content: x, location: location() };
@@ -216,7 +216,7 @@ displaymath
 
 displaymath_square_bracket
   = begin_display_math
-      x:(!end_display_math x:math_element {return x})+
+      skip_space x:(!end_display_math x:math_element {return x})*
     end_display_math
   {
     return { kind: "math.display", content: x, location: location() };
@@ -224,7 +224,7 @@ displaymath_square_bracket
 
 displaymath_shift_shift
   = math_shift math_shift
-      x:(!(math_shift math_shift) x:math_element {return x})+
+      skip_space x:(!(math_shift math_shift) x:math_element {return x})*
     math_shift math_shift
   {
     return { kind: "math.display", content: x, location: location() };
