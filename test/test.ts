@@ -135,6 +135,42 @@ lmn
         })
 
         test('parse elements including only spaces', () => {
+            const tex = '\\( \\)'
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'math.inline',
+                    content: []
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
+        test('parse elements including only spaces', () => {
+            const tex = '\\[ \\]'
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'math.display',
+                    content: []
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
+        test('parse elements including only spaces', () => {
+            const tex = '$$ $$'
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'math.display',
+                    content: []
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
+        test('parse elements including only spaces', () => {
             const tex = `\\begin{align} \\end{align}`
             const doc = latexParser.parse(tex)
             const expected: any = {
