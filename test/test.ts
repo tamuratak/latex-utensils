@@ -89,7 +89,18 @@ lmn
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
-    })
+        test('parse elements including only spaces', () => {
+            const tex = '$ $'
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'arg.group',
+                    content: []
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
 
-  })
+    })
+})
 
