@@ -135,9 +135,7 @@ lmn
         })
 
         test('parse elements including only spaces', () => {
-            const tex = `
-\\begin{align} \\end{align}
-            `
+            const tex = `\\begin{align} \\end{align}`
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
@@ -149,9 +147,7 @@ lmn
         })
 
         test('parse elements including only spaces', () => {
-            const tex = `
-\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}
-            `
+            const tex = `\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}`
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
