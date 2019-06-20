@@ -19,7 +19,6 @@ commander
 .option('--disable-location', 'delete locations')
 .parse(process.argv)
 const filename = commander.args[0]
-console.log(filename)
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
 const ret = parser.parse(s)
 
