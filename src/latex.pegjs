@@ -62,7 +62,7 @@ element_p
   / subscript
   / ignore
   / number
-  / x:(!nonchar_token x:. {return x})+ { return x.join(""); }
+  / $((!nonchar_token . )+)
   )
   {
     if (typeof result === "string") {
@@ -114,7 +114,7 @@ args_token "args token"
   / subscript
   / ignore
   / number
-  / x:(!(nonchar_token / "," / "]") x:. {return x})+ { return x.join(""); }
+  / $((!(nonchar_token / "," / "]") . )+)
 
 nonchar_token "nonchar token"
   = escape
@@ -132,9 +132,9 @@ nonchar_token "nonchar token"
   / EOF
 
 number "number"
-  = a:num+ "." b:num+ {return a.join("") + "." + b.join("")}
-  / "." b:num+ {return "." + b.join("")}
-  / a:num+ "." {return a.join("") + "."}
+  = $(num+ "." num+)
+  / $("." num+)
+  / $(num+ ".")
 
 // for the special commands like \[ \] and \begin{} \end{} etc.
 special_command "special command"
@@ -150,38 +150,38 @@ special_command "special command"
 // \verb|xxx|
 verb
   = escape "verb" e:.
-      x:(!(end:. & {return end == e}) x:. {return x})*
-    (end:. & {return end == e})
+      x:$((!(end:. & {return end === e}) . )*)
+    (end:. & {return end === e})
   {
-    return { kind: "verb", escape: e, content: x.join(""), location: location() };
+    return { kind: "verb", escape: e, content: x, location: location() };
   }
 
 // verbatim environment
 verbatim
   = escape "begin{verbatim}"
-      x:(!(escape "end{verbatim}") x:. {return x})*
+      x:$((!(escape "end{verbatim}") . )*)
     escape "end{verbatim}"
   {
-    return { kind: "env.verbatim", content: x.join(""), location: location() };
+    return { kind: "env.verbatim", content: x, location: location() };
   }
 
 
 // minted environment
 minted
   = escape "begin{minted}" args:(argument_list? group)
-      x:(!(escape "end{minted}") x:. {return x})*
+      x:$((!(escape "end{minted}") . )*)
     escape "end{minted}"
   {
-    return { kind: "env.minted", args: args, content: x.join(""), location: location() };
+    return { kind: "env.minted", args: args, content: x, location: location() };
   }
 
 // comment environment provided by \usepackage{verbatim}
 commentenv
   = escape "begin{comment}"
-      x:(!(escape "end{comment}") x:. {return x})*
+      x:$((!(escape "end{comment}") . )*)
     escape "end{comment}"
   {
-    return { kind: "env.comment", content: x.join(""), location: location() };
+    return { kind: "env.comment", content: x, location: location() };
   }
 
 // inline math $...$
@@ -364,9 +364,9 @@ end_doc = end_env skip_space begin_group "document" end_group
 
 // catcode 14, including the newline
 comment 
-  = "%"  c:(!nl c:. {return c})* (nl / EOF) 
+  = "%"  c:$((!nl . )*) (nl / EOF)
   {
-    return c.join("");
+    return c;
   }
 
 whitespace
