@@ -41,6 +41,42 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\verb|1|', () => {
+            const tex = `\\verb|1|`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'verb',
+                    content: '1'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\begin{verbatim}...', () => {
+            const tex = '\\begin{verbatim}1\\end{verbatim}'
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.verbatim',
+                    content: '1'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\begin{minted}...', () => {
+            const tex = '\\begin{minted}{xxx}1\\end{minted}'
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.minted',
+                    content: '1'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\begin{align}...', () => {
             const tex = '\\begin{align}\n 1 \n\\end{align}'
             const doc = latexParser.parse(tex)
