@@ -1,6 +1,6 @@
 import * as parser from '../latex_parser'
 import * as fs from 'fs'
-import * as util from 'util'
+
 import * as commander from 'commander'
 
 function deleteLocation(node: any) {
@@ -29,4 +29,4 @@ if (!commander.location) {
     deleteLocation(ret)
 }
 
-console.log(util.inspect(ret, {showHidden: false, depth: null}))
+console.log(JSON.stringify(ret, undefined, '  '))
