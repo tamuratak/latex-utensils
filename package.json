@@ -26,10 +26,10 @@
   },
   "scripts": {
     "init": "mkdir -p out/src",
-    "generate": "./node_modules/.bin/pegjs -o out/src/latex_parser.js src/latex.pegjs",
+    "generate": "pegjs -o out/src/latex_parser.js src/latex.pegjs",
     "compile": "tsc -p ./",
     "build": "npm run init; npm run generate && npm run compile",
     "clean": "rm -rf out/src/* out/test/*",
-    "test": "./node_modules/.bin/mocha --ui tdd out/test/**/*.js"
+    "test": "mocha --ui tdd out/test/**/*.js"
   }
 }
