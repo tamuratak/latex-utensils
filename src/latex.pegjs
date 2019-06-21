@@ -30,7 +30,7 @@ https://github.com/siefkenj/latex-parser
 */
 
 {
-  const commentArray = options.enableComment ? [] : undefined;
+  const commentMap = options.enableComment ? new Map() : undefined;
   function compare_env(g1,g2) {
       return g1.content.join("") == g2.content.join("");
   }
@@ -39,7 +39,8 @@ https://github.com/siefkenj/latex-parser
 root
   = skip_space x:(element)*
   { 
-    return { kind: "ast.root", content: x, comment: commentArray };
+    const comment = commentMap ? Array.from(commentMap.values()) : undefined;
+    return { kind: "ast.root", content: x, comment };
   }
 
 preamble
@@ -47,7 +48,8 @@ preamble
   x:(!(escape "begin{document}") e:element_p skip_space { return e; })*
   rest:$(( escape "begin{document}" .* )?)
   {
-    return { kind: "ast.preamble", content: x, rest: rest, comment: commentArray };
+    const comment = commentMap ? Array.from(commentMap.values()) : undefined;
+    return { kind: "ast.preamble", content: x, rest: rest, comment };
   }
 
 element "element"
@@ -399,7 +401,11 @@ skip_comment
   = c:comment
   { 
     if (options.enableComment) {
-      commentArray.push( { kind: "comment", content: c, location: location() } );
+      const loc = location();
+      const locJson = JSON.stringify(loc);
+      if (!commentMap.has(locJson)) {
+        commentMap.set(locJson, { kind: "comment", content: c, location: loc } );
+      }
     }
   }
 
