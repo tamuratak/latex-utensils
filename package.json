@@ -10,7 +10,7 @@
     "url": "https://github.com/tamuratak/latex-utensils.git"
   },
   "bin": {
-    "luparse": "./bin/luparse.js"
+    "luparse": "./bin/luparse"
   },
   "dependencies": {
     "commander": "^2.20.0"
