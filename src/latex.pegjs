@@ -30,7 +30,7 @@ https://github.com/siefkenj/latex-parser
 */
 
 {
-  const commentArray = [];
+  const commentArray = options.enableComment ? [] : undefined;
   function compare_env(g1,g2) {
       return g1.content.join("") == g2.content.join("");
   }
@@ -398,7 +398,9 @@ skip_space "spaces"
 skip_comment
   = c:comment
   { 
-    commentArray.push( { kind: "comment", content: c, location: location() } );
+    if (options.enableComment) {
+      commentArray.push( { kind: "comment", content: c, location: location() } );
+    }
   }
 
 skip_all_space  "spaces"

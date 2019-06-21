@@ -16,15 +16,16 @@ function deleteLocation(node: any) {
 }
 
 commander
-.option('--enable-location', 'delete locations')
-.option('--start-rule [rule]', 'start rule')
+.option('-l, --location', 'enable location')
+.option('-c, --comment', 'enable comment')
+.option('-s, --start-rule [rule]', 'set start rule. default is "root".')
 .parse(process.argv)
 const filename = commander.args[0]
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
 const startRule = commander.startRule || 'root'
-const ret = parser.parse(s, {startRule})
+const ret = parser.parse(s, {startRule, enableComment: commander.comment})
 
-if (!commander.enableLocation) {
+if (!commander.location) {
     deleteLocation(ret)
 }
 

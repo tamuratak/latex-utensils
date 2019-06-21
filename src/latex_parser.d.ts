@@ -143,14 +143,24 @@ type Comment = {
     location: Location;
 }
 
-type LatexAst = {
+type AstRoot = {
+    kind: 'ast.root';
     content: Node[];
-    comment: Comment[];
+    comment?: Comment[];
 }
+
+type AstPreamble = {
+    kind: 'ast.preamble';
+    content: Node[];
+    comment?: Comment[];
+}
+
+type LatexAst = AstRoot | AstPreamble
 
 type ParserOptions = {
     startRule?: string;
     tracer?: Tracer;
+    enableComment?: boolean;
 }
 
 type TraceArg = {
