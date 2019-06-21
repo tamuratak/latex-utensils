@@ -2,7 +2,7 @@
 
 MIT License
 
-Copyright (c) 2015-2017 Michael Brade, Jason Siefken
+Copyright (c) 2015-2019 Michael Brade, Jason Siefken
 
 Copyright (c) 2019 Takashi Tamura
 
