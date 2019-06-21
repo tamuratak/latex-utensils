@@ -251,9 +251,11 @@ lmn
             const doc = latexParser.parse(tex, {startRule: 'preamble'})
             const expected: any = {
                 kind: 'ast.preamble',
-                content: [
-                    { kind: 'command' }
-                ]
+                content: [ {
+                    kind: 'command',
+                    name: 'newcommand',
+                    args: [ {kind: 'arg.group'}, {kind: 'arg.group'}]
+                } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
