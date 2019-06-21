@@ -39,7 +39,15 @@ https://github.com/siefkenj/latex-parser
 root
   = skip_space x:(element)*
   { 
-    return { content: x, comment: commentArray };
+    return { kind: "ast.root", content: x, comment: commentArray };
+  }
+
+preamble
+  = skip_space
+  x:(!(escape "begin{document}") e:element_p skip_space { return e; })*
+  rest:$(( escape "begin{document}" .* )?)
+  {
+    return { kind: "ast.preamble", content: x, rest: rest, comment: commentArray };
   }
 
 element "element"

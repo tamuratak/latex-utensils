@@ -17,10 +17,12 @@ function deleteLocation(node: any) {
 
 commander
 .option('--disable-location', 'delete locations')
+.option('--start-rule [rule]', 'start rule')
 .parse(process.argv)
 const filename = commander.args[0]
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
-const ret = parser.parse(s)
+const startRule = commander.startRule || 'root'
+const ret = parser.parse(s, {startRule})
 
 if (commander.disableLocation) {
     deleteLocation(ret)

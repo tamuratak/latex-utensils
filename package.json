@@ -26,7 +26,7 @@
   },
   "scripts": {
     "init": "mkdir -p out/src",
-    "generate": "pegjs -o out/src/latex_parser.js src/latex.pegjs",
+    "generate": "pegjs --allowed-start-rules root,preamble -o out/src/latex_parser.js src/latex.pegjs",
     "compile": "tsc -p ./",
     "build": "npm run init; npm run generate && npm run compile",
     "clean": "rm -rf out/src/* out/test/*",
