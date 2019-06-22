@@ -27,10 +27,6 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return stringifyArray(node)
     }
     if (lp.isTextString(node)) {
-        // workaround
-        if (node.content === '#') {
-            return node.content
-        }
         return node.content + ' '
     }
     if (lp.isCommand(node)) {
@@ -60,6 +56,15 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
     }
     if (lp.isSubscript(node)) {
         return '_' + stringifyArray(node.content)
+    }
+    if (lp.isAlignmentTab(node)) {
+        return '&'
+    }
+    if (lp.isCommandParameter(node)) {
+        return '#' + node.nargs
+    }
+    if (lp.isIgnore(node)) {
+        return ""
     }
     if (lp.isVerb(node)) {
         return '\\verb' + node.escape + node.content + node.escape

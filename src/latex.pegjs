@@ -67,7 +67,7 @@ element_p
   / group
   / inlinemath_shift
   / alignment_tab
-  / command_parameter
+  / command_parameter_with_number
   / superscript
   / subscript
   / ignore
@@ -97,7 +97,7 @@ math_element_p
   / full_comment
   / group
   / alignment_tab
-  / command_parameter
+  / command_parameter_with_number
   / superscript skip_space x:math_element { return { kind: "superscript", content: x, location: location() }; }
   / subscript skip_space x:math_element { return { kind: "subscript", content: x, location: location() }; }
   / ignore
@@ -120,7 +120,7 @@ args_token "args token"
   / inlinemath_shift
   / alignment_tab
   / sp* nl sp* nl+ sp* {return {kind:"parbreak", location: location()}}
-  / command_parameter
+  / command_parameter_with_number
   / superscript
   / subscript
   / ignore
@@ -160,6 +160,7 @@ number "number"
   = $(num+ "." num+)
   / $("." num+)
   / $(num+ ".")
+  / $(num+)
 
 // for the special commands like \[ \] and \begin{} \end{} etc.
 special_command "special command"
@@ -371,14 +372,34 @@ escape "escape" = "\\"                             // catcode 0
 begin_group     = "{"                              // catcode 1
 end_group       = "}"                              // catcode 2
 math_shift      = "$"                              // catcode 3
-alignment_tab   = "&"                              // catcode 4
-command_parameter = "#"                              // catcode 6
+
+alignment_tab                                      // catcode 4
+  = "&"
+  {
+    return { kind: "alignment_tab" };
+  }
+
+command_parameter = "#"                            // catcode 6
 superscript     = "^"                              // catcode 7
 subscript       = "_"                              // catcode 8
-ignore          = "\0"                             // catcode 9
-char        "letter"       = c:[a-zA-Z]            // catcode 11
-num         "digit"        = n:[0-9]               // catcode 12 (other)
-punctuation "punctuation" = p:[.,;:\-\*/()!?=+<>\[\]]   // catcode 12
+
+ignore                                             // catcode 9
+  = "\0"
+  {
+    return { kind: "ignore" };
+  }
+
+char            = [a-zA-Z]                         // catcode 11
+num             = [0-9]                            // catcode 12 (other)
+punctuation  = [.,;:\-\*/()!?=+<>\[\]]             // catcode 12
+//	!"'()*+,-./:;<=>?@[]`
+
+command_parameter_with_number
+  = command_parameter n:$(num*)
+  {
+    return { kind: "command_parameter", nargs: n };
+  }
+
 
 // space handling
 

@@ -114,6 +114,31 @@ export function isSubscript(node: Node) : node is Subscript {
     return node.kind === 'subscript'
 }
 
+export type AlignmentTab = {
+    kind: 'alignment_tab';
+}
+
+export function isAlignmentTab(node: Node) : node is AlignmentTab {
+    return node.kind === 'alignment_tab'
+}
+
+export type CommandParameter = {
+    kind: 'command_parameter';
+    nargs: string;
+}
+
+export function isCommandParameter(node: Node) : node is CommandParameter {
+    return node.kind === 'command_parameter'
+}
+
+export type Ignore = {
+    kind: 'ignore';
+}
+
+export function isIgnore(node: Node) : node is Ignore {
+    return node.kind === 'ignore'
+}
+
 export type Verb = {
     kind: 'verb';
     escape: string;
@@ -180,6 +205,9 @@ export type Node
 | Parbreak
 | Supescript
 | Subscript
+| AlignmentTab
+| CommandParameter
+| Ignore
 | Verb
 | Verbatim
 | Minted
