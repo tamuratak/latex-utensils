@@ -64,7 +64,7 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return '#' + node.nargs
     }
     if (lp.isIgnore(node)) {
-        return ""
+        return ''
     }
     if (lp.isVerb(node)) {
         return '\\verb' + node.escape + node.content + node.escape
