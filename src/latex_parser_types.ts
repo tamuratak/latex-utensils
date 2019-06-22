@@ -4,6 +4,10 @@ export type TextString = {
     location: Location;
 }
 
+export function isTextString(node: Node) : node is TextString {
+    return node.kind === 'text.string'
+}
+
 export type Command = {
     kind: "command";
     name: string;
@@ -11,10 +15,18 @@ export type Command = {
     location: Location;
 }
 
+export function isCommand(node: Node) : node is Command {
+    return node.kind === 'command'
+}
+
 export type AmsMathTextCommand = {
     kind: "command.text";
     arg: Group;
     location: Location;
+}
+
+export function isAmsMathTextCommand(node: Node) : node is AmsMathTextCommand {
+    return node.kind === 'command.text'
 }
 
 export type Environment = {
@@ -25,11 +37,19 @@ export type Environment = {
     location: Location;
 }
 
+export function isEnvironment(node: Node) : node is Environment {
+    return node.kind === 'env'
+}
+
 export type MathEnv = {
     kind: "env.math.align";
     name: string;
     content: Node[];
     location: Location;
+}
+
+export function isMathEnv(node: Node) : node is MathEnv {
+    return node.kind === 'env.math.align'
 }
 
 export type MathEnvAligned = {
@@ -39,10 +59,18 @@ export type MathEnvAligned = {
     location: Location;
 }
 
+export function isMathEnvAligned(node: Node) : node is MathEnvAligned {
+    return node.kind === 'env.math.aligned'
+}
+
 export type Group = {
     kind: "arg.group";
     content: Node[];
     location: Location;
+}
+
+export function isGroup(node: Node) : node is Group {
+    return node.kind === 'arg.group'
 }
 
 export type OptionalArg = {
@@ -51,9 +79,17 @@ export type OptionalArg = {
     location: Location;
 }
 
+export function isOptionalArg(node: Node) : node is OptionalArg {
+    return node.kind === 'arg.optional'
+}
+
 export type Pagebreak = {
     kind: "parbreak";
     location: Location;
+}
+
+export function isPagebreak(node: Node) : node is Pagebreak {
+    return node.kind === 'parbreak'
 }
 
 export type Supescript = {
@@ -62,10 +98,18 @@ export type Supescript = {
     location: Location;
 }
 
+export function isSupescript(node: Node) : node is Subscript {
+    return node.kind === 'superscript'
+}
+
 export type Subscript = {
     kind: "subscript";
     content: Node[];
     location: Location;
+}
+
+export function isSubscript(node: Node) : node is Subscript {
+    return node.kind === 'subscript'
 }
 
 export type Verb = {
@@ -75,10 +119,18 @@ export type Verb = {
     location: Location;
 }
 
+export function isVerb(node: Node) : node is Verb {
+    return node.kind === 'verb'
+}
+
 export type Verbatim = {
     kind: "env.verbatim";
     content: string;
     location: Location;
+}
+
+export function isVerbatim(node: Node) : node is Verbatim {
+    return node.kind === 'env.verbatim'
 }
 
 export type Minted = {
@@ -88,16 +140,28 @@ export type Minted = {
     location: Location;
 }
 
+export function isMinted(node: Node) : node is Minted {
+    return node.kind === 'env.minted'
+}
+
 export type InlienMath = {
     kind: "math.inline";
     content: Node[];
     location: Location;
 }
 
+export function isInlienMath(node: Node) : node is InlienMath {
+    return node.kind === 'math.inline'
+}
+
 export type DisplayMath = {
     kind: "math.display";
     content: Node[];
     location: Location;
+}
+
+export function isDisplayMath(node: Node) : node is DisplayMath {
+    return node.kind === 'math.display'
 }
 
 export type Node
