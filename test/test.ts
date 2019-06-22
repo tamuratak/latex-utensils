@@ -266,6 +266,13 @@ lmn
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content), tex)
         })
+
+        test('test latexParser.stringify', () => {
+            const tex = '\\newcommand{\\cmark}[1][Green]{\\textcolor{#1!60!text}{\\ding{51}}}'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
     })
 
 })

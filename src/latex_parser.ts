@@ -27,6 +27,10 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return stringifyArray(node)
     }
     if (lp.isTextString(node)) {
+        // workaround
+        if (node.content === '#') {
+            return node.content
+        }
         return node.content + ' '
     }
     if (lp.isCommand(node)) {

@@ -112,7 +112,8 @@ math_element_p
   }
 
 args_token "args token"
-  = special_command
+  = result:
+  ( special_command
   / command
   / full_comment
   / group
@@ -125,6 +126,20 @@ args_token "args token"
   / ignore
   / number
   / $((!(nonchar_token / "," / "]") . )+)
+  )
+  {
+    if (typeof result === "string") {
+      return { kind: "text.string", content: result, location: location() };
+    } else {
+      return result;
+    }
+  }
+
+args_delimiter
+  = ","
+  {
+    return { kind: "text.string", content: ",", location: location() };
+  }
 
 nonchar_token "nonchar token"
   = escape
@@ -271,7 +286,7 @@ group_envname "envname group"
 
 
 argument_list "optional argument"
-  = skip_space "[" body:(!"]" x:("," / args_token) {return x})* "]"
+  = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
