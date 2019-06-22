@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "alwaysStrict": true,
+        "declaration": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [
             "es2019", "dom"
