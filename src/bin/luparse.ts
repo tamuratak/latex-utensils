@@ -1,6 +1,6 @@
 import * as parser from '../latex_parser'
 import * as fs from 'fs'
-
+import * as util from 'util'
 import * as commander from 'commander'
 
 function deleteLocation(node: any) {
@@ -16,6 +16,8 @@ function deleteLocation(node: any) {
 }
 
 commander
+.option('-i, --inspect', 'use util.inspect to output AST')
+.option('--color', 'turn on the color option of util.inspect')
 .option('-l, --location', 'enable location')
 .option('-c, --comment', 'enable comment')
 .option('-s, --start-rule [rule]', 'set start rule. default is "root".')
@@ -29,4 +31,9 @@ if (!commander.location) {
     deleteLocation(ret)
 }
 
-console.log(JSON.stringify(ret, undefined, '  '))
+if (commander.inspect) {
+    const colors = commander.color
+    console.log(util.inspect(ret, {showHidden: false, depth: null, colors}))
+} else {
+    console.log(JSON.stringify(ret, undefined, '  '))
+}
