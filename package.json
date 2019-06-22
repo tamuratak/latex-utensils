@@ -2,7 +2,7 @@
   "name": "latex-utensils",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "LaTeX utilities",
+  "description": "A LaTeX parser and utilities",
   "homepage": "https://github.com/tamuratak/latex-utensils",
   "main": "./out/src/main.js",
   "repository": {
@@ -28,6 +28,10 @@
     "bin/**/*",
     "out/**/*",
     "src/**/*"
+  ],
+  "keywords": [
+    "latex",
+    "parser"
   ],
   "scripts": {
     "init": "mkdir -p out/src",
