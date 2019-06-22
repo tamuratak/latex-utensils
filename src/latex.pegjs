@@ -63,7 +63,6 @@ element_p
   ( special_command
   / break { return { kind: "parbreak", location: location() }; }
   / command
-  / full_comment
   / group
   / inlinemath_shift
   / alignment_tab
@@ -94,7 +93,6 @@ math_element_p
   / amsmath_text_command
   / special_command
   / command
-  / full_comment
   / group
   / alignment_tab
   / command_parameter_with_number
@@ -115,7 +113,6 @@ args_token "args token"
   = result:
   ( special_command
   / command
-  / full_comment
   / group
   / inlinemath_shift
   / alignment_tab
