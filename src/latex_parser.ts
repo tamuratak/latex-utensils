@@ -72,5 +72,5 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
     if (lp.isDisplayMath(node)) {
         return '\\[' + stringifyArray(node.content).trim() + '\\] '
     }
-    throw "not reach here"
+    throw 'not reachable here'
 }
