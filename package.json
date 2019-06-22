@@ -24,6 +24,11 @@
     "tslint": "^5.16.0",
     "typescript": "^3.4.5"
   },
+  "files": [
+    "bin/**/*",
+    "out/**/*",
+    "src/**/*"
+  ],
   "scripts": {
     "init": "mkdir -p out/src",
     "generate:simple": "pegjs --allowed-start-rules root,preamble -o out/src/latex_parser_without_trace.js src/latex.pegjs",
