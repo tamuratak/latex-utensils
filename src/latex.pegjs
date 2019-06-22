@@ -290,7 +290,7 @@ math_environment "math environment"
       skip_space body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
-    return { kind: "env.math.align", name: env, content: body, location: location() };
+    return { kind: "env.math.align", name: env, args: [], content: body, location: location() };
   }
 
 math_aligned_environment "math aligned environment"
@@ -298,7 +298,7 @@ math_aligned_environment "math aligned environment"
       skip_space body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
-    return { kind: "env.math.aligned", name: env, content: body, location: location() };
+    return { kind: "env.math.aligned", name: env, args: [], content: body, location: location() };
   }
 
 // group that assumes you're in math mode.

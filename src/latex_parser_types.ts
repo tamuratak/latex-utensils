@@ -44,6 +44,7 @@ export function isEnvironment(node: Node) : node is Environment {
 export type MathEnv = {
     kind: 'env.math.align';
     name: string;
+    args: (OptionalArg | Group)[];
     content: Node[];
     location: Location;
 }
@@ -55,6 +56,7 @@ export function isMathEnv(node: Node) : node is MathEnv {
 export type MathEnvAligned = {
     kind: 'env.math.aligned';
     name: string;
+    args: (OptionalArg | Group)[];
     content: Node[];
     location: Location;
 }
@@ -83,12 +85,12 @@ export function isOptionalArg(node: Node) : node is OptionalArg {
     return node.kind === 'arg.optional'
 }
 
-export type Pagebreak = {
+export type Parbreak = {
     kind: 'parbreak';
     location: Location;
 }
 
-export function isPagebreak(node: Node) : node is Pagebreak {
+export function isParbreak(node: Node) : node is Parbreak {
     return node.kind === 'parbreak'
 }
 
@@ -98,7 +100,7 @@ export type Supescript = {
     location: Location;
 }
 
-export function isSupescript(node: Node) : node is Subscript {
+export function isSupescript(node: Node) : node is Supescript {
     return node.kind === 'superscript'
 }
 
@@ -175,7 +177,7 @@ export type Node
 | DisplayMath
 | MathEnv
 | MathEnvAligned
-| Pagebreak
+| Parbreak
 | Supescript
 | Subscript
 | Verb
