@@ -260,6 +260,12 @@ lmn
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
+
+        test('test latexParser.stringify', () => {
+            const tex = '\\newcommand{\\ABC}{ABC}'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
     })
 
 })
