@@ -135,7 +135,7 @@ lmn
                         latexParser.parse(tex)
                     },
                     (e: any) => {
-                        return e && e instanceof latexParser.SyntaxError
+                        return e && latexParser.isSyntaxError(e)
                     },
                     `parsing ${tex}`
                 )
