@@ -1,5 +1,5 @@
 export type TextString = {
-    kind: "text.string";
+    kind: 'text.string';
     content: string;
     location: Location;
 }
@@ -9,7 +9,7 @@ export function isTextString(node: Node) : node is TextString {
 }
 
 export type Command = {
-    kind: "command";
+    kind: 'command';
     name: string;
     args: (OptionalArg | Group)[];
     location: Location;
@@ -20,7 +20,7 @@ export function isCommand(node: Node) : node is Command {
 }
 
 export type AmsMathTextCommand = {
-    kind: "command.text";
+    kind: 'command.text';
     arg: Group;
     location: Location;
 }
@@ -30,7 +30,7 @@ export function isAmsMathTextCommand(node: Node) : node is AmsMathTextCommand {
 }
 
 export type Environment = {
-    kind: "env";
+    kind: 'env';
     name: string;
     args: (OptionalArg | Group)[];
     content: Node[];
@@ -42,7 +42,7 @@ export function isEnvironment(node: Node) : node is Environment {
 }
 
 export type MathEnv = {
-    kind: "env.math.align";
+    kind: 'env.math.align';
     name: string;
     content: Node[];
     location: Location;
@@ -53,7 +53,7 @@ export function isMathEnv(node: Node) : node is MathEnv {
 }
 
 export type MathEnvAligned = {
-    kind: "env.math.aligned";
+    kind: 'env.math.aligned';
     name: string;
     content: Node[];
     location: Location;
@@ -64,7 +64,7 @@ export function isMathEnvAligned(node: Node) : node is MathEnvAligned {
 }
 
 export type Group = {
-    kind: "arg.group";
+    kind: 'arg.group';
     content: Node[];
     location: Location;
 }
@@ -74,7 +74,7 @@ export function isGroup(node: Node) : node is Group {
 }
 
 export type OptionalArg = {
-    kind: "arg.optional";
+    kind: 'arg.optional';
     content: Node[];
     location: Location;
 }
@@ -84,7 +84,7 @@ export function isOptionalArg(node: Node) : node is OptionalArg {
 }
 
 export type Pagebreak = {
-    kind: "parbreak";
+    kind: 'parbreak';
     location: Location;
 }
 
@@ -93,7 +93,7 @@ export function isPagebreak(node: Node) : node is Pagebreak {
 }
 
 export type Supescript = {
-    kind: "superscript";
+    kind: 'superscript';
     content: Node[];
     location: Location;
 }
@@ -103,7 +103,7 @@ export function isSupescript(node: Node) : node is Subscript {
 }
 
 export type Subscript = {
-    kind: "subscript";
+    kind: 'subscript';
     content: Node[];
     location: Location;
 }
@@ -113,7 +113,7 @@ export function isSubscript(node: Node) : node is Subscript {
 }
 
 export type Verb = {
-    kind: "verb";
+    kind: 'verb';
     escape: string;
     content: string;
     location: Location;
@@ -124,7 +124,7 @@ export function isVerb(node: Node) : node is Verb {
 }
 
 export type Verbatim = {
-    kind: "env.verbatim";
+    kind: 'env.verbatim';
     content: string;
     location: Location;
 }
@@ -134,7 +134,7 @@ export function isVerbatim(node: Node) : node is Verbatim {
 }
 
 export type Minted = {
-    kind: "env.minted";
+    kind: 'env.minted';
     args: (OptionalArg | Group)[];
     content: string;
     location: Location;
@@ -145,7 +145,7 @@ export function isMinted(node: Node) : node is Minted {
 }
 
 export type InlienMath = {
-    kind: "math.inline";
+    kind: 'math.inline';
     content: Node[];
     location: Location;
 }
@@ -155,7 +155,7 @@ export function isInlienMath(node: Node) : node is InlienMath {
 }
 
 export type DisplayMath = {
-    kind: "math.display";
+    kind: 'math.display';
     content: Node[];
     location: Location;
 }
@@ -183,7 +183,7 @@ export type Node
 | Minted
 
 export type Location = {
-    start: { 
+    start: {
         offset: number;
         line: number;
         column: number;
@@ -196,7 +196,7 @@ export type Location = {
 }
 
 export type Comment = {
-    kind: "comment";
+    kind: 'comment';
     content: string;
     location: Location;
 }
@@ -222,7 +222,7 @@ export type ParserOptions = {
 }
 
 export type TraceArg = {
-    type: "rule.enter" | "rule.match" | "rule.fail";
+    type: 'rule.enter' | 'rule.match' | 'rule.fail';
     rule: string;
     result: string | Node;
     location: Location;
