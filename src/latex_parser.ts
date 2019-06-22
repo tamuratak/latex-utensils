@@ -44,7 +44,7 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         const args = stringifyArray(node.args)
         const content = stringifyArray(node.content)
         const end = '\\end{' + node.name + '}'
-        return begin + args + '\n' + content + '\n' + end
+        return begin + args + content + end
     }
     if (lp.isGroup(node)) {
         return '{' + stringifyArray(node.content).trim() + '}'
