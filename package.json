@@ -34,12 +34,11 @@
     "parser"
   ],
   "scripts": {
-    "init": "mkdir -p out/src",
     "generate:simple": "pegjs --allowed-start-rules root,preamble -o out/src/latex_parser_without_trace.js src/latex.pegjs",
     "generate:trace": "pegjs --trace --allowed-start-rules root,preamble -o out/src/latex_parser_with_trace.js src/latex.pegjs",
     "generate": "npm run generate:simple && npm run generate:trace",
     "compile": "tsc -p ./",
-    "build": "npm run init; npm run generate && npm run compile",
+    "build": "npm run compile && npm run generate",
     "clean": "rm -rf out/src/* out/test/*",
     "test": "mocha --ui tdd out/test/**/*.js"
   }
