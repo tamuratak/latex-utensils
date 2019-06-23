@@ -56,8 +56,7 @@ element "element"
   }
 
 element_p
-  = result:
-  ( special_command
+  = special_command
   / break { return { kind: "parbreak", location: location() }; }
   / command
   / group
@@ -67,15 +66,7 @@ element_p
   / superscript
   / subscript
   / ignore
-  / $((!nonchar_token . )+)
-  )
-  {
-    if (typeof result === "string") {
-      return { kind: "text.string", content: result, location: location() };
-    } else {
-      return result;
-    }
-  }
+  / c:$((!nonchar_token . )+) { return { kind: "text.string", content: c, location: location() }; }
 
 math_element =
   x:math_element_p skip_space
