@@ -109,35 +109,6 @@ math_element_p
     }
   }
 
-args_token "args token"
-  = result:
-  ( special_command
-  / command
-  / group
-  / inlinemath_shift
-  / alignment_tab
-  / sp* nl sp* nl+ sp* {return {kind:"parbreak", location: location()}}
-  / command_parameter_with_number
-  / superscript
-  / subscript
-  / ignore
-  / number
-  / $((!(nonchar_token / "," / "]") . )+)
-  )
-  {
-    if (typeof result === "string") {
-      return { kind: "text.string", content: result, location: location() };
-    } else {
-      return result;
-    }
-  }
-
-args_delimiter
-  = ","
-  {
-    return { kind: "text.string", content: ",", location: location() };
-  }
-
 nonchar_token "nonchar token"
   = escape
   / "%"
@@ -289,6 +260,34 @@ argument_list "optional argument"
     return { kind: "arg.optional", content: body, location: location() };
   }
 
+args_token "args token"
+  = result:
+  ( special_command
+  / command
+  / group
+  / inlinemath_shift
+  / alignment_tab
+  / sp* nl sp* nl+ sp* {return {kind:"parbreak", location: location()}}
+  / command_parameter_with_number
+  / superscript
+  / subscript
+  / ignore
+  / number
+  / $((!(nonchar_token / "," / "]") . )+)
+  )
+  {
+    if (typeof result === "string") {
+      return { kind: "text.string", content: result, location: location() };
+    } else {
+      return result;
+    }
+  }
+
+args_delimiter
+  = ","
+  {
+    return { kind: "text.string", content: ",", location: location() };
+  }
 
 environment "environment"
   = begin_env skip_space env:group_envname args:(argument_list / group)*
