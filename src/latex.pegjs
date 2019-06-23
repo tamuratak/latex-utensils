@@ -78,6 +78,7 @@ math_element_p
   = math_aligned_environment
   / amsmath_text_command
   / special_command
+  / math_matching_paren
   / command
   / math_group
   / alignment_tab
@@ -225,6 +226,13 @@ math_group "math group"
   = skip_space begin_group skip_space x:(!end_group c:math_element {return c})* end_group
   {
     return { kind: "arg.group", content: x, location: location() };
+  }
+
+// \left( ... \right) in math mode.
+math_matching_paren
+  = skip_space escape "left" l:. skip_space x:(!(escape "right" .) c:math_element)* escape "right" r:.
+  {
+    return { kind: "math.matching_paren", left: l, right: r, content: x, location: location() };
   }
 
 argument_list "optional argument"

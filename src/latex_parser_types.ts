@@ -200,6 +200,18 @@ export function isMathCharacter(node: Node) : node is MathCharacter {
     return node.kind === 'math.character'
 }
 
+export type MathMatchingParen = {
+    kind: 'math.matching_paren';
+    left: string;
+    right: string;
+    content: Node[];
+    location: Location;
+}
+
+export function isMathMatchingParen(node: Node) : node is MathMatchingParen {
+    return node.kind === 'math.matching_paren'
+}
+
 export type Node
 = TextString
 | Command
@@ -210,6 +222,7 @@ export type Node
 | InlienMath
 | DisplayMath
 | MathCharacter
+| MathMatchingParen
 | MathEnv
 | MathEnvAligned
 | Parbreak

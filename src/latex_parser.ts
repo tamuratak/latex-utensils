@@ -84,5 +84,8 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
     if (lp.isMathCharacter(node)) {
         return node.content
     }
+    if (lp.isMathMatchingParen(node)) {
+        return '\\left' + node.left + stringifyArray(node.content) + '\\right' + node.right
+    }
     throw 'not reachable here'
 }
