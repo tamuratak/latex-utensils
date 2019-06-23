@@ -1,4 +1,4 @@
-import {ParserOptions, LatexAst} from './latex_parser_types'
+import {ParserOptions, LatexAst, Location} from './latex_parser_types'
 
 export declare class SyntaxError extends Error {
     message: string;
