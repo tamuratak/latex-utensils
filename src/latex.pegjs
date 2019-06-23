@@ -123,8 +123,8 @@ special_command "special command"
 // \verb|xxx|
 verb
   = escape "verb" e:.
-      x:$((!(end:. & {return end === e}) . )*)
-    (end:. & {return end === e})
+      x:$((!(end:. & {return end === e;}) . )*)
+    (end:. & {return end === e;})
   {
     return { kind: "verb", escape: e, content: x, location: location() };
   }
@@ -160,13 +160,13 @@ commentenv
 // inline math $...$
 inlinemath_shift
   = math_shift
-     skip_space eq:(!math_shift t:math_element {return t})+
+     skip_space eq:(!math_shift t:math_element {return t;})+
     math_shift
   {
     return { kind: "math.inline", content: eq, location: location() };
   }
   / math_shift
-     whitespace eq:(!math_shift t:math_element {return t})*
+     whitespace eq:(!math_shift t:math_element {return t;})*
     math_shift
   {
     return { kind: "math.inline", content: eq, location: location() };
@@ -175,7 +175,7 @@ inlinemath_shift
 //inline math with \(\)
 inlinemath_paren
   = begin_inline_math
-      skip_space x:(!end_inline_math x:math_element {return x})*
+      skip_space x:(!end_inline_math x:math_element {return x;})*
     end_inline_math
   {
     return { kind: "math.inline", content: x, location: location() };
@@ -189,7 +189,7 @@ displaymath
 
 displaymath_square_bracket
   = begin_display_math
-      skip_space x:(!end_display_math x:math_element {return x})*
+      skip_space x:(!end_display_math x:math_element {return x;})*
     end_display_math
   {
     return { kind: "math.display", content: x, location: location() };
@@ -197,7 +197,7 @@ displaymath_square_bracket
 
 displaymath_shift_shift
   = math_shift math_shift
-      skip_space x:(!(math_shift math_shift) x:math_element {return x})*
+      skip_space x:(!(math_shift math_shift) x:math_element {return x;})*
     math_shift math_shift
   {
     return { kind: "math.display", content: x, location: location() };
@@ -216,14 +216,14 @@ command_name
   / .
 
 group "group"
-  = skip_space begin_group skip_space x:(!end_group c:element {return c})* end_group
+  = skip_space begin_group skip_space x:(!end_group c:element {return c;})* end_group
   {
     return { kind: "arg.group", content: x, location: location() };
   }
 
 // group that assumes you're in math mode.
 math_group "math group"
-  = skip_space begin_group skip_space x:(!end_group c:math_element {return c})* end_group
+  = skip_space begin_group skip_space x:(!end_group c:math_element {return c;})* end_group
   {
     return { kind: "arg.group", content: x, location: location() };
   }
@@ -244,7 +244,7 @@ math_delimiter
   / escape char+
 
 argument_list "optional argument"
-  = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x})* "]"
+  = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x;})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
@@ -271,7 +271,7 @@ args_delimiter
 
 environment "environment"
   = begin_env name:group_envname args:(argument_list / group)*
-      skip_space body:(!(end_env n:group_envname & {return name === n;}) x:element {return x})*
+      skip_space body:(!(end_env n:group_envname & {return name === n;}) x:element {return x;})*
     end_env group_envname
   {
     return { kind: "env", name, args, content: body, location: location() };
@@ -279,7 +279,7 @@ environment "environment"
 
 math_environment "math environment"
   = begin_env skip_space begin_group name:math_env_name end_group
-      skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x})*
+      skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x;})*
     end_env skip_space begin_group math_env_name end_group
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
@@ -287,7 +287,7 @@ math_environment "math environment"
 
 math_aligned_environment "math aligned environment"
   = begin_env skip_space begin_group name:maht_aligned_env_name end_group
-      skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x})*
+      skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x;})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
@@ -308,8 +308,8 @@ amsmath_text_command
 
 // comment that detects whether it is at the end of a line or on a new line
 full_comment "full comment"
-  = nl x:comment { return { kind: "comment", content: x, location: location() } }
-  / x:comment { return { kind: "comment", content: x, location: location() } }
+  = nl x:comment { return { kind: "comment", content: x, location: location() }; }
+  / x:comment { return { kind: "comment", content: x, location: location() }; }
 
 
 begin_display_math = escape "["
@@ -382,7 +382,7 @@ command_parameter_with_number
 end_doc = end_env skip_space begin_group "document" end_group
 
 // nl    "newline" = !'\r''\n' / '\r' / '\r\n'        // catcode 5 (linux, os x, windows)
-// sp          "whitespace"   =   [ \t]+ { return " "}// catcode 10
+// sp          "whitespace"   =   [ \t]+ { return " "; }// catcode 10
 
 // catcode 14, including the newline
 comment 
