@@ -230,10 +230,18 @@ math_group "math group"
 
 // \left( ... \right) in math mode.
 math_matching_paren
-  = skip_space escape "left" l:. skip_space x:(!(escape "right" .) c:math_element {return c;})* escape "right" r:.
+  = skip_space
+    escape "left" l:$math_delimiter
+      skip_space x:(!(escape "right" math_delimiter) c:math_element {return c;})*
+    escape "right" r:$math_delimiter
   {
     return { kind: "math.matching_paren", left: l, right: r, content: x, location: location() };
   }
+
+math_delimiter
+  = [()\[\]|/]
+  / escape [.{}|]
+  / escape char+
 
 argument_list "optional argument"
   = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x})* "]"
