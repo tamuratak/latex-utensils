@@ -67,7 +67,6 @@ element_p
   / superscript
   / subscript
   / ignore
-  / number
   / $((!nonchar_token . )+)
   )
   {
@@ -257,7 +256,6 @@ args_token "args token"
   / superscript
   / subscript
   / ignore
-  / number
   / $((!(nonchar_token / "," / "]") . )+)
   )
   {
