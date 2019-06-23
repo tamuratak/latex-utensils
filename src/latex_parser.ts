@@ -76,10 +76,10 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return '\\begin{minted}' + node.content + '\\end{minted}'
     }
     if (lp.isInlienMath(node)) {
-        return '$' + stringifyArray(node.content).trim() + '$ '
+        return '$' + stringifyArray(node.content).trim() + '$'
     }
     if (lp.isDisplayMath(node)) {
-        return '\\[' + stringifyArray(node.content).trim() + '\\] '
+        return '\\[' + stringifyArray(node.content).trim() + '\\]'
     }
     throw 'not reachable here'
 }
