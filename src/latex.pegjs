@@ -46,7 +46,7 @@ preamble
   rest:$(( escape "begin{document}" .* )?)
   {
     const comment = commentMap ? Array.from(commentMap.values()) : undefined;
-    return { kind: "ast.preamble", content: x, rest: rest, comment };
+    return { kind: "ast.preamble", content: x, rest, comment };
   }
 
 element "element"

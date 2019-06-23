@@ -241,6 +241,7 @@ export type AstPreamble = {
     kind: 'ast.preamble';
     content: Node[];
     comment?: Comment[];
+    rest: string;
 }
 
 export type LatexAst = AstRoot | AstPreamble
