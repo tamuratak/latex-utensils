@@ -33,7 +33,7 @@ lmn
                 content: [ {
                     kind: 'math.inline',
                     content: [ {
-                        kind: 'text.string',
+                        kind: 'math.character',
                         content: '1'
                     } ]
                 } ]
@@ -84,7 +84,7 @@ lmn
                 content: [ {
                     kind: 'env.math.align',
                     content: [ {
-                        kind: 'text.string'
+                        kind: 'math.character'
                     } ]
                 } ]
             }
@@ -149,10 +149,10 @@ lmn
                 content: [ {
                     kind: 'math.inline',
                     content: [
-                        { kind: 'text.string', content: 'a'},
+                        { kind: 'math.character', content: 'a'},
                         {
                             kind: 'superscript',
-                            content: { kind: 'text.string', content: 'b' }
+                            content: { kind: 'math.character', content: 'b' }
                         }
                     ]
                 } ]

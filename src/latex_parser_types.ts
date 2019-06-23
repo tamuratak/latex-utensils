@@ -191,6 +191,15 @@ export function isDisplayMath(node: Node) : node is DisplayMath {
     return node.kind === 'math.display'
 }
 
+export type MathCharacter = {
+    kind: 'math.character';
+    content: string;
+}
+
+export function isMathCharacter(node: Node) : node is MathCharacter {
+    return node.kind === 'math.character'
+}
+
 export type Node
 = TextString
 | Command
@@ -200,6 +209,7 @@ export type Node
 | OptionalArg
 | InlienMath
 | DisplayMath
+| MathCharacter
 | MathEnv
 | MathEnvAligned
 | Parbreak

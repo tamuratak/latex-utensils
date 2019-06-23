@@ -75,8 +75,7 @@ math_element =
   }
 
 math_element_p
-  = result:
-  ( math_aligned_environment
+  = math_aligned_environment
   / amsmath_text_command
   / special_command
   / command
@@ -86,15 +85,7 @@ math_element_p
   / superscript skip_space x:math_element { return { kind: "superscript", content: x, location: location() }; }
   / subscript skip_space x:math_element { return { kind: "subscript", content: x, location: location() }; }
   / ignore
-  / .
-  )
-  {
-    if (typeof result === "string") {
-      return { kind: "text.string", content: result, location: location() };
-    } else {
-      return result;
-    }
-  }
+  / c:. { return { kind: "math.character", content: c}; }
 
 nonchar_token "nonchar token"
   = escape
