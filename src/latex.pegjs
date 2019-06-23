@@ -242,26 +242,18 @@ argument_list "optional argument"
   }
 
 args_token "args token"
-  = result:
-  ( special_command
+  = special_command
   / command
   / group
   / inlinemath_shift
   / alignment_tab
-  / sp* nl sp* nl+ sp* {return {kind:"parbreak", location: location()}}
+  / sp* nl sp* nl+ sp* { return {kind:"parbreak", location: location()}; }
   / command_parameter_with_number
   / superscript
   / subscript
   / ignore
-  / $((!(nonchar_token / "," / "]") . )+)
-  )
-  {
-    if (typeof result === "string") {
-      return { kind: "text.string", content: result, location: location() };
-    } else {
-      return result;
-    }
-  }
+  / c:$((!(nonchar_token / "," / "]") . )+) { return { kind: "text.string", content: c, location: location() }; }
+
 
 args_delimiter
   = ","
