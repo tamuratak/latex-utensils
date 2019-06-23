@@ -79,7 +79,7 @@ math_element_p
   / amsmath_text_command
   / special_command
   / command
-  / group
+  / math_group
   / alignment_tab
   / command_parameter_with_number
   / superscript skip_space x:math_element { return { kind: "superscript", content: x, location: location() }; }
@@ -220,6 +220,13 @@ group "group"
     return { kind: "arg.group", content: x, location: location() };
   }
 
+// group that assumes you're in math mode.
+math_group "math group"
+  = skip_space begin_group skip_space x:(!end_group c:math_element {return c})* end_group
+  {
+    return { kind: "arg.group", content: x, location: location() };
+  }
+
 argument_list "optional argument"
   = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x})* "]"
   {
@@ -283,13 +290,6 @@ group_envname
   = skip_space begin_group x:$(char+ "*"?) end_group
   {
     return x;
-  }
-
-// group that assumes you're in math mode.
-math_group "math group"
-  = begin_group x:(!end_group c:math_element {return c})* end_group
-  {
-    return { kind: "arg.group", content: x, location: location() };
   }
 
 amsmath_text_command
