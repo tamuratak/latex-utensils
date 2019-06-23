@@ -31,9 +31,6 @@ https://github.com/siefkenj/latex-parser
 
 {
   const commentMap = options.enableComment ? new Map() : undefined;
-  function compare_env(g1,g2) {
-      return g1.content.join("") == g2.content.join("");
-  }
 }
 
 root
@@ -242,18 +239,6 @@ group "group"
     return { kind: "arg.group", content: x, location: location() };
   }
 
-
-group_envname "envname group"
-  = skip_space begin_group x:(!end_group c:element {return c})* end_group
-  {
-    if (x.length === 1 && x[0].kind === "text.string") {
-      return { kind: "arg.group", content: [x[0].content] };
-    } else {
-      return { kind: "arg.group", content: x };
-    }
-  }
-
-
 argument_list "optional argument"
   = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x})* "]"
   {
@@ -290,27 +275,34 @@ args_delimiter
   }
 
 environment "environment"
-  = begin_env skip_space env:group_envname args:(argument_list / group)*
-      skip_space body:(!(end_env end_env:group_envname & {return compare_env(env,end_env)}) x:element {return x})*
-    end_env skip_space group_envname
+  = begin_env name:group_envname args:(argument_list / group)*
+      skip_space body:(!(end_env n:group_envname & {return name === n;}) x:element {return x})*
+    end_env group_envname
   {
-    return { kind: "env", name: env.content[0], args: args, content: body, location: location() };
+    return { kind: "env", name, args, content: body, location: location() };
   }
 
 math_environment "math environment"
-  = begin_env skip_space begin_group env:math_env_name end_group
-      skip_space body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
+  = begin_env skip_space begin_group name:math_env_name end_group
+      skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x})*
     end_env skip_space begin_group math_env_name end_group
   {
-    return { kind: "env.math.align", name: env, args: [], content: body, location: location() };
+    return { kind: "env.math.align", name, args: [], content: body, location: location() };
   }
 
 math_aligned_environment "math aligned environment"
-  = begin_env skip_space begin_group env:maht_aligned_env_name end_group
-      skip_space body: (!(end_env end_env:group_envname & {return compare_env({content:[env]},end_env)}) x:math_element {return x})*
+  = begin_env skip_space begin_group name:maht_aligned_env_name end_group
+      skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x})*
     end_env skip_space begin_group maht_aligned_env_name end_group
   {
-    return { kind: "env.math.aligned", name: env, args: [], content: body, location: location() };
+    return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
+  }
+
+// return only envname without { and }
+group_envname
+  = skip_space begin_group x:$(char+ "*"?) end_group
+  {
+    return x;
   }
 
 // group that assumes you're in math mode.
