@@ -352,7 +352,7 @@ math_shift      = "$"                              // catcode 3
 alignment_tab                                      // catcode 4
   = "&"
   {
-    return { kind: "alignment_tab" };
+    return { kind: "alignmentTab" };
   }
 
 command_parameter = "#"                            // catcode 6
@@ -373,7 +373,7 @@ punctuation  = [.,;:\-\*/()!?=+<>\[\]]             // catcode 12
 command_parameter_with_number
   = command_parameter n:$(num*)
   {
-    return { kind: "command_parameter", nargs: n };
+    return { kind: "commandParameter", nargs: n };
   }
 
 

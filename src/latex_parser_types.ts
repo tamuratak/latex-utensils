@@ -115,20 +115,20 @@ export function isSubscript(node: Node) : node is Subscript {
 }
 
 export type AlignmentTab = {
-    kind: 'alignment_tab';
+    kind: 'alignmentTab';
 }
 
 export function isAlignmentTab(node: Node) : node is AlignmentTab {
-    return node.kind === 'alignment_tab'
+    return node.kind === 'alignmentTab'
 }
 
 export type CommandParameter = {
-    kind: 'command_parameter';
+    kind: 'commandParameter';
     nargs: string;
 }
 
 export function isCommandParameter(node: Node) : node is CommandParameter {
-    return node.kind === 'command_parameter'
+    return node.kind === 'commandParameter'
 }
 
 export type Ignore = {
