@@ -281,6 +281,17 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse empty preamble', () => {
+            const tex = `\\begin{document} \\end{document}`
+            const doc = latexParser.parse(tex, {startRule: 'preamble'})
+            const expected: any = {
+                kind: 'ast.preamble',
+                rest: '\\begin{document} \\end{document}',
+                content: []
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('test latexParser.stringify', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
             const doc = latexParser.parse(tex)
