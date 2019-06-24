@@ -42,7 +42,7 @@ root
 
 preamble
   = skip_space
-  x:(!(escape "begin{document}") e:element_p skip_space { return e; })*
+  x:(!(escape "begin{document}") e:element { return e; })*
   rest:$(( escape "begin{document}" .* )?)
   {
     const comment = commentMap ? Array.from(commentMap.values()) : undefined;
