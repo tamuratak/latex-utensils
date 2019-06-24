@@ -49,7 +49,7 @@ preamble
     return { kind: "ast.preamble", content: x, rest, comment };
   }
 
-element "element"
+element
   = x:element_p skip_space
   { 
     return x;
@@ -88,7 +88,7 @@ math_element_p
   / ignore
   / c:. { return { kind: "math.character", content: c}; }
 
-nonchar_token "nonchar token"
+nonchar_token
   = escape
   / "%"
   / begin_group
@@ -103,7 +103,7 @@ nonchar_token "nonchar token"
   / sp
   / EOF
 
-number "number"
+number
   = $(num+ "." num+)
   / $("." num+)
   / $(num+ ".")
@@ -203,7 +203,7 @@ displaymath_shift_shift
     return { kind: "math.display", content: x, location: location() };
   }
 
-command "command"
+command
   = escape n:command_name args:(argument_list / group)*
   {
     return { kind: "command", name: n, args: args, location: location() };
@@ -215,14 +215,14 @@ command_name
   / "\\*"
   / .
 
-group "group"
+group
   = skip_space begin_group skip_space x:(!end_group c:element {return c;})* end_group
   {
     return { kind: "arg.group", content: x, location: location() };
   }
 
 // group that assumes you're in math mode.
-math_group "math group"
+math_group
   = skip_space begin_group skip_space x:(!end_group c:math_element {return c;})* end_group
   {
     return { kind: "arg.group", content: x, location: location() };
@@ -243,13 +243,13 @@ math_delimiter
   / escape [.{}|]
   / escape char+
 
-argument_list "optional argument"
+argument_list
   = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x;})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
 
-args_token "args token"
+args_token
   = special_command
   / command
   / group
@@ -269,7 +269,7 @@ args_delimiter
     return { kind: "text.string", content: ",", location: location() };
   }
 
-environment "environment"
+environment
   = begin_env name:group_envname args:(argument_list / group)*
       skip_space body:(!(end_env n:group_envname & {return name === n;}) x:element {return x;})*
     end_env group_envname
@@ -277,7 +277,7 @@ environment "environment"
     return { kind: "env", name, args, content: body, location: location() };
   }
 
-math_environment "math environment"
+math_environment
   = begin_env skip_space begin_group name:math_env_name end_group
       skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x;})*
     end_env skip_space begin_group math_env_name end_group
@@ -285,7 +285,7 @@ math_environment "math environment"
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
   }
 
-math_aligned_environment "math aligned environment"
+math_aligned_environment
   = begin_env skip_space begin_group name:maht_aligned_env_name end_group
       skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x;})*
     end_env skip_space begin_group maht_aligned_env_name end_group
@@ -307,7 +307,7 @@ amsmath_text_command
   }
 
 // comment that detects whether it is at the end of a line or on a new line
-full_comment "full comment"
+full_comment
   = nl x:comment { return { kind: "comment", content: x, location: location() }; }
   / x:comment { return { kind: "comment", content: x, location: location() }; }
 
@@ -344,7 +344,7 @@ maht_aligned_env_name
   / "gathered"
   / "split"
 
-escape "escape" = "\\"                             // catcode 0
+escape = "\\"                             // catcode 0
 begin_group     = "{"                              // catcode 1
 end_group       = "}"                              // catcode 2
 math_shift      = "$"                              // catcode 3
@@ -395,7 +395,7 @@ whitespace
   = (nl sp*/ sp+ nl sp* !nl/ sp+)
 
 // catcode 5 (linux, os x, windows, unicode)
-nl  "newline"
+nl
   = "\n"
   / "\r\n"
   / "\r"
@@ -403,8 +403,7 @@ nl  "newline"
   / "\u2029"
 
 // catcode 10
-sp  "whitespace"
-  = [ \t]
+sp = [ \t]
 
 skip_space "spaces"
   = (!break (nl / sp / skip_comment))*
@@ -421,7 +420,7 @@ skip_comment
     }
   }
 
-skip_all_space  "spaces"
+skip_all_space
   = (nl / sp / comment)*
   {
     return undefined;
@@ -429,7 +428,7 @@ skip_all_space  "spaces"
 
 // ctrl_space  "control space" = escape (&nl &break / nl / sp)     { return g.brsp; }          // latex.ltx, line 540
 
-break "paragraph break"
+break
   = (skip_all_space escape "par" skip_all_space)+
   {
     return true;
