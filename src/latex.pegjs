@@ -78,9 +78,9 @@ MathElement_p
   = MathAlignedEnvironment
   / AmsmathTextCommand
   / SpecialCommand
-  / math_matching_paren
+  / MatchingDelimiters
   / command
-  / math_group
+  / MathGroup
   / AlignmentTab
   / CommandParameterWithNumber
   / Superscript skip_space x:MathElement { return { kind: "superscript", content: x, location: location() }; }
@@ -93,7 +93,7 @@ noncharToken
   / "%"
   / beginGroup
   / endGroup
-  / math_shift
+  / mathShift
   / AlignmentTab
   / nl
   / commandParameter
@@ -117,8 +117,8 @@ SpecialCommand "special command"
   / commentenv
   / DisplayMath
   / InlineMathParen
-  / math_environment
-  / environment
+  / MathEnvironment
+  / Environment
 
 // \verb|xxx|
 Verb
@@ -141,7 +141,7 @@ Verbatim
 
 // minted environment
 Minted
-  = escape "begin{minted}" args:(argument_list? group)
+  = escape "begin{minted}" args:(argumentList? group)
       x:$((!(escape "end{minted}") . )*)
     escape "end{minted}"
   {
@@ -159,15 +159,15 @@ commentenv
 
 // inline math $...$
 InlineMathShift
-  = math_shift
-     skip_space eq:(!math_shift t:MathElement {return t;})+
-    math_shift
+  = mathShift
+     skip_space eq:(!mathShift t:MathElement {return t;})+
+    mathShift
   {
     return { kind: "math.inline", content: eq, location: location() };
   }
-  / math_shift
-     whitespace eq:(!math_shift t:MathElement {return t;})*
-    math_shift
+  / mathShift
+     whitespace eq:(!mathShift t:MathElement {return t;})*
+    mathShift
   {
     return { kind: "math.inline", content: eq, location: location() };
   }
@@ -181,8 +181,7 @@ InlineMathParen
     return { kind: "math.inline", content: x, location: location() };
   }
 
-//display math with \[\]
-//display math with $$ $$
+//display math, \[\] and $$ $$.
 DisplayMath
   = displayMathSquareBracket
   / displayMathShiftShift
@@ -196,20 +195,20 @@ displayMathSquareBracket
   }
 
 displayMathShiftShift
-  = math_shift math_shift
-      skip_space x:(!(math_shift math_shift) x:MathElement {return x;})*
-    math_shift math_shift
+  = mathShift mathShift
+      skip_space x:(!(mathShift mathShift) x:MathElement {return x;})*
+    mathShift mathShift
   {
     return { kind: "math.display", content: x, location: location() };
   }
 
 command
-  = escape n:command_name args:(argument_list / group)*
+  = escape n:commandName args:(argumentList / group)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
 
-command_name
+commandName
   = n:$(char+) skip_space '*' { return n + '*'; }
   / $(char+)
   / "\\*"
@@ -222,34 +221,34 @@ group
   }
 
 // group that assumes you're in math mode.
-math_group
+MathGroup
   = skip_space beginGroup skip_space x:(!endGroup c:MathElement {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
 
 // \left( ... \right) in math mode.
-math_matching_paren
+MatchingDelimiters
   = skip_space
-    escape "left" l:$math_delimiter
-      skip_space x:(!(escape "right" math_delimiter) c:MathElement {return c;})*
-    escape "right" r:$math_delimiter
+    escape "left" l:$mathDelimiter
+      skip_space x:(!(escape "right" mathDelimiter) c:MathElement {return c;})*
+    escape "right" r:$mathDelimiter
   {
     return { kind: "math.matching_paren", left: l, right: r, content: x, location: location() };
   }
 
-math_delimiter
+mathDelimiter
   = [()\[\]|/]
   / escape [.{}|]
   / escape char+
 
-argument_list
-  = skip_space "[" body:(!"]" x:(args_delimiter / args_token) {return x;})* "]"
+argumentList
+  = skip_space "[" body:(!"]" x:(argsDelimiter / argsToken) {return x;})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
 
-args_token
+argsToken
   = SpecialCommand
   / command
   / group
@@ -263,38 +262,38 @@ args_token
   / c:$((!(noncharToken / "," / "]") . )+) { return { kind: "text.string", content: c, location: location() }; }
 
 
-args_delimiter
+argsDelimiter
   = ","
   {
     return { kind: "text.string", content: ",", location: location() };
   }
 
-environment
-  = beginEnv name:group_envname args:(argument_list / group)*
-      skip_space body:(!(endEnv n:group_envname & {return name === n;}) x:element {return x;})*
-    endEnv group_envname
+Environment
+  = beginEnv name:groupEnvname args:(argumentList / group)*
+      skip_space body:(!(endEnv n:groupEnvname & {return name === n;}) x:element {return x;})*
+    endEnv groupEnvname
   {
     return { kind: "env", name, args, content: body, location: location() };
   }
 
-math_environment
-  = beginEnv skip_space beginGroup name:math_env_name endGroup
-      skip_space body: (!(endEnv n:group_envname & {return name === n;}) x:MathElement {return x;})*
-    endEnv skip_space beginGroup math_env_name endGroup
+MathEnvironment
+  = beginEnv skip_space beginGroup name:mathEnvName endGroup
+      skip_space body:(!(endEnv n:groupEnvname & {return name === n;}) x:MathElement {return x;})*
+    endEnv skip_space beginGroup mathEnvName endGroup
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
   }
 
 MathAlignedEnvironment
-  = beginEnv skip_space beginGroup name:maht_aligned_env_name endGroup
-      skip_space body: (!(endEnv n:group_envname & {return name === n;}) x:MathElement {return x;})*
-    endEnv skip_space beginGroup maht_aligned_env_name endGroup
+  = beginEnv skip_space beginGroup name:mahtAlignedEnvName endGroup
+      skip_space body: (!(endEnv n:groupEnvname & {return name === n;}) x:MathElement {return x;})*
+    endEnv skip_space beginGroup mahtAlignedEnvName endGroup
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
   }
 
 // return only envname without { and }
-group_envname
+groupEnvname
   = skip_space beginGroup x:$(char+ "*"?) endGroup
   {
     return x;
@@ -330,7 +329,7 @@ beginEnv
 endEnv
   = escape "end"
 
-math_env_name
+mathEnvName
   = "equation*"
   / "equation"
   / "align*"
@@ -346,7 +345,7 @@ math_env_name
   / "math"
   / "displaymath"
 
-maht_aligned_env_name
+mahtAlignedEnvName
   = "aligned"
   / "alignedat"
   / "cases"
@@ -354,10 +353,10 @@ maht_aligned_env_name
   / "gathered"
   / "split"
 
-escape = "\\"                             // catcode 0
+escape         = "\\"                             // catcode 0
 beginGroup     = "{"                              // catcode 1
 endGroup       = "}"                              // catcode 2
-math_shift      = "$"                              // catcode 3
+mathShift      = "$"                              // catcode 3
 
 AlignmentTab                                      // catcode 4
   = "&"
@@ -366,10 +365,10 @@ AlignmentTab                                      // catcode 4
   }
 
 commandParameter = "#"                            // catcode 6
-Superscript     = "^"                              // catcode 7
-Subscript       = "_"                              // catcode 8
+Superscript      = "^"                            // catcode 7
+Subscript        = "_"                            // catcode 8
 
-ignore                                             // catcode 9
+ignore                                            // catcode 9
   = "\0"
   {
     return { kind: "ignore" };
