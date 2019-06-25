@@ -19,7 +19,23 @@ export function isSyntaxError(e: any) : e is SyntaxError {
 
 
 function stringifyArray(arry: lp.Node[]) : string {
-    return arry.map((e) => stringify(e)).join('')
+    const len = arry.length
+    let ret = ''
+    for (let i = 0; i < len; i++) {
+        ret += stringify(arry[i])
+        if (lp.isCommandParameter(arry[i])) {
+            continue
+        }
+        if (i+1 < len && lp.isTextString(arry[i+1])) {
+            ret += ' '
+            continue
+        }
+        if (i+1 < len && lp.isMathCharacter(arry[i+1]) && !lp.isMathCharacter(arry[i])) {
+            ret += ' '
+            continue
+        }
+    }
+    return ret
 }
 
 export function stringify(node: lp.Node | lp.Node[]) : string {
@@ -27,7 +43,7 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return stringifyArray(node)
     }
     if (lp.isTextString(node)) {
-        return node.content + ' '
+        return node.content
     }
     if (lp.isCommand(node)) {
         return '\\' + node.name + stringifyArray(node.args)
@@ -43,13 +59,13 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return begin + args + content + end
     }
     if (lp.isGroup(node)) {
-        return '{' + stringifyArray(node.content).trim() + '}'
+        return '{' + stringifyArray(node.content) + '}'
     }
     if (lp.isOptionalArg(node)) {
-        return '[' + stringifyArray(node.content).trim() + ']'
+        return '[' + stringifyArray(node.content) + ']'
     }
     if (lp.isParbreak(node)) {
-        return '\\par '
+        return '\\par'
     }
     if (lp.isSupescript(node)) {
         return '^' + stringifyArray(node.content)
@@ -76,10 +92,10 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
         return '\\begin{minted}' + node.content + '\\end{minted}'
     }
     if (lp.isInlienMath(node)) {
-        return '$' + stringifyArray(node.content).trim() + '$'
+        return '$' + stringifyArray(node.content) + '$'
     }
     if (lp.isDisplayMath(node)) {
-        return '\\[' + stringifyArray(node.content).trim() + '\\]'
+        return '\\[' + stringifyArray(node.content) + '\\]'
     }
     if (lp.isMathCharacter(node)) {
         return node.content
