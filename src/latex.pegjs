@@ -56,17 +56,17 @@ element
   }
 
 element_p
-  = special_command
+  = SpecialCommand
   / break { return { kind: "parbreak", location: location() }; }
   / command
   / group
-  / inlinemath_shift
-  / alignment_tab
-  / command_parameter_with_number
+  / InlineMathShift
+  / AlignmentTab
+  / CommandParameterWithNumber
   / superscript
   / subscript
   / ignore
-  / c:$((!nonchar_token . )+) { return { kind: "text.string", content: c, location: location() }; }
+  / c:$((!noncharToken . )+) { return { kind: "text.string", content: c, location: location() }; }
 
 math_element =
   x:math_element_p skip_space
@@ -75,26 +75,26 @@ math_element =
   }
 
 math_element_p
-  = math_aligned_environment
-  / amsmath_text_command
-  / special_command
+  = MathAlignedEnvironment
+  / AmsmathTextCommand
+  / SpecialCommand
   / math_matching_paren
   / command
   / math_group
-  / alignment_tab
-  / command_parameter_with_number
+  / AlignmentTab
+  / CommandParameterWithNumber
   / superscript skip_space x:math_element { return { kind: "superscript", content: x, location: location() }; }
   / subscript skip_space x:math_element { return { kind: "subscript", content: x, location: location() }; }
   / ignore
   / c:. { return { kind: "math.character", content: c}; }
 
-nonchar_token
+noncharToken
   = escape
   / "%"
-  / begin_group
-  / end_group
+  / beginGroup
+  / endGroup
   / math_shift
-  / alignment_tab
+  / AlignmentTab
   / nl
   / command_parameter
   / superscript
@@ -110,13 +110,13 @@ number
   / $(num+)
 
 // for the special commands like \[ \] and \begin{} \end{} etc.
-special_command "special command"
+SpecialCommand "special command"
   = verb
   / verbatim
   / minted
   / commentenv
   / displaymath
-  / inlinemath_paren
+  / InlineMathParen
   / math_environment
   / environment
 
@@ -158,7 +158,7 @@ commentenv
   }
 
 // inline math $...$
-inlinemath_shift
+InlineMathShift
   = math_shift
      skip_space eq:(!math_shift t:math_element {return t;})+
     math_shift
@@ -173,10 +173,10 @@ inlinemath_shift
   }
 
 //inline math with \(\)
-inlinemath_paren
-  = begin_inline_math
-      skip_space x:(!end_inline_math x:math_element {return x;})*
-    end_inline_math
+InlineMathParen
+  = beginInlineMath
+      skip_space x:(!endInlineMath x:math_element {return x;})*
+    endInlineMath
   {
     return { kind: "math.inline", content: x, location: location() };
   }
@@ -188,9 +188,9 @@ displaymath
   / displaymath_shift_shift
 
 displaymath_square_bracket
-  = begin_display_math
-      skip_space x:(!end_display_math x:math_element {return x;})*
-    end_display_math
+  = beginDisplayMath
+      skip_space x:(!endDisplayMath x:math_element {return x;})*
+    endDisplayMath
   {
     return { kind: "math.display", content: x, location: location() };
   }
@@ -216,14 +216,14 @@ command_name
   / .
 
 group
-  = skip_space begin_group skip_space x:(!end_group c:element {return c;})* end_group
+  = skip_space beginGroup skip_space x:(!endGroup c:element {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
 
 // group that assumes you're in math mode.
 math_group
-  = skip_space begin_group skip_space x:(!end_group c:math_element {return c;})* end_group
+  = skip_space beginGroup skip_space x:(!endGroup c:math_element {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
@@ -250,17 +250,17 @@ argument_list
   }
 
 args_token
-  = special_command
+  = SpecialCommand
   / command
   / group
-  / inlinemath_shift
-  / alignment_tab
+  / InlineMathShift
+  / AlignmentTab
   / sp* nl sp* nl+ sp* { return {kind:"parbreak", location: location()}; }
-  / command_parameter_with_number
+  / CommandParameterWithNumber
   / superscript
   / subscript
   / ignore
-  / c:$((!(nonchar_token / "," / "]") . )+) { return { kind: "text.string", content: c, location: location() }; }
+  / c:$((!(noncharToken / "," / "]") . )+) { return { kind: "text.string", content: c, location: location() }; }
 
 
 args_delimiter
@@ -278,29 +278,29 @@ environment
   }
 
 math_environment
-  = begin_env skip_space begin_group name:math_env_name end_group
+  = begin_env skip_space beginGroup name:math_env_name endGroup
       skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x;})*
-    end_env skip_space begin_group math_env_name end_group
+    end_env skip_space beginGroup math_env_name endGroup
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
   }
 
-math_aligned_environment
-  = begin_env skip_space begin_group name:maht_aligned_env_name end_group
+MathAlignedEnvironment
+  = begin_env skip_space beginGroup name:maht_aligned_env_name endGroup
       skip_space body: (!(end_env n:group_envname & {return name === n;}) x:math_element {return x;})*
-    end_env skip_space begin_group maht_aligned_env_name end_group
+    end_env skip_space beginGroup maht_aligned_env_name endGroup
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
   }
 
 // return only envname without { and }
 group_envname
-  = skip_space begin_group x:$(char+ "*"?) end_group
+  = skip_space beginGroup x:$(char+ "*"?) endGroup
   {
     return x;
   }
 
-amsmath_text_command
+AmsmathTextCommand
   = escape "text" arg:group
   {
     return { kind: "command.text", arg: arg, location: location() };
@@ -312,10 +312,17 @@ full_comment
   / x:comment { return { kind: "comment", content: x, location: location() }; }
 
 
-begin_display_math = escape "["
-end_display_math = escape "]"
-begin_inline_math = escape "("
-end_inline_math = escape ")"
+beginDisplayMath
+  = escape "["
+
+endDisplayMath
+  = escape "]"
+
+beginInlineMath
+  = escape "("
+
+endInlineMath
+  = escape ")"
   
 begin_env = escape "begin"
 end_env = escape "end"
@@ -345,11 +352,11 @@ maht_aligned_env_name
   / "split"
 
 escape = "\\"                             // catcode 0
-begin_group     = "{"                              // catcode 1
-end_group       = "}"                              // catcode 2
+beginGroup     = "{"                              // catcode 1
+endGroup       = "}"                              // catcode 2
 math_shift      = "$"                              // catcode 3
 
-alignment_tab                                      // catcode 4
+AlignmentTab                                      // catcode 4
   = "&"
   {
     return { kind: "alignmentTab" };
@@ -370,7 +377,7 @@ num             = [0-9]                            // catcode 12 (other)
 punctuation  = [.,;:\-\*/()!?=+<>\[\]]             // catcode 12
 //	!"'()*+,-./:;<=>?@[]`
 
-command_parameter_with_number
+CommandParameterWithNumber
   = command_parameter n:$(num*)
   {
     return { kind: "commandParameter", nargs: n };
@@ -379,7 +386,7 @@ command_parameter_with_number
 
 // space handling
 
-end_doc = end_env skip_space begin_group "document" end_group
+end_doc = end_env skip_space beginGroup "document" endGroup
 
 // nl    "newline" = !'\r''\n' / '\r' / '\r\n'        // catcode 5 (linux, os x, windows)
 // sp          "whitespace"   =   [ \t]+ { return " "; }// catcode 10
