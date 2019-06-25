@@ -22,15 +22,20 @@ function stringifyArray(arry: lp.Node[]) : string {
     const len = arry.length
     let ret = ''
     for (let i = 0; i < len; i++) {
-        ret += stringify(arry[i])
-        if (lp.isCommandParameter(arry[i])) {
+        const cur = arry[i]
+        ret += stringify(cur)
+        if (lp.isCommandParameter(cur)) {
             continue
         }
         if (i+1 < len && lp.isTextString(arry[i+1])) {
             ret += ' '
             continue
         }
-        if (i+1 < len && lp.isMathCharacter(arry[i+1]) && !lp.isMathCharacter(arry[i])) {
+        if (i+1 < len && lp.isMathCharacter(arry[i+1]) && !lp.isMathCharacter(cur)) {
+            ret += ' '
+            continue
+        }
+        if (i+1 < len && lp.isCommand(cur) && cur.args.length === 0 && lp.isCommandParameter(arry[i+1])) {
             ret += ' '
             continue
         }
