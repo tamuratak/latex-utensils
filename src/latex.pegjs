@@ -34,7 +34,7 @@ https://github.com/siefkenj/latex-parser
 }
 
 root
-  = skip_space x:(element)*
+  = skip_space x:(Element)*
   { 
     const comment = commentMap ? Array.from(commentMap.values()) : undefined;
     return { kind: "ast.root", content: x, comment };
@@ -42,24 +42,24 @@ root
 
 preamble
   = skip_space
-  x:(!(escape "begin{document}") e:element { return e; })*
+  x:(!(escape "begin{document}") e:Element { return e; })*
   rest:$(( escape "begin{document}" .* )?)
   {
     const comment = commentMap ? Array.from(commentMap.values()) : undefined;
     return { kind: "ast.preamble", content: x, rest, comment };
   }
 
-element
-  = x:element_p skip_space
+Element
+  = x:Element_p skip_space
   { 
     return x;
   }
 
-element_p
+Element_p
   = SpecialCommand
   / break { return { kind: "parbreak", location: location() }; }
-  / command
-  / group
+  / Command
+  / Group
   / InlineMathShift
   / AlignmentTab
   / CommandParameterWithNumber
@@ -79,7 +79,7 @@ MathElement_p
   / AmsmathTextCommand
   / SpecialCommand
   / MatchingDelimiters
-  / command
+  / Command
   / MathGroup
   / AlignmentTab
   / CommandParameterWithNumber
@@ -141,7 +141,7 @@ Verbatim
 
 // minted environment
 Minted
-  = escape "begin{minted}" args:(argumentList? group)
+  = escape "begin{minted}" args:(argumentList? Group)
       x:$((!(escape "end{minted}") . )*)
     escape "end{minted}"
   {
@@ -202,8 +202,8 @@ displayMathShiftShift
     return { kind: "math.display", content: x, location: location() };
   }
 
-command
-  = escape n:commandName args:(argumentList / group)*
+Command
+  = escape n:commandName args:(argumentList / Group)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
@@ -214,8 +214,8 @@ commandName
   / "\\*"
   / .
 
-group
-  = skip_space beginGroup skip_space x:(!endGroup c:element {return c;})* endGroup
+Group
+  = skip_space beginGroup skip_space x:(!endGroup c:Element {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
@@ -250,8 +250,8 @@ argumentList
 
 argsToken
   = SpecialCommand
-  / command
-  / group
+  / Command
+  / Group
   / InlineMathShift
   / AlignmentTab
   / sp* nl sp* nl+ sp* { return {kind:"parbreak", location: location()}; }
@@ -269,8 +269,8 @@ argsDelimiter
   }
 
 Environment
-  = beginEnv name:groupEnvname args:(argumentList / group)*
-      skip_space body:(!(endEnv n:groupEnvname & {return name === n;}) x:element {return x;})*
+  = beginEnv name:groupEnvname args:(argumentList / Group)*
+      skip_space body:(!(endEnv n:groupEnvname & {return name === n;}) x:Element {return x;})*
     endEnv groupEnvname
   {
     return { kind: "env", name, args, content: body, location: location() };
@@ -300,7 +300,7 @@ groupEnvname
   }
 
 AmsmathTextCommand
-  = escape "text" arg:group
+  = escape "text" arg:Group
   {
     return { kind: "command.text", arg: arg, location: location() };
   }
