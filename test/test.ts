@@ -304,6 +304,16 @@ lmn
             assert.strictEqual(latexParser.stringify(doc.content), tex)
         })
 
+        test('test latexParser.stringify', () => {
+            const tex = `
+\\newcommand{\\topic}[1]{%
+    \\needspace{5\\baselineskip}%
+    \\begin{center} {\\itshape #1} \\end{center}%
+}`
+            const doc = latexParser.parse(tex)
+            const expected = '\\newcommand{\\topic}[1]{\\needspace{5\\baselineskip}\\begin{center}{\\itshape #1}\\end{center}}'
+            assert.strictEqual(latexParser.stringify(doc.content), expected)
+        })
     })
 
 })
