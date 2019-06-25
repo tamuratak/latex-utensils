@@ -33,14 +33,14 @@ https://github.com/siefkenj/latex-parser
   const commentMap = options.enableComment ? new Map() : undefined;
 }
 
-root
+Root
   = skip_space x:(Element)*
   { 
     const comment = commentMap ? Array.from(commentMap.values()) : undefined;
     return { kind: "ast.root", content: x, comment };
   }
 
-preamble
+Preamble
   = skip_space
   x:(!(escape "begin{document}") e:Element { return e; })*
   rest:$(( escape "begin{document}" .* )?)
