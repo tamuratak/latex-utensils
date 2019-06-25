@@ -163,13 +163,13 @@ InlineMathShift
      skip_space eq:(!mathShift t:MathElement {return t;})+
     mathShift
   {
-    return { kind: "math.inline", content: eq, location: location() };
+    return { kind: "inlineMath", content: eq, location: location() };
   }
   / mathShift
      whitespace eq:(!mathShift t:MathElement {return t;})*
     mathShift
   {
-    return { kind: "math.inline", content: eq, location: location() };
+    return { kind: "inlineMath", content: eq, location: location() };
   }
 
 //inline math with \(\)
@@ -178,7 +178,7 @@ InlineMathParen
       skip_space x:(!endInlineMath x:MathElement {return x;})*
     endInlineMath
   {
-    return { kind: "math.inline", content: x, location: location() };
+    return { kind: "inlineMath", content: x, location: location() };
   }
 
 //display math, \[\] and $$ $$.
@@ -191,7 +191,7 @@ displayMathSquareBracket
       skip_space x:(!endDisplayMath x:MathElement {return x;})*
     endDisplayMath
   {
-    return { kind: "math.display", content: x, location: location() };
+    return { kind: "displayMath", content: x, location: location() };
   }
 
 displayMathShiftShift
@@ -199,7 +199,7 @@ displayMathShiftShift
       skip_space x:(!(mathShift mathShift) x:MathElement {return x;})*
     mathShift mathShift
   {
-    return { kind: "math.display", content: x, location: location() };
+    return { kind: "displayMath", content: x, location: location() };
   }
 
 Command

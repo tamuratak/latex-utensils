@@ -31,7 +31,7 @@ lmn
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.inline',
+                    kind: 'inlineMath',
                     content: [ {
                         kind: 'math.character',
                         content: '1'
@@ -147,7 +147,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.inline',
+                    kind: 'inlineMath',
                     content: [
                         { kind: 'math.character', content: 'a'},
                         {
@@ -165,7 +165,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.inline',
+                    kind: 'inlineMath',
                     content: [ {
                         kind: 'math.matching_paren',
                         left: '(',
@@ -197,7 +197,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.inline',
+                    kind: 'inlineMath',
                     content: []
                 } ]
             }
@@ -209,7 +209,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.inline',
+                    kind: 'inlineMath',
                     content: []
                 } ]
             }
@@ -221,7 +221,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.display',
+                    kind: 'displayMath',
                     content: []
                 } ]
             }
@@ -233,7 +233,7 @@ lmn
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'math.display',
+                    kind: 'displayMath',
                     content: []
                 } ]
             }

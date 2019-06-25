@@ -172,23 +172,23 @@ export function isMinted(node: Node) : node is Minted {
 }
 
 export type InlienMath = {
-    kind: 'math.inline';
+    kind: 'inlineMath';
     content: Node[];
     location: Location;
 }
 
 export function isInlienMath(node: Node) : node is InlienMath {
-    return node.kind === 'math.inline'
+    return node.kind === 'inlineMath'
 }
 
 export type DisplayMath = {
-    kind: 'math.display';
+    kind: 'displayMath';
     content: Node[];
     location: Location;
 }
 
 export function isDisplayMath(node: Node) : node is DisplayMath {
-    return node.kind === 'math.display'
+    return node.kind === 'displayMath'
 }
 
 export type MathCharacter = {
