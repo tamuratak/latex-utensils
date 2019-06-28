@@ -108,6 +108,25 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse a command whose name has @', () => {
+            const tex = `\\a@c{abc}`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'a@c',
+                    args: [ {
+                        kind: 'arg.group',
+                        content: [ {
+                            kind: 'text.string',
+                            content: 'abc'
+                        } ]
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse invalid commands without error', () => {
             const tex = `\\begin{abc}`
             const doc = latexParser.parse(tex)

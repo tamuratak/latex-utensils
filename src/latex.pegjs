@@ -209,8 +209,8 @@ Command
   }
 
 commandName
-  = n:$(char+) skip_space '*' { return n + '*'; }
-  / $(char+)
+  = n:$((char / '@')+) skip_space '*' { return n + '*'; }
+  / $((char / '@')+)
   / "\\*"
   / .
 
