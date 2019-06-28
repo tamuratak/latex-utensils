@@ -296,7 +296,7 @@ lmn
 
         test('parse preamble', () => {
             const tex = `\\newcommand{\\ABC}{ABC} \\begin{document} \\end{document}`
-            const doc = latexParser.parse(tex, {startRule: 'Preamble'})
+            const doc = latexParser.parsePreamble(tex)
             const expected: any = {
                 kind: 'ast.preamble',
                 rest: '\\begin{document} \\end{document}',

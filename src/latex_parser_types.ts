@@ -279,7 +279,7 @@ export type AstPreamble = {
 export type LatexAst = AstRoot | AstPreamble
 
 export type ParserOptions = {
-    startRule?: string;
+    startRule?: 'Root' | 'Preamble';
     tracer?: Tracer;
     enableComment?: boolean;
 }

@@ -13,6 +13,10 @@ export function parse(s: string, option?: lp.ParserOptions) : lp.LatexAst {
     }
 }
 
+export function parsePreamble(s: string) : lp.LatexAst {
+    return _latexParser.parse(s, {startRule: 'Preamble'})
+}
+
 export function isSyntaxError(e: any) : e is SyntaxError {
     return (e instanceof _latexParser.SyntaxError) || (e instanceof _latexParserWithTrace.SyntaxError)
 }
