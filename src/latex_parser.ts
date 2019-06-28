@@ -84,6 +84,9 @@ export function stringify(node: lp.Node | lp.Node[]) : string {
     if (lp.isCommandParameter(node)) {
         return '#' + node.nargs
     }
+    if (lp.isActiveCharacter(node)) {
+        return '~'
+    }
     if (lp.isIgnore(node)) {
         return ''
     }

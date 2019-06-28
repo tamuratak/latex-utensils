@@ -131,6 +131,14 @@ export function isCommandParameter(node: Node) : node is CommandParameter {
     return node.kind === 'commandParameter'
 }
 
+export type ActiveCharacter = {
+    kind: 'activeCharacter';
+}
+
+export function isActiveCharacter(node: Node) : node is ActiveCharacter {
+    return node.kind === 'activeCharacter'
+}
+
 export type Ignore = {
     kind: 'ignore';
 }
@@ -230,6 +238,7 @@ export type Node
 | Subscript
 | AlignmentTab
 | CommandParameter
+| ActiveCharacter
 | Ignore
 | Verb
 | Verbatim

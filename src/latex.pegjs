@@ -65,6 +65,7 @@ Element_p
   / CommandParameterWithNumber
   / Superscript
   / Subscript
+  / ActiveCharacter
   / ignore
   / c:$((!noncharToken . )+) { return { kind: "text.string", content: c, location: location() }; }
 
@@ -85,6 +86,7 @@ MathElement_p
   / CommandParameterWithNumber
   / Superscript skip_space x:MathElement { return { kind: "superscript", content: x, location: location() }; }
   / Subscript skip_space x:MathElement { return { kind: "subscript", content: x, location: location() }; }
+  / ActiveCharacter
   / ignore
   / c:. { return { kind: "math.character", content: c}; }
 
@@ -378,6 +380,12 @@ char            = [a-zA-Z]                         // catcode 11
 num             = [0-9]                            // catcode 12 (other)
 punctuation  = [.,;:\-\*/()!?=+<>\[\]]             // catcode 12
 //	!"'()*+,-./:;<=>?@[]`
+
+ActiveCharacter                                    // catcode 13
+  = "~"
+  {
+    return { kind: "activeCharacter" };
+  }
 
 CommandParameterWithNumber
   = commandParameter n:$(num*)

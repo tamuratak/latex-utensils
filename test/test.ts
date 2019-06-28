@@ -146,6 +146,15 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse ~', () => {
+            const tex = `~`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ { kind: 'activeCharacter' } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('should throw SyntaxError', () => {
             const invalidTexts = [ `{`, `$`, `$$` ]
             for (const tex of invalidTexts) {
