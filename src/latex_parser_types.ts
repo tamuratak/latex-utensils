@@ -269,11 +269,19 @@ export type AstRoot = {
     comment?: Comment[];
 }
 
+export function isAstRoot(ast: LatexAst) : ast is AstRoot {
+    return ast.kind === 'ast.root'
+}
+
 export type AstPreamble = {
     kind: 'ast.preamble';
     content: Node[];
     comment?: Comment[];
     rest: string;
+}
+
+export function isAstPreamble(ast: LatexAst) : ast is AstPreamble {
+    return ast.kind === 'ast.preamble'
 }
 
 export type LatexAst = AstRoot | AstPreamble
