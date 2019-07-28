@@ -77,13 +77,12 @@ const ast = latexParser.parse(texString);
 console.log(JSON.stringify(ast, undefined, '  '));
 ```
 
-### `latexParser.parse(texString, options): AstRoot | AstPreamble`
+### `latexParser.parse(texString, options?): AstRoot | AstPreamble`
 
 #### Parameters
 
 * `texString: string`
-* `options: { startRule?: 'Root' | 'Preamble'; enableComment?: boolean; }`
- — `startRule` specifies a rule with which the parser begins. If `'Root'` is set, the whole document is parsed. If `'Preamble'` is set, only the preamble is parsed. The default is `'Root'`. If `enableComment` is true, all the comments in the `texString` will be extracted into a returned AST also. The default is `false`.
+* `options?: { startRule?: 'Root' | 'Preamble'; enableComment?: boolean; }` — `startRule` specifies a rule with which the parser begins. If `'Root'` is set, the whole document is parsed. If `'Preamble'` is set, only the preamble is parsed. The default is `'Root'`. If `enableComment` is true, all the comments in the `texString` will be extracted into a returned AST also. The default is `false`.
 
 #### Returns
 
