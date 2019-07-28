@@ -1,5 +1,7 @@
 # latex-utensils
 
+[![latex-utensils](https://img.shields.io/npm/v/latex-utensils)](https://www.npmjs.com/package/latex-utensils)
+
 A LaTeX parser and utilities.
 
 The parser is based on the following libraries:
