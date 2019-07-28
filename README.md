@@ -67,3 +67,58 @@ Options:
   -s, --start-rule [rule]  set start rule. default is "Root".
   -h, --help               output usage information
 ```
+
+## API
+
+```typescript
+import {latexParser} from 'latex-utensils';
+const texString = '\\begin{document}abc\\end{document}';
+const ast = latexParser.parse(texString);
+console.log(JSON.stringify(ast, undefined, '  '));
+```
+
+### `latexParser.parse(texString, options): AstRoot | AstPreamble`
+
+#### Parameters
+
+* `texString: string`
+* `options: { startRule?: 'Root' | 'Preamble'; enableComment?: boolean; }`
+) — `startRule` specifies the startRule with which the parser begins. If `Preamble` is set, only the preamble is parsed. The default is `Root`. If `enableComment` is true, all the comments in the `texString` will be extracted into a returned AST also.
+
+#### Returns
+
+If the startRule is `Root`, an `AstRoot` object is returned.
+
+```typescript
+type AstRoot = {
+    kind: 'ast.root';
+    content: Node[];
+    comment?: Comment[];
+}
+```
+
+If the startRule is `Preamble`, an `AstPreamble` object is returned.
+
+```typescript
+type AstPreamble = {
+    kind: 'ast.preamble';
+    content: Node[];
+    comment?: Comment[];
+    rest: string;
+}
+```
+
+For the details of `Node` and `Comment`, please see [src/latex_parser_types.ts](https://github.com/tamuratak/latex-utensils/blob/master/src/latex_parser_types.ts).
+
+
+### `latexParser.parsePreamble(texString): AstPreamble`
+
+Equivalent to `latexParser.parse(texString, {startRule: 'Preamble'})`.
+
+### `latexParser.stringify(node: Node | Node[]): string`
+
+Convert AST to a string.
+
+### `latexParser.isSyntaxError(e: any): boolean`
+
+A Type Guard for SyntaxError thrown by `latexParser.parse`.
