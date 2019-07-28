@@ -29,7 +29,7 @@ if (!fs.existsSync(filename)) {
     process.exit(1)
 }
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
-const startRule = commander.startRule || 'root'
+const startRule = commander.startRule || 'Root'
 
 let ret: parser.LatexAst
 try {
