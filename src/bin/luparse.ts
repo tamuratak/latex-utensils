@@ -21,7 +21,7 @@ commander
 .option('--color', 'turn on the color option of util.inspect')
 .option('-l, --location', 'enable location')
 .option('-c, --comment', 'enable comment')
-.option('-s, --start-rule [rule]', 'set start rule. default is "root".')
+.option('-s, --start-rule [rule]', 'set start rule. default is "Root".')
 .parse(process.argv)
 const filename = commander.args[0]
 if (!fs.existsSync(filename)) {
