@@ -83,7 +83,7 @@ console.log(JSON.stringify(ast, undefined, '  '));
 
 * `texString: string`
 * `options: { startRule?: 'Root' | 'Preamble'; enableComment?: boolean; }`
- — `startRule` specifies a rule with which the parser begins. If `Preamble` is set, only the preamble is parsed. The default is `Root`. If `enableComment` is true, all the comments in the `texString` will be extracted into a returned AST also.
+ — `startRule` specifies a rule with which the parser begins. If `'Root'` is set, the whole document is parsed. If `'Preamble'` is set, only the preamble is parsed. The default is `'Root'`. If `enableComment` is true, all the comments in the `texString` will be extracted into a returned AST also. The default is `false`.
 
 #### Returns
 
