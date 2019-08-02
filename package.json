@@ -23,6 +23,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "eslint": "^5.16.0",
     "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.0.2",
     "lodash": ">=4.17.13",
     "mocha": "^6.1.4",
     "pegjs": "^0.10.0",
@@ -46,5 +47,10 @@
     "build": "npm run compile && npm run generate",
     "clean": "rm -rf out/src/* out/test/*",
     "test": "mocha --ui tdd out/test/**/*.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint --cache --ext .ts ."
+    }
   }
 }
