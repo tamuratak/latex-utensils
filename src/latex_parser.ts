@@ -5,7 +5,7 @@ import * as _latexParser from './latex_parser_without_trace'
 import * as _latexParserWithTrace from './latex_parser_with_trace'
 
 
-export function parse(s: string, option?: lp.ParserOptions) : lp.LatexAst {
+export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
     if (option && option.tracer) {
         return _latexParserWithTrace.parse(s, option)
     } else {
@@ -13,16 +13,16 @@ export function parse(s: string, option?: lp.ParserOptions) : lp.LatexAst {
     }
 }
 
-export function parsePreamble(s: string) : lp.LatexAst {
+export function parsePreamble(s: string): lp.LatexAst {
     return _latexParser.parse(s, {startRule: 'Preamble'})
 }
 
-export function isSyntaxError(e: any) : e is SyntaxError {
+export function isSyntaxError(e: any): e is SyntaxError {
     return (e instanceof _latexParser.SyntaxError) || (e instanceof _latexParserWithTrace.SyntaxError)
 }
 
 
-function stringifyArray(arry: lp.Node[]) : string {
+function stringifyArray(arry: lp.Node[]): string {
     const len = arry.length
     let ret = ''
     for (let i = 0; i < len; i++) {
@@ -47,7 +47,7 @@ function stringifyArray(arry: lp.Node[]) : string {
     return ret
 }
 
-export function stringify(node: lp.Node | lp.Node[]) : string {
+export function stringify(node: lp.Node | lp.Node[]): string {
     if (node instanceof Array) {
         return stringifyArray(node)
     }

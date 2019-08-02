@@ -4,7 +4,7 @@ export type TextString = {
     location: Location;
 }
 
-export function isTextString(node: Node) : node is TextString {
+export function isTextString(node: Node): node is TextString {
     return node.kind === 'text.string'
 }
 
@@ -15,7 +15,7 @@ export type Command = {
     location: Location;
 }
 
-export function isCommand(node: Node) : node is Command {
+export function isCommand(node: Node): node is Command {
     return node.kind === 'command'
 }
 
@@ -25,7 +25,7 @@ export type AmsMathTextCommand = {
     location: Location;
 }
 
-export function isAmsMathTextCommand(node: Node) : node is AmsMathTextCommand {
+export function isAmsMathTextCommand(node: Node): node is AmsMathTextCommand {
     return node.kind === 'command.text'
 }
 
@@ -37,7 +37,7 @@ export type Environment = {
     location: Location;
 }
 
-export function isEnvironment(node: Node) : node is Environment {
+export function isEnvironment(node: Node): node is Environment {
     return node.kind === 'env'
 }
 
@@ -49,7 +49,7 @@ export type MathEnv = {
     location: Location;
 }
 
-export function isMathEnv(node: Node) : node is MathEnv {
+export function isMathEnv(node: Node): node is MathEnv {
     return node.kind === 'env.math.align'
 }
 
@@ -61,7 +61,7 @@ export type MathEnvAligned = {
     location: Location;
 }
 
-export function isMathEnvAligned(node: Node) : node is MathEnvAligned {
+export function isMathEnvAligned(node: Node): node is MathEnvAligned {
     return node.kind === 'env.math.aligned'
 }
 
@@ -71,7 +71,7 @@ export type Group = {
     location: Location;
 }
 
-export function isGroup(node: Node) : node is Group {
+export function isGroup(node: Node): node is Group {
     return node.kind === 'arg.group'
 }
 
@@ -81,7 +81,7 @@ export type OptionalArg = {
     location: Location;
 }
 
-export function isOptionalArg(node: Node) : node is OptionalArg {
+export function isOptionalArg(node: Node): node is OptionalArg {
     return node.kind === 'arg.optional'
 }
 
@@ -90,7 +90,7 @@ export type Parbreak = {
     location: Location;
 }
 
-export function isParbreak(node: Node) : node is Parbreak {
+export function isParbreak(node: Node): node is Parbreak {
     return node.kind === 'parbreak'
 }
 
@@ -100,7 +100,7 @@ export type Supescript = {
     location: Location;
 }
 
-export function isSupescript(node: Node) : node is Supescript {
+export function isSupescript(node: Node): node is Supescript {
     return node.kind === 'superscript'
 }
 
@@ -110,7 +110,7 @@ export type Subscript = {
     location: Location;
 }
 
-export function isSubscript(node: Node) : node is Subscript {
+export function isSubscript(node: Node): node is Subscript {
     return node.kind === 'subscript'
 }
 
@@ -118,7 +118,7 @@ export type AlignmentTab = {
     kind: 'alignmentTab';
 }
 
-export function isAlignmentTab(node: Node) : node is AlignmentTab {
+export function isAlignmentTab(node: Node): node is AlignmentTab {
     return node.kind === 'alignmentTab'
 }
 
@@ -127,7 +127,7 @@ export type CommandParameter = {
     nargs: string;
 }
 
-export function isCommandParameter(node: Node) : node is CommandParameter {
+export function isCommandParameter(node: Node): node is CommandParameter {
     return node.kind === 'commandParameter'
 }
 
@@ -135,7 +135,7 @@ export type ActiveCharacter = {
     kind: 'activeCharacter';
 }
 
-export function isActiveCharacter(node: Node) : node is ActiveCharacter {
+export function isActiveCharacter(node: Node): node is ActiveCharacter {
     return node.kind === 'activeCharacter'
 }
 
@@ -143,7 +143,7 @@ export type Ignore = {
     kind: 'ignore';
 }
 
-export function isIgnore(node: Node) : node is Ignore {
+export function isIgnore(node: Node): node is Ignore {
     return node.kind === 'ignore'
 }
 
@@ -154,7 +154,7 @@ export type Verb = {
     location: Location;
 }
 
-export function isVerb(node: Node) : node is Verb {
+export function isVerb(node: Node): node is Verb {
     return node.kind === 'verb'
 }
 
@@ -164,7 +164,7 @@ export type Verbatim = {
     location: Location;
 }
 
-export function isVerbatim(node: Node) : node is Verbatim {
+export function isVerbatim(node: Node): node is Verbatim {
     return node.kind === 'env.verbatim'
 }
 
@@ -175,7 +175,7 @@ export type Minted = {
     location: Location;
 }
 
-export function isMinted(node: Node) : node is Minted {
+export function isMinted(node: Node): node is Minted {
     return node.kind === 'env.minted'
 }
 
@@ -185,7 +185,7 @@ export type InlienMath = {
     location: Location;
 }
 
-export function isInlienMath(node: Node) : node is InlienMath {
+export function isInlienMath(node: Node): node is InlienMath {
     return node.kind === 'inlineMath'
 }
 
@@ -195,7 +195,7 @@ export type DisplayMath = {
     location: Location;
 }
 
-export function isDisplayMath(node: Node) : node is DisplayMath {
+export function isDisplayMath(node: Node): node is DisplayMath {
     return node.kind === 'displayMath'
 }
 
@@ -204,7 +204,7 @@ export type MathCharacter = {
     content: string;
 }
 
-export function isMathCharacter(node: Node) : node is MathCharacter {
+export function isMathCharacter(node: Node): node is MathCharacter {
     return node.kind === 'math.character'
 }
 
@@ -216,7 +216,7 @@ export type MathMatchingParen = {
     location: Location;
 }
 
-export function isMathMatchingParen(node: Node) : node is MathMatchingParen {
+export function isMathMatchingParen(node: Node): node is MathMatchingParen {
     return node.kind === 'math.matching_paren'
 }
 
@@ -269,7 +269,7 @@ export type AstRoot = {
     comment?: Comment[];
 }
 
-export function isAstRoot(ast: LatexAst) : ast is AstRoot {
+export function isAstRoot(ast: LatexAst): ast is AstRoot {
     return ast.kind === 'ast.root'
 }
 
@@ -280,7 +280,7 @@ export type AstPreamble = {
     rest: string;
 }
 
-export function isAstPreamble(ast: LatexAst) : ast is AstPreamble {
+export function isAstPreamble(ast: LatexAst): ast is AstPreamble {
     return ast.kind === 'ast.preamble'
 }
 

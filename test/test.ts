@@ -27,7 +27,7 @@ lmn
         })
 
         test('parse $1$', () => {
-            const tex = `$1$`
+            const tex = '$1$'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -42,7 +42,7 @@ lmn
         })
 
         test('parse \\verb|1|', () => {
-            const tex = `\\verb|1|`
+            const tex = '\\verb|1|'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -109,7 +109,7 @@ lmn
         })
 
         test('parse a command whose name has @', () => {
-            const tex = `\\a@c{abc}`
+            const tex = '\\a@c{abc}'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -128,7 +128,7 @@ lmn
         })
 
         test('parse invalid commands without error', () => {
-            const tex = `\\begin{abc}`
+            const tex = '\\begin{abc}'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -147,7 +147,7 @@ lmn
         })
 
         test('parse ~', () => {
-            const tex = `~`
+            const tex = '~'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ { kind: 'activeCharacter' } ]
@@ -156,7 +156,7 @@ lmn
         })
 
         test('should throw SyntaxError', () => {
-            const invalidTexts = [ `{`, `$`, `$$` ]
+            const invalidTexts = [ '{', '$', '$$' ]
             for (const tex of invalidTexts) {
                 assert.throws(
                     () => {
@@ -171,7 +171,7 @@ lmn
         })
 
         test('parse $ a ^ b $', () => {
-            const tex = `$ a ^ b $`
+            const tex = '$ a ^ b $'
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -189,7 +189,7 @@ lmn
         })
 
         test('parse $\\left(1\\right]$', () => {
-            const tex = `$\\left(1\\right]$`
+            const tex = '$\\left(1\\right]$'
             const root = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -269,7 +269,7 @@ lmn
         })
 
         test('parse \\begin{align} \\end{align}', () => {
-            const tex = `\\begin{align} \\end{align}`
+            const tex = '\\begin{align} \\end{align}'
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
@@ -281,7 +281,7 @@ lmn
         })
 
         test('parse \\begin{align} \\begin{aligned} \\end{aligned} \\end{align}', () => {
-            const tex = `\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}`
+            const tex = '\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}'
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
@@ -295,7 +295,7 @@ lmn
         })
 
         test('parse preamble', () => {
-            const tex = `\\newcommand{\\ABC}{ABC} \\begin{document} \\end{document}`
+            const tex = '\\newcommand{\\ABC}{ABC} \\begin{document} \\end{document}'
             const doc = latexParser.parsePreamble(tex)
             const expected: any = {
                 kind: 'ast.preamble',
@@ -310,7 +310,7 @@ lmn
         })
 
         test('parse empty preamble', () => {
-            const tex = `\\begin{document} \\end{document}`
+            const tex = '\\begin{document} \\end{document}'
             const doc = latexParser.parse(tex, {startRule: 'Preamble'})
             const expected: any = {
                 kind: 'ast.preamble',
