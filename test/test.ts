@@ -340,7 +340,14 @@ lmn
 }`
             const doc = latexParser.parse(tex)
             const expected = '\\newcommand{\\topic}[1]{\\needspace{5\\baselineskip}\\begin{center}{\\itshape #1}\\end{center}}'
-            assert.strictEqual(latexParser.stringify(doc.content), expected)
+            assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '' }), expected)
+        })
+
+        test('test latexParser.stringify with lineBreak', () => {
+            const tex = '\\begin{align} a \\\\ b \\end{align}'
+            const actualTeX = '\\begin{align}\na\\\\ b\n\\end{align}\n'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
     })
 
