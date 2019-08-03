@@ -116,7 +116,7 @@ For the details of `Node` and `Comment`, please see [src/latex_parser_types.ts](
 
 Equivalent to `latexParser.parse(texString, {startRule: 'Preamble'})`.
 
-### `latexParser.stringify(node: Node | Node[]): string`
+### `latexParser.stringify(node: Node | Node[], options = { lineBreak: '' }): string`
 
 Convert AST to a string.
 
