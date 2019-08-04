@@ -52,7 +52,7 @@ export function stringify(
     options = { lineBreak: '' }
 ): string {
     const lineBreak = options.lineBreak
-    if (node instanceof Array) {
+    if (Array.isArray(node)) {
         return stringifyArray(node, options)
     }
     if (lp.isTextString(node)) {
@@ -119,5 +119,9 @@ export function stringify(
     if (lp.isMathMatchingParen(node)) {
         return '\\left' + node.left + stringifyArray(node.content, options) + '\\right' + node.right
     }
+    return fail()
+}
+
+function fail(): never {
     throw 'not reachable here'
 }
