@@ -349,6 +349,25 @@ lmn
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
+
+        test('test type gurad', () => {
+            const tex = 'a'
+            const doc = latexParser.parse(tex)
+            const node: latexParser.Node = doc.content[0] as any
+            if (latexParser.hasContent(node)) {
+                return node.content
+            }
+            if (latexParser.hasContentArray(node)) {
+                return node.content.pop
+            }
+            if (latexParser.hasContent(node) && !latexParser.hasContentArray(node)) {
+                return node.content.charCodeAt
+            }
+            if (!latexParser.hasContent(node)) {
+                return node
+            }
+            return
+        })
     })
 
 })
