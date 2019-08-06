@@ -179,6 +179,17 @@ export function isMinted(node: Node): node is Minted {
     return node.kind === 'env.minted'
 }
 
+export type Lstlisting = {
+    kind: 'env.lstlisting';
+    arg?: OptionalArg;
+    content: string;
+    location: Location;
+}
+
+export function isLstlisting(node: Node): node is Lstlisting {
+    return node.kind === 'env.lstlisting'
+}
+
 export type InlienMath = {
     kind: 'inlineMath';
     content: Node[];
@@ -251,6 +262,7 @@ export type Node
 | Verb
 | Verbatim
 | Minted
+| Lstlisting
 
 export type Location = {
     start: {

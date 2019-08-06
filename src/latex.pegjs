@@ -150,6 +150,15 @@ Minted
     return { kind: "env.minted", args: args, content: x, location: location() };
   }
 
+// lstlisting environment
+Lstlisting
+  = escape "begin{lstlisting}" arg:argumentList?
+      x:$((!(escape "end{lstlisting}") . )*)
+    escape "end{lstlisting}"
+  {
+    return { kind: "env.lstlisting", arg: arg, content: x, location: location() };
+  }
+
 // comment environment provided by \usepackage{verbatim}
 commentenv
   = escape "begin{comment}"
