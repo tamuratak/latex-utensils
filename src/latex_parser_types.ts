@@ -220,6 +220,14 @@ export function isMathMatchingParen(node: Node): node is MathMatchingParen {
     return node.kind === 'math.matching_paren'
 }
 
+export function hasContent(node: Node): node is TextString | Environment | Group | OptionalArg | InlienMath | DisplayMath | MathCharacter | MathMatchingParen | MathEnv | MathEnvAligned | Supescript | Subscript | Verb | Verbatim | Minted {
+    return isTextString(node) || isEnvironment(node) || isGroup(node) || isOptionalArg(node) || isInlienMath(node) || isDisplayMath(node) || isMathCharacter(node) || isMathMatchingParen(node) || isMathEnv(node) || isMathEnvAligned(node) || isSupescript(node) || isSubscript(node) || isVerb(node) || isVerbatim(node) || isMinted(node)
+}
+
+export function hasContentArray(node: Node): node is Environment | Group | OptionalArg | InlienMath | DisplayMath | MathMatchingParen | MathEnv | MathEnvAligned | Supescript | Subscript {
+    return isEnvironment(node) || isGroup(node) || isOptionalArg(node) || isInlienMath(node) || isDisplayMath(node) || isMathMatchingParen(node) || isMathEnv(node) || isMathEnvAligned(node) || isSupescript(node) || isSubscript(node)
+}
+
 export type Node
 = TextString
 | Command
