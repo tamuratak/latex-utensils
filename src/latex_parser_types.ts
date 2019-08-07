@@ -160,6 +160,7 @@ export function isVerb(node: Node): node is Verb {
 
 export type Verbatim = {
     kind: 'env.verbatim';
+    name: 'verbatim';
     content: string;
     location: Location;
 }
@@ -170,6 +171,7 @@ export function isVerbatim(node: Node): node is Verbatim {
 
 export type Minted = {
     kind: 'env.minted';
+    name: 'minted';
     args: (OptionalArg | Group)[];
     content: string;
     location: Location;
@@ -181,6 +183,7 @@ export function isMinted(node: Node): node is Minted {
 
 export type Lstlisting = {
     kind: 'env.lstlisting';
+    name: 'lstlisting';
     arg?: OptionalArg;
     content: string;
     location: Location;

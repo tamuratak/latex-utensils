@@ -137,7 +137,7 @@ Verbatim
       x:$((!(escape "end{verbatim}") . )*)
     escape "end{verbatim}"
   {
-    return { kind: "env.verbatim", content: x, location: location() };
+    return { kind: "env.verbatim", name: "verbatim", content: x, location: location() };
   }
 
 
@@ -147,7 +147,7 @@ Minted
       x:$((!(escape "end{minted}") . )*)
     escape "end{minted}"
   {
-    return { kind: "env.minted", args: args, content: x, location: location() };
+    return { kind: "env.minted", name: "minted", args: args, content: x, location: location() };
   }
 
 // lstlisting environment
@@ -156,7 +156,7 @@ Lstlisting
       x:$((!(escape "end{lstlisting}") . )*)
     escape "end{lstlisting}"
   {
-    return { kind: "env.lstlisting", arg: arg, content: x, location: location() };
+    return { kind: "env.lstlisting", name: "lstlisting", arg: arg, content: x, location: location() };
   }
 
 // comment environment provided by \usepackage{verbatim}
