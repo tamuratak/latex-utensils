@@ -105,7 +105,12 @@ export function stringify(
         return '\\begin{verbatim}' + node.content + '\\end{verbatim}' + lineBreak
     }
     if (lp.isMinted(node)) {
-        return '\\begin{minted}' + node.content + '\\end{minted}' + lineBreak
+        const args = stringify(node.args)
+        return '\\begin{minted}' + args + node.content + '\\end{minted}' + lineBreak
+    }
+    if (lp.isLstlisting(node)) {
+        const arg = node.arg ? stringify(node.arg) : ''
+        return '\\begin{lstlisting}' + arg + node.content + '\\end{lstlisting}'
     }
     if (lp.isInlienMath(node)) {
         return '$' + stringifyArray(node.content, options) + '$'
@@ -119,9 +124,7 @@ export function stringify(
     if (lp.isMathMatchingParen(node)) {
         return '\\left' + node.left + stringifyArray(node.content, options) + '\\right' + node.right
     }
-    return fail()
-}
 
-function fail(): never {
-    throw 'not reachable here'
+    // node must be the never type here.
+    return node
 }
