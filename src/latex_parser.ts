@@ -126,5 +126,6 @@ export function stringify(
     }
 
     // node must be the never type here.
-    return node
+    const dummy: never = node
+    return dummy
 }

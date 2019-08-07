@@ -350,7 +350,7 @@ lmn
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
 
-        test('test type guard', (): undefined => {
+        test('test type guard', () => {
             const tex = 'a'
             const doc = latexParser.parse(tex)
             {
@@ -380,7 +380,8 @@ lmn
                     if ( latexParser.isCommand(node) || latexParser.isAmsMathTextCommand(node) || latexParser.isParbreak(node) || latexParser.isAlignmentTab(node) || latexParser.isCommandParameter(node) || latexParser.isActiveCharacter(node) || latexParser.isIgnore(node) ) {
                         return
                     }
-                    return node
+                    const dummy: never = node
+                    return dummy
                 }
             }
             return
