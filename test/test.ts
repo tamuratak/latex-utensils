@@ -350,7 +350,7 @@ lmn
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
 
-        test('test type gurad', (): undefined => {
+        test('test type guard', (): undefined => {
             const tex = 'a'
             const doc = latexParser.parse(tex)
             {
