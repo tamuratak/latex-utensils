@@ -350,21 +350,38 @@ lmn
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
 
-        test('test type gurad', () => {
+        test('test type gurad', (): undefined => {
             const tex = 'a'
             const doc = latexParser.parse(tex)
-            const node: latexParser.Node = doc.content[0] as any
-            if (latexParser.hasContent(node)) {
-                return node.content
+            {
+                const node: latexParser.Node = doc.content[0] as any
+                if (latexParser.hasContent(node)) {
+                    node.content.toString()
+                    return
+                }
             }
-            if (latexParser.hasContentArray(node)) {
-                return node.content.pop
+            {
+                const node: latexParser.Node = doc.content[0] as any
+                if (latexParser.hasContentArray(node)) {
+                    node.content.pop()
+                    return
+                }
             }
-            if (latexParser.hasContent(node) && !latexParser.hasContentArray(node)) {
-                return node.content.charCodeAt
+            {
+                const node: latexParser.Node = doc.content[0] as any
+                if (latexParser.hasContent(node) && !latexParser.hasContentArray(node)) {
+                    node.content.charCodeAt.toString()
+                    return
+                }
             }
-            if (!latexParser.hasContent(node)) {
-                return node
+            {
+                const node: latexParser.Node = doc.content[0] as any
+                if (!latexParser.hasContent(node)) {
+                    if ( latexParser.isCommand(node) || latexParser.isAmsMathTextCommand(node) || latexParser.isParbreak(node) || latexParser.isAlignmentTab(node) || latexParser.isCommandParameter(node) || latexParser.isActiveCharacter(node) || latexParser.isIgnore(node) ) {
+                        return
+                    }
+                    return node
+                }
             }
             return
         })
