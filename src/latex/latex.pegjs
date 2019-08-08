@@ -116,6 +116,7 @@ SpecialCommand "special command"
   = Verb
   / Verbatim
   / Minted
+  / Lstlisting
   / commentenv
   / DisplayMath
   / InlineMathParen
@@ -143,7 +144,7 @@ Verbatim
 
 // minted environment
 Minted
-  = escape "begin{minted}" args:(argumentList? Group)
+  = escape "begin{minted}" args:((argumentList Group) / Group)
       x:$((!(escape "end{minted}") . )*)
     escape "end{minted}"
   {

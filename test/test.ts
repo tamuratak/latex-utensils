@@ -66,11 +66,24 @@ lmn
         })
 
         test('parse \\begin{minted}...', () => {
-            const tex = '\\begin{minted}{xxx}1\\end{minted}'
+            const tex = '\\begin{minted}[abc]{xxx}1\\end{minted}'
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
                     kind: 'env.minted',
+                    content: '1'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
+        test('parse \\begin{lstlisting}...', () => {
+            const tex = '\\begin{lstlisting}[caption=hoge,label=fuga]1\\end{lstlisting}'
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.lstlisting',
                     content: '1'
                 } ]
             }
