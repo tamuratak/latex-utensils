@@ -351,40 +351,41 @@ lmn
         })
 
         test('test type guard', () => {
-            const tex = 'a'
-            const doc = latexParser.parse(tex)
-            {
-                const node: latexParser.Node = doc.content[0] as any
+            return [
+            (node: latexParser.Node): string | latexParser.Node[] => {
                 if (latexParser.hasContent(node)) {
-                    node.content.toString()
-                    return
+                    return node.content
                 }
-            }
-            {
-                const node: latexParser.Node = doc.content[0] as any
+                return ''
+            },
+            (node: latexParser.Node): latexParser.Node[] => {
                 if (latexParser.hasContentArray(node)) {
-                    node.content.pop()
-                    return
+                    return node.content
                 }
-            }
-            {
-                const node: latexParser.Node = doc.content[0] as any
+                return []
+            },
+            (node: latexParser.Node): string => {
                 if (latexParser.hasContent(node) && !latexParser.hasContentArray(node)) {
-                    node.content.charCodeAt.toString()
-                    return
+                    return node.content
                 }
-            }
-            {
-                const node: latexParser.Node = doc.content[0] as any
+                return ''
+            }]
+        })
+
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore
+
+        test('test type guard with assingment and never type', () => {
+            return (node: latexParser.Node) => {
                 if (!latexParser.hasContent(node)) {
+                    const dummy: NotHaveContent = node
                     if ( latexParser.isCommand(node) || latexParser.isAmsMathTextCommand(node) || latexParser.isParbreak(node) || latexParser.isAlignmentTab(node) || latexParser.isCommandParameter(node) || latexParser.isActiveCharacter(node) || latexParser.isIgnore(node) ) {
                         return
                     }
-                    const dummy: never = node
-                    return dummy
+                    const neverDummy: never = node
+                    return [dummy, neverDummy]
                 }
+                return
             }
-            return
         })
     })
 
