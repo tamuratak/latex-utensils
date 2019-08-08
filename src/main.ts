@@ -1,2 +1,2 @@
-import * as latexParser from './latex_parser'
+import * as latexParser from './latex/latex_parser'
 export {latexParser}

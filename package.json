@@ -40,8 +40,8 @@
     "parser"
   ],
   "scripts": {
-    "generate:simple": "pegjs --allowed-start-rules Root,Preamble -o out/src/latex_parser_without_trace.js src/latex.pegjs",
-    "generate:trace": "pegjs --trace --allowed-start-rules Root,Preamble -o out/src/latex_parser_with_trace.js src/latex.pegjs",
+    "generate:simple": "pegjs --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_without_trace.js src/latex/latex.pegjs",
+    "generate:trace": "pegjs --trace --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_with_trace.js src/latex/latex.pegjs",
     "generate": "npm run generate:simple && npm run generate:trace",
     "compile": "tsc -p ./",
     "build": "npm run compile && npm run generate",

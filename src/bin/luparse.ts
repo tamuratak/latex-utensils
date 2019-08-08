@@ -1,4 +1,4 @@
-import * as parser from '../latex_parser'
+import {latexParser} from '../main'
 import * as fs from 'fs'
 import * as util from 'util'
 import * as process from 'process'
@@ -31,11 +31,11 @@ if (!fs.existsSync(filename)) {
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
 const startRule = commander.startRule || 'Root'
 
-let ret: parser.LatexAst
+let ret: latexParser.LatexAst
 try {
-    ret = parser.parse(s, {startRule, enableComment: commander.comment})
+    ret = latexParser.parse(s, {startRule, enableComment: commander.comment})
 } catch (e) {
-    if (parser.isSyntaxError(e)) {
+    if (latexParser.isSyntaxError(e)) {
         const loc = e.location
         console.error(`SyntaxError at line: ${loc.start.line}, column: ${loc.start.column}.`)
         console.error(e.message)
