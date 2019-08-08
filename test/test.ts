@@ -378,11 +378,8 @@ lmn
             return (node: latexParser.Node) => {
                 if (!latexParser.hasContent(node)) {
                     const dummy: NotHaveContent = node
-                    if ( latexParser.isCommand(node) || latexParser.isAmsMathTextCommand(node) || latexParser.isParbreak(node) || latexParser.isAlignmentTab(node) || latexParser.isCommandParameter(node) || latexParser.isActiveCharacter(node) || latexParser.isIgnore(node) ) {
-                        return
-                    }
-                    const neverDummy: never = node
-                    return [dummy, neverDummy]
+                    const dummyWithoutContent: typeof node = dummy
+                    return dummyWithoutContent
                 }
                 return
             }
