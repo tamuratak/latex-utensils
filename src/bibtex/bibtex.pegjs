@@ -88,7 +88,7 @@ Field
       return { name, value };
   }
 
-FieldName = Name
+FieldName = NameToLowerCase
 
 Concat
   = x:(ConcatElement __ '#' __ { return x; })+ last:ConcatElement
@@ -124,10 +124,12 @@ Number
 
 AbbreviationName = $([a-zA-Z]+)
 
-Name
-  = name:$([^@={}", \t\r\n]+)
+NameToLowerCase
+  = n:Name
   {
-      return name.toLowerCase();
+      return n.toLowerCase();
   }
+
+Name = $([^@={}", \t\r\n]+)
 
 __ = ('\r\n' / [ \t\n])*

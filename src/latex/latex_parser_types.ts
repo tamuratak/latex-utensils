@@ -267,19 +267,6 @@ export type Node
 | Minted
 | Lstlisting
 
-export type Location = {
-    start: {
-        offset: number;
-        line: number;
-        column: number;
-    };
-    end: {
-        offset: number;
-        line: number;
-        column: number;
-    };
-}
-
 export type Comment = {
     kind: 'comment';
     content: string;
