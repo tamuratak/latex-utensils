@@ -13,11 +13,11 @@ Comment
   / [^@]
 
 Entry
-  = x:Entry_p
+  = x:Entry_p __
   {
       return x;
   }
-  / Comment+ ( ' ' / '\r\n' / '\n' ) x:Entry_p
+  / Comment+ ( ' ' / '\r\n' / '\n' ) x:Entry_p __
   {
       return x;
   }
@@ -27,13 +27,13 @@ Entry_p
       fields:FieldArray? __
     '}'
   {
-      return { entryType, fields: fields || [], internalKey };
+      return { entryType, content: fields || [], internalKey };
   }
   / entryType:EntryType __ '(' __ internalKey:InternalKey? __
       fields:FieldArray? __
     ')'
   {
-      return { entryType, fields: fields || [], internalKey };
+      return { entryType, content: fields || [], internalKey };
   }
 
 EntryType
@@ -47,27 +47,27 @@ StringEntry
        name:$([a-zA-Z]+) __ '=' __ value:( CurlyBracketValue / QuotedValue ) __
     '}'
   {
-      return { entryType: 'string', abbreviation: name, value };
+      return { entryType: 'string', content: {abbreviation: name, value} };
   }
   /  '@string'i __ '(' __ 
        name:$([a-zA-Z]+) __ '=' __ value:( CurlyBracketValue / QuotedValue ) __
     ')'
   {
-      return { entryType: 'string', abbreviation: name, value };
+      return { entryType: 'string', content: {abbreviation: name, value} };
   }
 
 PreambleEntry
   = '@preamble'i __ '{' __
-       value:( CurlyBracketValue / QuotedValue / Concat ) __
+       content:( CurlyBracketValue / QuotedValue / Concat ) __
     '}'
   {
-      return { entryType: 'preamble', value };
+      return { entryType: 'preamble', content };
   }
   / '@preamble'i __ '(' __
        value:( CurlyBracketValue / QuotedValue / Concat ) __
     ')'
   {
-      return { entryType: 'preamble', value };
+      return { entryType: 'preamble', content };
   }
 
 InternalKey
