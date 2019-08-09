@@ -1,5 +1,5 @@
 Root
-  = __ content:(Entry)* __
+  = __ content:(Entry)*
   {
       return { kind: 'ast.root', content };
   }
@@ -39,18 +39,18 @@ Entry_p
 EntryType
   = '@' type:$([a-zA-Z]+)
   {
-      return type;
+      return type.toLowerCase();
   }
 
 StringEntry
   = '@string'i __ '{' __ 
-       name:$([a-zA-Z]+) __ '=' __ value:( CurlyBracketValue / QuotedValue ) __
+       name:AbbreviationName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number ) __
     '}'
   {
       return { entryType: 'string', content: {abbreviation: name, value} };
   }
   /  '@string'i __ '(' __ 
-       name:$([a-zA-Z]+) __ '=' __ value:( CurlyBracketValue / QuotedValue ) __
+       name:AbbreviationName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number ) __
     ')'
   {
       return { entryType: 'string', content: {abbreviation: name, value} };
@@ -77,28 +77,29 @@ InternalKey
   }
 
 FieldArray
-  = fields:(x:Field __ ',' __ { return x; } )* last:Field ','?
+  = fields:(x:Field __ ',' __ { return x; } )* last:Field __ ','?
   {
       return fields.concat([last]);
   }
 
 Field
-  = name:FieldName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number / Abbreviation )
+  = name:FieldName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number / Abbreviation / Concat )
   {
       return { name, value };
   }
 
-FieldName
-  = $([^ \t\r\n]+)
+FieldName = Name
 
 Concat
-  = (x:(QuotedValue / Abbreviation) __ '#' __ { return x; })+ last:(QuotedValue / Abbreviation)
+  = x:(ConcatElement __ '#' __ { return x; })+ last:ConcatElement
   {
       return { kind: 'concat', content: x.concat([last]) };
   }
 
+ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation
+
 CurlyBracketValue
-  = '{' content:$(( escape '{' / escape '}' / CurlyBracketValue / [^}] )*) '}'
+  = '{' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^}] )*) '}'
   {
       return { kind: 'value', content };
   }
@@ -110,7 +111,7 @@ QuotedValue
   }
 
 Abbreviation
-  = content:$([a-zA-Z]+)
+  = content:AbbreviationName
   {
       return { kind: 'abbreviation', content };
   }
@@ -121,7 +122,12 @@ Number
       return { kind: 'number', content };
   }
 
-Name = $([^@={}", \t\r\n]+)
+AbbreviationName = $([a-zA-Z]+)
 
-escape = '\\'
+Name
+  = name:$([^@={}", \t\r\n]+)
+  {
+      return name.toLowerCase();
+  }
+
 __ = ('\r\n' / [ \t\n])*
