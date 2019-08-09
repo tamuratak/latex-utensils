@@ -1,10 +1,28 @@
 Root
-  = __ content:Entry* __
+  = __ content:(Entry)* __
   {
       return { kind: 'ast.root', content };
   }
 
+
+Comment
+  = QuotedValue
+  / CurlyBracketValue
+  / '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
+  / '@comment'i __ '(' ( QuotedValue / CurlyBracketValue / [^}] )* ')'
+  / [^@]
+
 Entry
+  = x:Entry_p
+  {
+      return x;
+  }
+  / Comment+ ( ' ' / '\r\n' / '\n' ) x:Entry_p
+  {
+      return x;
+  }
+
+Entry_p
   = entryType:EntryType __ '{' __ internalKey:InternalKey? __
       fields:FieldArray? __
     '}'
@@ -17,7 +35,6 @@ Entry
   {
       return { entryType, fields: fields || [], internalKey };
   }
-    
 
 EntryType
   = '@' type:$([a-zA-Z]+)
@@ -25,14 +42,42 @@ EntryType
       return type;
   }
 
+StringEntry
+  = '@string'i __ '{' __ 
+       name:$([a-zA-Z]+) __ '=' __ value:( CurlyBracketValue / QuotedValue ) __
+    '}'
+  {
+      return { entryType: 'string', abbreviation: name, value };
+  }
+  /  '@string'i __ '(' __ 
+       name:$([a-zA-Z]+) __ '=' __ value:( CurlyBracketValue / QuotedValue ) __
+    ')'
+  {
+      return { entryType: 'string', abbreviation: name, value };
+  }
+
+PreambleEntry
+  = '@preamble'i __ '{' __
+       value:( CurlyBracketValue / QuotedValue / Concat ) __
+    '}'
+  {
+      return { entryType: 'preamble', value };
+  }
+  / '@preamble'i __ '(' __
+       value:( CurlyBracketValue / QuotedValue / Concat ) __
+    ')'
+  {
+      return { entryType: 'preamble', value };
+  }
+
 InternalKey
   = name:Name __ ','
   {
-      return name
+      return name;
   }
 
 FieldArray
-  = fields:(x:Field __ ',' __ { return x; } )* last:Field
+  = fields:(x:Field __ ',' __ { return x; } )* last:Field ','?
   {
       return fields.concat([last]);
   }
@@ -45,6 +90,12 @@ Field
 
 FieldName
   = $([^ \t\r\n]+)
+
+Concat
+  = (x:(QuotedValue / Abbreviation) __ '#' __ { return x; })+ last:(QuotedValue / Abbreviation)
+  {
+      return { kind: 'concat', content: x.concat([last]) };
+  }
 
 CurlyBracketValue
   = '{' content:$(( escape '{' / escape '}' / CurlyBracketValue / [^}] )*) '}'
