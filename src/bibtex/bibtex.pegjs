@@ -24,13 +24,13 @@ Entry
 
 Entry_p
   = entryType:EntryType __ '{' __ internalKey:InternalKey? __
-      fields:FieldArray? __
+      fields:FieldArray?
     '}'
   {
       return { entryType, content: fields || [], internalKey };
   }
   / entryType:EntryType __ '(' __ internalKey:InternalKey? __
-      fields:FieldArray? __
+      fields:FieldArray?
     ')'
   {
       return { entryType, content: fields || [], internalKey };
