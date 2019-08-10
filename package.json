@@ -42,7 +42,8 @@
   "scripts": {
     "generate:simple": "pegjs --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_without_trace.js src/latex/latex.pegjs",
     "generate:trace": "pegjs --trace --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_with_trace.js src/latex/latex.pegjs",
-    "generate": "npm run generate:simple && npm run generate:trace",
+    "generate:bibtex": "pegjs -o out/src/bibtex/bibtex_parser_js.js src/bibtex/bibtex.pegjs",
+    "generate": "npm run generate:simple && npm run generate:trace && npm run generate:bibtex",
     "compile": "tsc -p ./",
     "build": "npm run compile && npm run generate",
     "clean": "rm -rf out/src/* out/test/*",
