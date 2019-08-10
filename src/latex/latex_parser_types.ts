@@ -1,3 +1,5 @@
+import {Location} from '../pegjs/pegjs_types'
+
 export type TextString = {
     kind: 'text.string';
     content: string;

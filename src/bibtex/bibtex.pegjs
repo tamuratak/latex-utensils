@@ -77,9 +77,9 @@ InternalKey
   }
 
 FieldArray
-  = fields:(x:Field __ ',' __ { return x; } )* last:Field __ ','?
+  = begin:Field fields:( __ ',' __ x:Field { return x; } )* __ ','? __
   {
-      return fields.concat([last]);
+      return [begin].concat(fields);
   }
 
 Field
