@@ -13,11 +13,11 @@ Comment
   / [^@]
 
 Entry
-  = x:Entry_p __
+  = x:(StringEntry / PreambleEntry / Entry_p) __
   {
       return x;
   }
-  / Comment+ ( ' ' / '\r\n' / '\n' ) x:Entry_p __
+  / Comment+ ( ' ' / '\r\n' / '\n' ) x:(StringEntry / PreambleEntry / Entry_p) __
   {
       return x;
   }
