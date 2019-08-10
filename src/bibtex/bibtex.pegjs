@@ -17,7 +17,7 @@ Entry
   {
       return x;
   }
-  / Comment+ ( ' ' / '\r\n' / '\n' ) x:(StringEntry / PreambleEntry / Entry_p) __
+  / Comment+ x:(StringEntry / PreambleEntry / Entry_p) __
   {
       return x;
   }
@@ -122,7 +122,7 @@ Number
       return { kind: 'number', content };
   }
 
-AbbreviationName = $([a-zA-Z]+)
+AbbreviationName = $([a-zA-Z0-9_:-]+)
 
 NameToLowerCase
   = n:Name
