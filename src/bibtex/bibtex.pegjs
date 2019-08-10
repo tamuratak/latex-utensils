@@ -1,7 +1,7 @@
 Root
   = __ content:(Entry)*
   {
-      return { kind: 'ast.root', content };
+      return { content };
   }
 
 
@@ -47,13 +47,13 @@ StringEntry
        name:AbbreviationName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number ) __
     '}'
   {
-      return { entryType: 'string', content: {abbreviation: name, value} };
+      return { entryType: 'string', abbreviation: name, value };
   }
   /  '@string'i __ '(' __ 
        name:AbbreviationName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number ) __
     ')'
   {
-      return { entryType: 'string', content: {abbreviation: name, value} };
+      return { entryType: 'string', abbreviation: name, value };
   }
 
 PreambleEntry
