@@ -24,16 +24,16 @@ Entry
 
 Entry_p
   = entryType:EntryType __ '{' __ internalKey:InternalKey? __
-      fields:FieldArray?
+      fields:FieldArray? __
     '}'
   {
-      return { entryType, content: fields || [], internalKey };
+      return { entryType, content: fields || [], internalKey: internalKey || undefined };
   }
   / entryType:EntryType __ '(' __ internalKey:InternalKey? __
-      fields:FieldArray?
+      fields:FieldArray? __
     ')'
   {
-      return { entryType, content: fields || [], internalKey };
+      return { entryType, content: fields || [], internalKey: internalKey || undefined };
   }
 
 EntryType
@@ -64,7 +64,7 @@ PreambleEntry
       return { entryType: 'preamble', content };
   }
   / '@preamble'i __ '(' __
-       value:( Concat / CurlyBracketValue / QuotedValue ) __
+       content:( Concat / CurlyBracketValue / QuotedValue ) __
     ')'
   {
       return { entryType: 'preamble', content };
@@ -77,7 +77,7 @@ InternalKey
   }
 
 FieldArray
-  = begin:Field fields:( __ ',' __ x:Field { return x; } )* __ ','? __
+  = begin:Field fields:( __ ',' __ x:Field { return x; } )* __ ','?
   {
       return [begin].concat(fields);
   }
