@@ -17,7 +17,7 @@ suite('bibtexParser', () => {
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
-    test('parse a simple bib file', () => {
+    test('parse a bib file', () => {
         const bib = `
         @Article{Lee_Robustvehiclerouting_2012,
             author    = {Lee, Chungmok and Lee, Kyungsik and Park, Sungsoo},
@@ -30,9 +30,11 @@ suite('bibtexParser', () => {
             doi       = {10.1057/jors.2011.136},
             file      = {:Lee_Robustvehiclerouting_2012 - Robust vehicle routing problem with deadlines and travel time_demand uncertainty.pdf:PDF},
             publisher = {Springer},
-          }          
-`
-        bibtexParser.parse(bib)
-
+        }`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ { entryType: 'article', internalKey: 'Lee_Robustvehiclerouting_2012' } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 })
