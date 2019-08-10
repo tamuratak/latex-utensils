@@ -44,13 +44,13 @@ EntryType
 
 StringEntry
   = '@string'i __ '{' __ 
-       name:AbbreviationName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number ) __
+       name:AbbreviationName __ '=' __ value:( Concat / CurlyBracketValue / QuotedValue / Number ) __
     '}'
   {
       return { entryType: 'string', abbreviation: name, value };
   }
   /  '@string'i __ '(' __ 
-       name:AbbreviationName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number ) __
+       name:AbbreviationName __ '=' __ value:( Concat / CurlyBracketValue / QuotedValue / Number  ) __
     ')'
   {
       return { entryType: 'string', abbreviation: name, value };
@@ -58,13 +58,13 @@ StringEntry
 
 PreambleEntry
   = '@preamble'i __ '{' __
-       content:( CurlyBracketValue / QuotedValue / Concat ) __
+       content:( Concat / CurlyBracketValue / QuotedValue ) __
     '}'
   {
       return { entryType: 'preamble', content };
   }
   / '@preamble'i __ '(' __
-       value:( CurlyBracketValue / QuotedValue / Concat ) __
+       value:( Concat / CurlyBracketValue / QuotedValue ) __
     ')'
   {
       return { entryType: 'preamble', content };
@@ -83,7 +83,7 @@ FieldArray
   }
 
 Field
-  = name:FieldName __ '=' __ value:( CurlyBracketValue / QuotedValue / Number / Abbreviation / Concat )
+  = name:FieldName __ '=' __ value:( Concat / CurlyBracketValue / QuotedValue / Number / Abbreviation )
   {
       return { name, value };
   }
@@ -91,9 +91,9 @@ Field
 FieldName = NameToLowerCase
 
 Concat
-  = x:(ConcatElement __ '#' __ { return x; })+ last:ConcatElement
+  = begin:ConcatElement rest:(__ '#' __ x:ConcatElement { return x; })+
   {
-      return { kind: 'concat', content: x.concat([last]) };
+      return { kind: 'concat', content: [begin].concat(rest) };
   }
 
 ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation

@@ -1,4 +1,3 @@
-
 import {SyntaxErrorBase} from '../pegjs/pegjs_types'
 import {BibtexAst} from './bibtex_parser_types'
 
