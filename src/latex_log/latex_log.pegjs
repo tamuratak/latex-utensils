@@ -11,20 +11,27 @@ EachFileStack
   }
 
 FileStack
-  = '(' path:Path  content:FileStackElement+ ')'
+  = '(' path:Path  content:FileStackElement* ')'
   {
       return { path, content };
   }
 
 FileStackElement
-  = $(( !(Delimiter FileStack) [^)] )+)
+  = $(LogTextElement+)
   / Delimiter x:FileStack
   {
       return x;
   }
 
+LogTextElement
+  = Delimiter !FileStack ParenthesisString
+  / ( !(Delimiter? FileStack) [^())] )
+
+ParenthesisString
+  = '(' [^)]+ ')'
+
 Path
-  = $( ('.' / '/') (!Delimiter .)+ )
+  = $( ('.' / '/') (!Delimiter [^)])+ )
   
 Delimiter = ' ' / '\r\n' / '\n'
 
