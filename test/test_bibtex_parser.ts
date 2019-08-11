@@ -60,6 +60,23 @@ title={sample title3}
         assert.strictEqual(doc.content.length, 0)
     })
 
+    test('parse @comment @article @comment', () => {
+        const bib = `
+% xxxxx
+@comment{ xxxxx }
+@article{
+    title = "aaa"
+}
+@comment{ xxxxx }
+Blah Blah
+`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ { entryType: 'article' } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
     test('parse bib with abbreviation', () => {
         const bib = `
 @Article{key1,
