@@ -25,13 +25,13 @@ EachEntry
 Entry = StringEntry / PreambleEntry / BasicEntry
 
 BasicEntry
-  = entryType:EntryType __ '{' __ internalKey:Name? __ ',' __
+  = entryType:EntryType __ '{' __ internalKey:InternalKey? __
       fields:FieldArray? __
     '}'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined };
   }
-  / entryType:EntryType __ '(' __ internalKey:Name? __ ',' __
+  / entryType:EntryType __ '(' __ internalKey:InternalKey? __
       fields:FieldArray? __
     ')'
   {
@@ -72,6 +72,17 @@ EntryType
       return type.toLowerCase();
   }
 
+InternalKey
+  = ','
+  {
+      return undefined;
+  }
+  / name:Name __ ','
+  {
+      return name;
+  }
+
+
 FieldArray
   = begin:Field fields:( __ ',' __ x:Field { return x; } )* __ ','?
   {
@@ -97,13 +108,13 @@ ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation
 CurlyBracketValue
   = '{' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^}] )*) '}'
   {
-      return { kind: 'value', content };
+      return { kind: 'text_string', content };
   }
 
 QuotedValue
   = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
   {
-      return { kind: 'value', content };
+      return { kind: 'text_string', content };
   }
 
 Abbreviation

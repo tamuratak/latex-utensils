@@ -35,12 +35,12 @@ export function isPreambleEntry(e: Entry | StringEntry | PreambleEntry): e is Pr
 }
 
 export type TextStringValue = {
-    kind: 'value';
+    kind: 'text_string';
     content: string;
 }
 
 export function isTextStringValue(e: FieldValue): e is TextStringValue {
-    return e.kind === 'value'
+    return e.kind === 'text_string'
 }
 
 export type NumberValue = {

@@ -10,10 +10,15 @@ suite('bibtexParser', () => {
     title={sample title}
 }
 @article{sample2, title={sample title2} }
+@article{
+
+title={sample title3}
+
+}
 `
         const doc = bibtexParser.parse(bib)
         const expected: any = {
-            content: [ { entryType: 'article', internalKey: 'sample1' }, { entryType: 'article' } ]
+            content: [ { entryType: 'article', internalKey: 'sample1' }, { entryType: 'article' }, {} ]
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
@@ -65,7 +70,7 @@ suite('bibtexParser', () => {
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
-    test('parse bib with empty citeky', () => {
+    test('parse entry with empty citeky', () => {
         const bib = `
 @Article{,
    file = {aaa},
@@ -75,6 +80,21 @@ suite('bibtexParser', () => {
             content: [ {
                 entryType: 'article',
                 internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
+    test('parse entry with command', () => {
+        const bib = `
+@Article{
+   file = {\\command{aaa}}
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                content: [ { name: 'file', value: { content: '\\command{aaa}' } } ]
             } ]
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
