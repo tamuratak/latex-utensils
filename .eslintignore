@@ -1,2 +1,5 @@
+.github
+.vscode
 out
+sample
 node_modules
