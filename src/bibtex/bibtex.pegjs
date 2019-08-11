@@ -1,5 +1,5 @@
 Root
-  = __ content:(Entry)*
+  = __ content:(Entry__)*
   {
       return { content };
   }
@@ -10,21 +10,21 @@ Comment
   / CurlyBracketValue
   / '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
   / '@comment'i __ '(' ( QuotedValue / CurlyBracketValue / [^}] )* ')'
-  / !EntryElement .
+  / !Entry .
 
-Entry
-  = x:EntryElement __
+Entry__
+  = x:Entry __
   {
       return x;
   }
-  / Comment+ x:EntryElement __
+  / Comment+ x:Entry __
   {
       return x;
   }
 
-EntryElement = StringEntry / PreambleEntry / Entry_p
+Entry = StringEntry / PreambleEntry / BasicEntry
 
-Entry_p
+BasicEntry
   = entryType:EntryType __ '{' __ internalKey:InternalKey? __
       fields:FieldArray? __
     '}'
@@ -36,12 +36,6 @@ Entry_p
     ')'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined };
-  }
-
-EntryType
-  = '@' type:$([a-zA-Z]+)
-  {
-      return type.toLowerCase();
   }
 
 StringEntry
@@ -70,6 +64,12 @@ PreambleEntry
     ')'
   {
       return { entryType: 'preamble', content };
+  }
+
+EntryType
+  = '@' type:$([a-zA-Z]+)
+  {
+      return type.toLowerCase();
   }
 
 InternalKey
