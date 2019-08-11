@@ -64,4 +64,19 @@ suite('bibtexParser', () => {
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+
+    test('parse bib with empty citeky', () => {
+        const bib = `
+@Article{,
+   file = {aaa},
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
 })

@@ -25,13 +25,13 @@ EachEntry
 Entry = StringEntry / PreambleEntry / BasicEntry
 
 BasicEntry
-  = entryType:EntryType __ '{' __ internalKey:InternalKey? __
+  = entryType:EntryType __ '{' __ internalKey:Name? __ ',' __
       fields:FieldArray? __
     '}'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined };
   }
-  / entryType:EntryType __ '(' __ internalKey:InternalKey? __
+  / entryType:EntryType __ '(' __ internalKey:Name? __ ',' __
       fields:FieldArray? __
     ')'
   {
@@ -70,12 +70,6 @@ EntryType
   = '@' type:$([a-zA-Z]+)
   {
       return type.toLowerCase();
-  }
-
-InternalKey
-  = name:Name __ ','
-  {
-      return name;
   }
 
 FieldArray
