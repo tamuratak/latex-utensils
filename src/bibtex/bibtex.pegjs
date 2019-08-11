@@ -1,5 +1,5 @@
 Root
-  = __ content:(Entry__)*
+  = __ content:(EachEntry)*
   {
       return { content };
   }
@@ -12,7 +12,7 @@ Comment
   / '@comment'i __ '(' ( QuotedValue / CurlyBracketValue / [^}] )* ')'
   / !Entry .
 
-Entry__
+EachEntry
   = x:Entry __
   {
       return x;
