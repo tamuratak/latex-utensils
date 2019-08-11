@@ -1,16 +1,16 @@
 Root
-  = __ content:(EachEntry)*
+  = __ Comment* content:(EachEntry)*
   {
       return { content };
   }
 
 
 Comment
-  = QuotedValue
-  / CurlyBracketValue
-  / '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
+  = '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
   / '@comment'i __ '(' ( QuotedValue / CurlyBracketValue / [^}] )* ')'
-  / !Entry .
+  / QuotedValue
+  / CurlyBracketValue
+  / !Entry [^@]
 
 EachEntry
   = x:Entry __

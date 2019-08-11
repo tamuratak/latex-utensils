@@ -1,4 +1,4 @@
-// import * as assert from 'assert'
+import * as assert from 'assert'
 import {bibtexParser} from '../src/main'
 import {equalOnlyOnExpectedOwnedProperties} from './assert_partially'
 
@@ -49,6 +49,16 @@ title={sample title3}
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+    test('parse only @comment', () => {
+        const bib = `
+@Comment{jabref-meta: grouping:
+0 AllEntriesGroup:;
+1 StaticGroup:Markings\\;2\\;1\\;\\;\\;\\;;
+2 StaticGroup:James:6\\;2\\;1\\;\\;\\;\\;;
+}`
+        const doc = bibtexParser.parse(bib)
+        assert.strictEqual(doc.content.length, 0)
+    })
 
     test('parse bib with abbreviation', () => {
         const bib = `
@@ -95,6 +105,21 @@ title={sample title3}
             content: [ {
                 entryType: 'article',
                 content: [ { name: 'file', value: { content: '\\command{aaa}' } } ]
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
+    test('parse entry with command', () => {
+        const bib = `
+@Article{
+   file = "\\$\\%\\#\\&\\_\\{\\}"
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                content: [ { name: 'file', value: { content: '\\$\\%\\#\\&\\_\\{\\}' } } ]
             } ]
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
