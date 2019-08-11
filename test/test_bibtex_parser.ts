@@ -50,12 +50,7 @@ title={sample title3}
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
     test('parse only @comment', () => {
-        const bib = `
-@Comment{jabref-meta: grouping:
-0 AllEntriesGroup:;
-1 StaticGroup:Markings\\;2\\;1\\;\\;\\;\\;;
-2 StaticGroup:James:6\\;2\\;1\\;\\;\\;\\;;
-}`
+        const bib = '@Comment{ xxx }'
         const doc = bibtexParser.parse(bib)
         assert.strictEqual(doc.content.length, 0)
     })
