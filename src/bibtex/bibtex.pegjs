@@ -81,7 +81,6 @@ InternalKey
       return name;
   }
 
-
 FieldArray
   = begin:Field fields:( __ ',' __ x:Field { return x; } )* __ ','?
   {
