@@ -10,17 +10,19 @@ Comment
   / CurlyBracketValue
   / '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
   / '@comment'i __ '(' ( QuotedValue / CurlyBracketValue / [^}] )* ')'
-  / [^@]
+  / !EntryElement .
 
 Entry
-  = x:(StringEntry / PreambleEntry / Entry_p) __
+  = x:EntryElement __
   {
       return x;
   }
-  / Comment+ x:(StringEntry / PreambleEntry / Entry_p) __
+  / Comment+ x:EntryElement __
   {
       return x;
   }
+
+EntryElement = StringEntry / PreambleEntry / Entry_p
 
 Entry_p
   = entryType:EntryType __ '{' __ internalKey:InternalKey? __
@@ -105,7 +107,7 @@ CurlyBracketValue
   }
 
 QuotedValue
-  = '"' content:$(( CurlyBracketValue / [^"] )*) '"'
+  = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
   {
       return { kind: 'value', content };
   }
