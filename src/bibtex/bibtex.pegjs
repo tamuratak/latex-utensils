@@ -1,5 +1,5 @@
 Root
-  = __ Comment* __ content:(EachEntry)* __ Comment* __
+  = content:(EachEntry)* Comment*
   {
       return { content };
   }
