@@ -124,4 +124,19 @@ title={sample title3}
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+
+    test('parse entry with concat', () => {
+        const bib = `
+@Article{
+   file = "abc" # "xyz"
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                content: [ { name: 'file', value: { kind: 'concat' } } ]
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
 })
