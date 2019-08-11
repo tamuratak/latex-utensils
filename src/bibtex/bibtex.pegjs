@@ -1,9 +1,8 @@
 Root
-  = __ Comment* content:(EachEntry)*
+  = __ Comment* __ content:(EachEntry)* __ Comment* __
   {
       return { content };
   }
-
 
 Comment
   = '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
