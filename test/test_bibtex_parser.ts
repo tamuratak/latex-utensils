@@ -151,4 +151,18 @@ Blah Blah
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+
+    test('parse entry with quotes', () => {
+        const bib = `
+@article{
+    title={sample \\"aaaa\\" title},
+    name={sample "aaaa" title"}
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ { entryType: 'article' } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
 })
