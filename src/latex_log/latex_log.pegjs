@@ -13,23 +13,34 @@ EachFileStack
 FileStack
   = '(' path:Path ')' Delimiter+
   {
-      return { path, content: [] };
+      return { kind: 'node', path, content: [] };
   }
   / '(' path:Path Delimiter+ content:FileStackElement+ ')' __
   {
-      return { path, content };
+      return { kind: 'node', path, content };
   }
 
 FileStackElement
-  = x:FileStack 
+  = FileStack 
+  / PageNumber
+  / x:$(LogTextElement+)
   {
-      return x;
+      return { kind: 'text_string', content:x };
   }
-  / $(LogTextElement+)
- 
+
+PageNumber
+  = '[' page:$([0-9]+) __ content:$([^\]]*) ']'
+  {
+      return { kind: 'page_number', page: Number(page), content }
+  }
+
+PageNumberChar
+  = !']' .
+  / ']' & ' ['
+
 LogTextElement
   = !FileStack ParenthesisString
-  / !FileStack [^()]
+  / !FileStack !PageNumber [^()]
 
 ParenthesisString
   = '(' LogTextElement+ ')'
@@ -39,7 +50,7 @@ Path
 
 PathChar
   = !')' Char
-  / ')' !Delimiter
+  / ')' !Delimiter !')'
 
 Char = !Delimiter .
   
