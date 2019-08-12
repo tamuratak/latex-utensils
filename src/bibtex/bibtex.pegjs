@@ -28,13 +28,13 @@ BasicEntry
       fields:FieldArray? __
     '}'
   {
-      return { entryType, content: fields || [], internalKey: internalKey || undefined };
+      return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
   }
   / entryType:EntryType __ '(' __ internalKey:InternalKey? __
       fields:FieldArray? __
     ')'
   {
-      return { entryType, content: fields || [], internalKey: internalKey || undefined };
+      return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
   }
 
 StringEntry
@@ -42,13 +42,13 @@ StringEntry
        name:AbbreviationName __ '=' __ value:( Concat / CurlyBracketValue / QuotedValue / Number ) __
     '}'
   {
-      return { entryType: 'string', abbreviation: name, value };
+      return { entryType: 'string', abbreviation: name, value, location: location() };
   }
   /  '@string'i __ '(' __ 
        name:AbbreviationName __ '=' __ value:( Concat / CurlyBracketValue / QuotedValue / Number  ) __
     ')'
   {
-      return { entryType: 'string', abbreviation: name, value };
+      return { entryType: 'string', abbreviation: name, value, location: location() };
   }
 
 PreambleEntry
@@ -56,13 +56,13 @@ PreambleEntry
        content:( Concat / CurlyBracketValue / QuotedValue ) __
     '}'
   {
-      return { entryType: 'preamble', content };
+      return { entryType: 'preamble', content, location: location() };
   }
   / '@preamble'i __ '(' __
        content:( Concat / CurlyBracketValue / QuotedValue ) __
     ')'
   {
-      return { entryType: 'preamble', content };
+      return { entryType: 'preamble', content, location: location() };
   }
 
 EntryType
@@ -90,7 +90,7 @@ FieldArray
 Field
   = name:FieldName __ '=' __ value:( Concat / CurlyBracketValue / QuotedValue / Number / Abbreviation )
   {
-      return { name, value };
+      return { name, value, location: location() };
   }
 
 FieldName = NameToLowerCase
@@ -98,7 +98,7 @@ FieldName = NameToLowerCase
 Concat
   = begin:ConcatElement rest:(__ '#' __ x:ConcatElement { return x; })+
   {
-      return { kind: 'concat', content: [begin].concat(rest) };
+      return { kind: 'concat', content: [begin].concat(rest), location: location() };
   }
 
 ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation
@@ -106,25 +106,25 @@ ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation
 CurlyBracketValue
   = '{' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^}] )*) '}'
   {
-      return { kind: 'text_string', content };
+      return { kind: 'text_string', content, location: location() };
   }
 
 QuotedValue
   = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
   {
-      return { kind: 'text_string', content };
+      return { kind: 'text_string', content, location: location() };
   }
 
 Abbreviation
   = content:AbbreviationName
   {
-      return { kind: 'abbreviation', content };
+      return { kind: 'abbreviation', content, location: location() };
   }
 
 Number
   = content:$([0-9]+)
   {
-      return { kind: 'number', content };
+      return { kind: 'number', content, location: location() };
   }
 
 AbbreviationName = $([a-zA-Z0-9_:-]+)
