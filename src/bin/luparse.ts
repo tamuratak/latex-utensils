@@ -1,4 +1,4 @@
-import {bibtexParser, latexParser} from '../main'
+import {bibtexParser, latexLogParser, latexParser} from '../main'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as util from 'util'
@@ -31,16 +31,18 @@ if (!fs.existsSync(filename)) {
 }
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
 const startRule = commander.startRule || 'Root'
-
-let ret: latexParser.LatexAst | bibtexParser.BibtexAst
+const ext = path.extname(filename)
+let ret: latexParser.LatexAst | bibtexParser.BibtexAst | latexLogParser.LatexLogAst
 try {
-    if (path.extname(filename) === '.tex') {
+    if (ext === '.tex') {
         ret = latexParser.parse(s, {startRule, enableComment: commander.comment})
         if (!commander.location) {
             deleteLocation(ret)
         }
-    } else if (path.extname(filename) === '.bib') {
+    } else if (ext === '.bib') {
         ret = bibtexParser.parse(s)
+    } else if (ext === '.log') {
+        ret = latexLogParser.parse(s)
     } else {
         console.error('The suffix of the file is unknown.')
         process.exit(1)
