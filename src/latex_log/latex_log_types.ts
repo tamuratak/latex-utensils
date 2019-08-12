@@ -18,6 +18,18 @@ export function isTexError(e: LatexLogElement): e is TexError {
     return e.kind === 'tex_error'
 }
 
+export type LatexmkError = {
+    kind: 'latexmk_error';
+    message: string;
+    path: string;
+    line: number;
+    command?: string;
+}
+
+export function isLatexmkError(e: LatexLogElement): e is LatexmkError {
+    return e.kind === 'latexmk_error'
+}
+
 export type LogText = {
     kind: 'text_string';
     content: string
@@ -37,7 +49,7 @@ export function isPageNumber(e: LatexLogElement): e is PageNumber {
     return e.kind === 'page_number'
 }
 
-export type LatexLogElement = FileStack | TexError | LogText | PageNumber
+export type LatexLogElement = FileStack | TexError | LatexmkError | LogText | PageNumber
 
 export type LatexLogAst = {
     content: (LogText | FileStack)[]
