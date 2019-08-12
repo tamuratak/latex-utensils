@@ -44,7 +44,7 @@
     "generate:simple": "pegjs --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_without_trace.js src/latex/latex.pegjs",
     "generate:trace": "pegjs --trace --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_with_trace.js src/latex/latex.pegjs",
     "generate:bibtex": "pegjs -o out/src/bibtex/bibtex_parser_js.js src/bibtex/bibtex.pegjs",
-    "generate:latex_log": "pegjs -o out/src/latex_log/latex_log_parser_js.js src/latex_log/latex_log.pegjs",
+    "generate:latex_log": "pegjs --cache -o out/src/latex_log/latex_log_parser_js.js src/latex_log/latex_log.pegjs",
     "generate": "npm run generate:simple && npm run generate:trace && npm run generate:bibtex && npm run generate:latex_log",
     "compile": "tsc -p ./",
     "build": "npm run compile && npm run generate",

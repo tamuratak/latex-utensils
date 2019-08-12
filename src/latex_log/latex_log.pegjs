@@ -87,8 +87,12 @@ PathPrefix = '.' / '/' / [a-zA-Z] ':' / '\\\\'
 PathChar
   = !PathEnd .
 
+// workaround to allow spaces in path
 PathEnd
-  = LineBreak / skip_space '(' / ')'+ skip_space '(' / '))' / ')' LineBreak
+  = LineBreak
+  / skip_space '(' Path
+  / ')'+ skip_space '(' Path
+  /  [ )]+ LineBreak
 
 // quoted string is used by MikTeX as path string
 MiktexPath
