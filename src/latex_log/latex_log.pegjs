@@ -11,7 +11,11 @@ EachFileStack
   }
 
 FileStack
-  = '(' path:Path __ content:FileStackElement* ')' __
+  = '(' path:Path ')' Delimiter+
+  {
+      return { path, content: [] };
+  }
+  / '(' path:Path Delimiter+ content:FileStackElement+ ')' __
   {
       return { path, content };
   }
@@ -31,7 +35,13 @@ ParenthesisString
   = '(' LogTextElement+ ')'
 
 Path
-  = $( ('.' / '/') (!Delimiter [^)])+ )
+  = $( ('.' / '/') PathChar+ )
+
+PathChar
+  = !')' Char
+  / ')' !Delimiter
+
+Char = !Delimiter .
   
 Delimiter = ' ' / '\r\n' / '\n'
 
