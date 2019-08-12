@@ -88,7 +88,7 @@ PathChar
   = !PathEnd .
 
 PathEnd
-  = LineBreak / skip_space '(' Path / ')'+ skip_space '(' Path / ')'+ LineBreak
+  = LineBreak / skip_space '(' / ')'+ skip_space '(' / '))' / ')' LineBreak
 
 // quoted string is used by MikTeX as path string
 MiktexPath
