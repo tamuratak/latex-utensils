@@ -80,12 +80,20 @@ ParenthesisString
 
 Path
   = $( PathPrefix PathChar+ )
+  / MiktexPath
 
 PathPrefix = '.' / '/' / [a-zA-Z] ':' / '\\\\'
 
 PathChar
   = !')' Char
   / ')' !Delimiter !')'
+
+// quoted string is used by MikTeX as path string
+MiktexPath
+  = '"' x:$(( '\\"' / [^"] )+) '"'
+  {
+    return x;
+  }
 
 Char = !Delimiter .
 
