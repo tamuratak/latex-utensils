@@ -4,18 +4,6 @@ Root
       return { content: x };
   }
 
-ExtractFileStack
-  = (!FileStack .)* x:EachFileStack+ .*
-  {
-      return x;
-  }
-
-EachFileStack
-  = (!FileStack .)* x:FileStack
-  {
-      return x;
-  }
-
 FileStack
   = '(' path:Path ')' &(')' / Delimiter) __
   {
@@ -61,7 +49,9 @@ ParenthesisString
   = '(' LogTextElement+ ')'
 
 Path
-  = $( ('.' / '/') PathChar+ )
+  = $( PathPrefix PathChar+ )
+
+PathPrefix = '.' / '/' / [a-zA-Z] ':' / '\\\\'
 
 PathChar
   = !')' Char
