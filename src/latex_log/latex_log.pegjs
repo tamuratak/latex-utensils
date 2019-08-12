@@ -17,7 +17,18 @@ FileStack
 FileStackElement
   = FileStack 
   / PageNumber
+  / TexError
   / LogText
+
+TexError
+  = '!' skip_space message:$(TexErrorChar+) LineBreak
+    'l.' line:$([0-9]+) skip_space command:$(( !LineBreak . )*) __
+  {
+      return { kind: 'tex_error', message, line: Number(line), command: command || undefined };
+  }
+
+TexErrorChar
+  = ( !( LineBreak 'l.' [0-9]+ ) . )
 
 PageNumber
   = '[' page:$([0-9]+) __ content:$([^\]]*) ']'
@@ -43,7 +54,7 @@ LogText
 
 LogTextElement
   = !FileStack ParenthesisString
-  / !FileStack !PageNumber [^()]
+  / !FileStack !TexError !PageNumber [^()]
 
 ParenthesisString
   = '(' LogTextElement+ ')'
@@ -58,7 +69,11 @@ PathChar
   / ')' !Delimiter !')'
 
 Char = !Delimiter .
-  
+
+LineBreak = '\r\n' / '\n'
+
 Delimiter = ' ' / '\t' / '\r\n' / '\n'
+
+skip_space = [ \t]*
 
 __ = ('\r\n' / [ \t\n])*
