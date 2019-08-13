@@ -1,5 +1,11 @@
 Root
-  = x:(LogTextOutsideFileStack / FileStack)+
+  // normal or -interaction=nonstopmode
+  = x:(LogTextOutsideFileStack FileStack LogTextOutsideFileStack)
+  {
+      return { content: x };
+  }
+  // -halt-on-error
+  / x:(LogTextOutsideFileStackRightOpen  FileStackRightOpen)
   {
       return { content: x };
   }
@@ -12,6 +18,24 @@ FileStack
   / '(' path:Path Delimiter+ content:FileStackElement+ ')' __
   {
       return { kind: 'file_stack', path, content };
+  }
+
+FileStackRightOpen
+  = '(' path:Path  Delimiter+ content:FileStackElement+
+  {
+    return { kind: 'file_stack', path, content };
+  }
+
+FileStackRightOpenElement
+  = FileStack
+  / FileStackRightOpen
+  / PageNumber
+  / LogText
+
+LogTextOutsideFileStackRightOpen
+  = x:$((!FileStackRightOpen .)+)
+  {  
+      return { kind: 'text_string', content:x };
   }
 
 FileStackElement
