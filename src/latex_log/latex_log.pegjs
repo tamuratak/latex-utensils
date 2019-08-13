@@ -92,7 +92,7 @@ PathEnd
   = LineBreak
   / skip_space '(' Path
   / ')'+ skip_space '(' Path
-  /  [ )]+ LineBreak
+  /  ( Space / ')' )+ LineBreak
 
 // quoted string is used by MikTeX as path string
 MiktexPath
@@ -105,8 +105,10 @@ Char = !Delimiter .
 
 LineBreak = '\r\n' / '\n'
 
-Delimiter = ' ' / '\t' / '\r\n' / '\n'
+Space = [ \t]
 
-skip_space = [ \t]*
+Delimiter = Space / LineBreak
 
-__ = ([ \t] / !TexError !LatexmkError LineBreak )*
+skip_space = Space*
+
+__ = ( Space / !TexError !LatexmkError LineBreak )*
