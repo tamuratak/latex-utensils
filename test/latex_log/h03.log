@@ -1,0 +1,19 @@
+This is e-upTeX, Version 3.14159265-p3.8.1-u1.23-180226-2.6 (utf8.uptex) (TeX Live 2018) (preloaded format=uplatex)
+ restricted \write18 enabled.
+entering extended mode
+(./t.tex
+pLaTeX2e <2018-05-20u02> (based on LaTeX2e <2018-04-01> patch level 5)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size12.clo))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty)) (./t.aux)
+! Undefined control sequence.
+l.6 \dtae
+         {December 2004}
+No pages of output.
+Transcript written on t.log.

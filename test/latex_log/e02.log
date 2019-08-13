@@ -1,0 +1,60 @@
+This is e-pTeX, Version 3.14159265-p3.8.1-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex)
+ restricted \write18 enabled.
+entering extended mode
+(./t.tex
+pLaTeX2e <2018-05-20> (based on LaTeX2e <2018-04-01> patch level 5)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size12.clo))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty)) (./t.aux
+(./t1.aux))
+./t.tex:6: Undefined control sequence.
+l.6 \dtae
+         {December 2004}
+[1] (./t1.tex
+Runaway argument?
+ s \\ t \\ u 
+./t1.tex:5: Paragraph ended before \align was complete.
+<to be read again> 
+                   \par 
+l.5 
+    
+./t1.tex:5: Missing $ inserted.
+<inserted text> 
+                $
+l.5 
+    
+./t1.tex:5: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.5 
+    
+./t1.tex:5: Display math should end with $$.
+<to be read again> 
+                   \par 
+l.5 
+    
+) [2]
+
+./t.tex:13: LaTeX Error: \begin{align} on input line 1 ended by \end{document}.
+
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 \end{document}
+                   
+[3] (./t.aux (./t1.aux)) )
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 1 (\begingroup)
+### bottom level
+(see the transcript file for additional information)
+Output written on t.dvi (3 pages, 732 bytes).
+Transcript written on t.log.

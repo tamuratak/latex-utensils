@@ -2,12 +2,17 @@ Root
   // normal or -interaction=nonstopmode
   = x:(LogTextOutsideFileStack FileStack LogTextOutsideFileStack)
   {
-      return { content: x };
+      return { kind: 'full', content: x };
   }
   // -halt-on-error
-  / x:(LogTextOutsideFileStackRightOpen  FileStackRightOpen)
+  / x:(LogTextOutsideFileStackRightOpen FileStackRightOpen)
   {
-      return { content: x };
+      return { kind: 'halt_on_error', content: x };
+  }
+  // unknown
+  / x:(LogTextOutsideFileStack FileStack)+
+  {
+      return { kind: 'unknown', content: x };
   }
 
 FileStack
@@ -117,6 +122,9 @@ PathEnd
   / skip_space '(' Path
   / ')'+ skip_space '(' Path
   /  ( Space / ')' )+ LineBreak
+  /*  for lualatex  */
+  / '(' __ 'l' __ 'o' __ 'a' __ 'd' __ 'l' __ 'u' __ 'c' __ ':'
+  / '(' __ 'u' __ 's' __ 'i' __ 'n' __ 'g' __ 'r' __ 'e' __ 'a' __ 'd' __ 'c' __ 'a' __ 'c' __ 'h' __ 'e' __ ':'
 
 // quoted string is used by MikTeX as path string
 MiktexPath

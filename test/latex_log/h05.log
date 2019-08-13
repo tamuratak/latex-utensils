@@ -1,0 +1,31 @@
+This is LuaTeX, Version 1.07.0 (TeX Live 2018) 
+ restricted system commands enabled.
+(./t.tex
+LaTeX2e <2018-04-01> patch level 5
+(using write cache: /Users/tamura/Library/texlive/2018/texmf-var/luatex-cache/g
+eneric)(using read cache: /usr/local/texlive/2018/texmf-var/luatex-cache/generi
+c /Users/tamura/Library/texlive/2018/texmf-var/luatex-cache/generic)
+luaotfload | main : initialization completed in 0.132 seconds
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size12.clo(load luc: /Users/
+tamura/Library/texlive/2018/texmf-var/luatex-cache/generic/fonts/otl/lmroman12-
+regular.luc)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty)) (./t.aux)(lo
+ad luc: /Users/tamura/Library/texlive/2018/texmf-var/luatex-cache/generic/fonts
+/otl/lmroman17-regular.luc)(load luc: /Users/tamura/Library/texlive/2018/texmf-
+var/luatex-cache/generic/fonts/otl/lmroman12-bold.luc)
+! Undefined control sequence.
+l.6 \dtae
+       {December 2004}
+ 522 words of node memory still in use:
+   6 hlist, 1 vlist, 2 rule, 1 local_par, 1 dir, 7 glue, 1 kern, 2 penalty, 4 g
+lyph, 8 attribute, 48 glue_spec, 8 attribute_list, 2 write nodes
+   avail lists: 2:5,4:1,5:5,8:1,9:1
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on t.log.

@@ -1,0 +1,77 @@
+This is LuaTeX, Version 1.07.0 (TeX Live 2018) 
+ restricted system commands enabled.
+(./t.tex
+LaTeX2e <2018-04-01> patch level 5
+(using write cache: /Users/tamura/Library/texlive/2018/texmf-var/luatex-cache/g
+eneric)(using read cache: /usr/local/texlive/2018/texmf-var/luatex-cache/generi
+c /Users/tamura/Library/texlive/2018/texmf-var/luatex-cache/generic)
+luaotfload | main : initialization completed in 0.128 seconds
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/size12.clo(load luc: /Users/
+tamura/Library/texlive/2018/texmf-var/luatex-cache/generic/fonts/otl/lmroman12-
+regular.luc)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsmath/amsopn.sty)) (./t.aux)(lo
+ad luc: /Users/tamura/Library/texlive/2018/texmf-var/luatex-cache/generic/fonts
+/otl/lmroman17-regular.luc)(load luc: /Users/tamura/Library/texlive/2018/texmf-
+var/luatex-cache/generic/fonts/otl/lmroman12-bold.luc)
+! Undefined control sequence.
+l.6 \dtae
+       {December 2004}
+[1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(./t1.tex
+Runaway argument?
+ s \\ t \\ u 
+! Paragraph ended before \align was complete.
+<to be read again> 
+\par 
+l.5 
+  
+! Missing $ inserted.
+<inserted text> 
+$
+l.5 
+  
+! Missing \endgroup inserted.
+<inserted text> 
+\endgroup 
+l.5 
+  
+! Display math should end with $$.
+<to be read again> 
+\par 
+l.5 
+  
+) [2]
+
+! LaTeX Error: \begin{align} on input line 1 ended by \end{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 \end{document}
+                 
+[3] (./t.aux (./t1.aux)))
+(\end occurred inside a group at level 1)
+
+### semi simple group (level 1) entered at line 1 (\begingroup)
+### bottom level
+(see the transcript file for additional information)
+ 444 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 2 glue, 1 kern, 7 attribute, 48 glue_spec, 7 attri
+bute_list, 1 write nodes
+   avail lists: 2:85,3:10,4:1,5:37,6:3,7:75,8:8,9:57,11:2
+</usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.
+otf></usr/local/texlive/2018/texmf-dist/fonts/opentype/public/lm/lmroman12-bold
+.otf></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
+pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.p
+fb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+>
+Output written on t.pdf (3 pages, 30949 bytes).
+Transcript written on t.log.

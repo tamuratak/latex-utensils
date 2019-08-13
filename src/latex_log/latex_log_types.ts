@@ -52,5 +52,6 @@ export function isPageNumber(e: LatexLogElement): e is PageNumber {
 export type LatexLogElement = FileStack | TexError | LatexmkError | LogText | PageNumber
 
 export type LatexLogAst = {
-    content: (LogText | FileStack)[]
+    kind: 'full' | 'halt_on_error' | 'unknown';
+    content: (LogText | FileStack)[];
 }
