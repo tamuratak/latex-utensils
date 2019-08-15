@@ -4,6 +4,7 @@ import * as path from 'path'
 import * as util from 'util'
 import * as process from 'process'
 import * as commander from 'commander'
+import Tracer = require('pegjs-backtrace')
 
 function deleteLocation(node: any) {
     if (node.hasOwnProperty('location')) {
@@ -23,6 +24,7 @@ commander
 .option('-l, --location', 'enable location')
 .option('-c, --comment', 'enable comment')
 .option('-s, --start-rule [rule]', 'set start rule. default is "Root".')
+.option('-d, --debug', 'enable backtrace for debug')
 .parse(process.argv)
 const filename = commander.args[0]
 if (!fs.existsSync(filename)) {
@@ -33,16 +35,22 @@ const s = fs.readFileSync(filename, {encoding: 'utf8'})
 const startRule = commander.startRule || 'Root'
 const ext = path.extname(filename)
 let ret: latexParser.LatexAst | bibtexParser.BibtexAst | latexLogParser.LatexLogAst
+const useColor = commander.color ? true : false
+const tracer = commander.debug ? new Tracer(s, { showTrace: true, useColor, }) : undefined
+
 try {
     if (ext === '.tex') {
-        ret = latexParser.parse(s, {startRule, enableComment: commander.comment})
+        ret = latexParser.parse(
+            s,
+            {startRule, enableComment: commander.comment, tracer}
+        )
         if (!commander.location) {
             deleteLocation(ret)
         }
     } else if (ext === '.bib') {
-        ret = bibtexParser.parse(s)
+        ret = bibtexParser.parse(s, { tracer })
     } else if (ext === '.log') {
-        ret = latexLogParser.parse(s)
+        ret = latexLogParser.parse(s, { tracer })
     } else {
         console.error('The suffix of the file is unknown.')
         process.exit(1)

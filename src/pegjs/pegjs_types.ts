@@ -18,3 +18,20 @@ export class SyntaxErrorBase extends Error {
     location: Location
     name: 'SyntaxError'
 }
+
+export type ParserOptions = {
+    startRule?: string;
+    tracer?: Tracer;
+    enableComment?: boolean;
+}
+
+export type TraceArg = {
+    type: 'rule.enter' | 'rule.match' | 'rule.fail';
+    rule: string;
+    result: string | Node;
+    location: Location;
+}
+
+export type Tracer = {
+    trace: (e: TraceArg) => any;
+}
