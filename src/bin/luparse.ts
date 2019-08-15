@@ -58,6 +58,9 @@ try {
     }
 } catch (e) {
     if (latexParser.isSyntaxError(e)) {
+        if (tracer) {
+            console.log(tracer.getBacktraceString())
+        }
         const loc = e.location
         console.error(`SyntaxError at line: ${loc.start.line}, column: ${loc.start.column}.`)
         console.error(e.message)
