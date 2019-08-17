@@ -16,7 +16,10 @@
         "rootDir": ".",
         "sourceMap": true,
         "strictNullChecks": true,
-        "target": "es2019"
+        "target": "es2019",
+        "baseUrl": "./",
+        "paths": {"pegjs-backtrace": ["types/pegjs-backtrace"]},
+        "typeRoots": ["./types", "./node_modules/@types"]
     },
     "exclude": [
         "node_modules",
