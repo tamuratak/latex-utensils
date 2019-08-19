@@ -4,9 +4,30 @@ export * from './latex_parser_types'
 import * as _latexParser from './latex_parser_without_trace'
 import * as _latexParserWithTrace from './latex_parser_with_trace'
 
+class TimeoutTracer {
+    private _start: number
+
+    constructor(readonly timeout: number) {
+        this._start = Date.now()
+    }
+
+    trace() {
+        const now = Date.now()
+        if ( (now - this._start) > this.timeout ) {
+            throw new Error('could not complete parsing within the given time.')
+        }
+    }
+
+}
 
 export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
-    if (option && option.tracer) {
+    if (option && option.timeout && option.tracer) {
+        throw new Error('tracer and timeout not allowed at the same time.')
+    }
+    if (option && option.timeout) {
+        const tracer = new TimeoutTracer(option.timeout)
+        return _latexParserWithTrace.parse(s, { tracer })
+    } else if (option && option.tracer) {
         return _latexParserWithTrace.parse(s, option)
     } else {
         return _latexParser.parse(s, option)

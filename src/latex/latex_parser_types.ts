@@ -302,6 +302,7 @@ export type ParserOptions = {
     startRule?: 'Root' | 'Preamble';
     tracer?: Tracer;
     enableComment?: boolean;
+    timeout?: number;
 }
 
 export type TraceArg = {

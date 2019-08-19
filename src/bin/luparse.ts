@@ -25,6 +25,7 @@ commander
 .option('-c, --comment', 'enable comment')
 .option('-s, --start-rule [rule]', 'set start rule. default is "Root".')
 .option('-d, --debug', 'enable backtrace for debug')
+.option('--timeout [timeout]', 'set tiemout in milliseconds')
 .parse(process.argv)
 const filename = commander.args[0]
 if (!fs.existsSync(filename)) {
@@ -37,12 +38,13 @@ const ext = path.extname(filename)
 let ret: latexParser.LatexAst | bibtexParser.BibtexAst | latexLogParser.LatexLogAst
 const useColor = commander.color ? true : false
 const tracer = commander.debug ? new Tracer(s, { showTrace: true, useColor, }) : undefined
+const timeout = commander.timeout
 
 try {
     if (ext === '.tex') {
         ret = latexParser.parse(
             s,
-            {startRule, enableComment: commander.comment, tracer}
+            {startRule, enableComment: commander.comment, tracer, timeout}
         )
         if (!commander.location) {
             deleteLocation(ret)
