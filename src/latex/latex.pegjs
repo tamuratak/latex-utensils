@@ -215,7 +215,8 @@ displayMathShiftShift
   }
 
 Command
-  = escape n:commandName args:(argumentList / Group)*
+  = LabelCommand
+  / escape n:commandName args:(argumentList / Group)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
@@ -225,6 +226,19 @@ commandName
   / $((char / '@')+)
   / "\\*"
   / .
+
+LabelCommand
+  = escape "label" x:LabelGroup
+  {
+    return { kind: "command", name: "label", args: [x], location: location() };
+  }
+
+MathCommand
+  = LabelCommand
+  / escape n:commandName args:(argumentList / MathGroup)*
+  {
+    return { kind: "command", name: n, args: args, location: location() };
+  }
 
 Group
   = skip_space beginGroup skip_space x:(!endGroup c:Element {return c;})* endGroup
@@ -237,6 +251,18 @@ MathGroup
   = skip_space beginGroup skip_space x:(!endGroup c:MathElement {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
+  }
+
+LabelGroup
+  = skip_space beginGroup skip_space x:LabelText endGroup
+  {
+    return { kind: "arg.group", content: [x], location: location() };
+  }
+
+LabelText
+  = c:$((!endGroup .)*)
+  {
+    return { kind: "text.string", content: c, location: location() };
   }
 
 // \left( ... \right) in math mode.

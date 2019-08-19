@@ -159,6 +159,25 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\label{a_b}', () => {
+            const tex = '\\label{a_b}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'label',
+                    args: [ {
+                        kind: 'arg.group',
+                        content: [ {
+                            kind: 'text.string',
+                            content: 'a_b'
+                        } ]
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse ~', () => {
             const tex = '~'
             const doc = latexParser.parse(tex)
