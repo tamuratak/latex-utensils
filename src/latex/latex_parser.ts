@@ -1,8 +1,8 @@
 import {SyntaxError} from './latex_parser_syntaxerror'
 import * as lp from './latex_parser_types'
 export * from './latex_parser_types'
-import * as _latexParser from './latex_parser_without_trace'
-import * as _latexParserWithTrace from './latex_parser_with_trace'
+import * as _latexParser from './latex_parser_simple'
+import * as _latexParserWithTrace from './latex_parser_trace'
 import {TimeoutTracer} from '../pegjs/timeout'
 
 export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
