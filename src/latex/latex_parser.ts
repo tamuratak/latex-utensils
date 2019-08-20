@@ -1,10 +1,14 @@
 import {SyntaxError} from './latex_parser_syntaxerror'
 import * as lp from './latex_parser_types'
-export * from './latex_parser_types'
 import * as _latexParser from './latex_parser_with_trace'
 import {TimeoutTracer} from '../pegjs/timeout'
+import {EmptyTracer} from '../pegjs/empty_tracer'
 
-export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
+export * from './latex_parser_types'
+
+export function parse(s: string, _option?: lp.ParserOptions): lp.LatexAst {
+    const option = _option || {}
+    option.tracer = option.tracer || new EmptyTracer()
     if (option && option.timeout && option.tracer) {
         throw new Error('tracer and timeout not allowed at the same time.')
     }
@@ -19,7 +23,7 @@ export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
 }
 
 export function parsePreamble(s: string): lp.LatexAst {
-    return _latexParser.parse(s, {startRule: 'Preamble'})
+    return _latexParser.parse(s, {startRule: 'Preamble', tracer: new EmptyTracer()})
 }
 
 export function isSyntaxError(e: any): e is SyntaxError {
