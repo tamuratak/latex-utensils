@@ -297,21 +297,3 @@ export function isAstPreamble(ast: LatexAst): ast is AstPreamble {
 }
 
 export type LatexAst = AstRoot | AstPreamble
-
-export type ParserOptions = {
-    startRule?: 'Root' | 'Preamble';
-    tracer?: Tracer;
-    enableComment?: boolean;
-    timeout?: number;
-}
-
-export type TraceArg = {
-    type: 'rule.enter' | 'rule.match' | 'rule.fail';
-    rule: string;
-    result: string | Node;
-    location: Location;
-}
-
-export type Tracer = {
-    trace: (e: TraceArg) => any;
-}

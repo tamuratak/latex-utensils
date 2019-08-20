@@ -23,6 +23,7 @@ export type ParserOptions = {
     startRule?: string;
     tracer?: Tracer;
     enableComment?: boolean;
+    timeout?: number;
 }
 
 export type TraceArg = {

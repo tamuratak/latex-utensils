@@ -1,5 +1,5 @@
-import {ParserOptions, LatexAst} from './latex_parser_types'
-import {SyntaxErrorBase} from '../pegjs/pegjs_types'
+import {LatexAst} from './latex_parser_types'
+import {ParserOptions, SyntaxErrorBase} from '../pegjs/pegjs_types'
 
 export declare class SyntaxError extends SyntaxErrorBase {}
 
