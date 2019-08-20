@@ -407,13 +407,13 @@ commandParameter = "#"                            // catcode 6
 Superscript                            // catcode 7
   = "^"
   {
-    return { kind: "superscript", location: location() };
+    return { kind: "superscript", content: [], location: location() };
   }
 
 Subscript                             // catcode 8
   = "_"
   {
-    return { kind: "subscript", location: location() };
+    return { kind: "subscript", content: [], location: location() };
   }
 
 ignore                                            // catcode 9
