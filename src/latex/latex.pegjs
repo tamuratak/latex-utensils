@@ -88,7 +88,7 @@ MathElement_p
   / Subscript skip_space x:MathElement { return { kind: "subscript", content: x, location: location() }; }
   / ActiveCharacter
   / ignore
-  / c:. { return { kind: "math.character", content: c}; }
+  / c:. { return { kind: "math.character", content: c }; }
 
 noncharToken
   = escape
@@ -430,13 +430,13 @@ punctuation  = [.,;:\-\*/()!?=+<>\[\]]             // catcode 12
 ActiveCharacter                                    // catcode 13
   = "~"
   {
-    return { kind: "activeCharacter" };
+    return { kind: "activeCharacter", location: location() };
   }
 
 CommandParameterWithNumber
   = commandParameter n:$(num*)
   {
-    return { kind: "commandParameter", nargs: n };
+    return { kind: "commandParameter", nargs: n, location: location() };
   }
 
 
