@@ -23,8 +23,9 @@ export function parse(s: string, option?: ParserOptions): lp.LatexAst {
     }
 }
 
-export function parsePreamble(s: string): lp.LatexAst {
-    return _latexParser.parse(s, {startRule: 'Preamble'})
+export function parsePreamble(s: string, option?: { timeout: number }): lp.LatexAst {
+    const timeout = option && option.timeout
+    return parse(s, {startRule: 'Preamble', timeout})
 }
 
 export function isSyntaxError(e: any): e is SyntaxError {
