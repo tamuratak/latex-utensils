@@ -28,5 +28,5 @@ export function parsePreamble(s: string): lp.LatexAst {
 }
 
 export function isSyntaxError(e: any): e is SyntaxError {
-    return e instanceof _latexParser.SyntaxError
+    return e instanceof _latexParser.SyntaxError || e instanceof _latexParserWithTrace.SyntaxError
 }
