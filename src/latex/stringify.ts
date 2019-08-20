@@ -58,7 +58,7 @@ export function stringify(
     if (lp.isParbreak(node)) {
         return '\\par' + lineBreak
     }
-    if (lp.isSupescript(node)) {
+    if (lp.isSuperscript(node)) {
         return '^' + stringifyArray(node.content, options)
     }
     if (lp.isSubscript(node)) {

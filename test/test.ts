@@ -178,6 +178,19 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse a_b', () => {
+            const tex = 'a_b'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    { kind: 'text.string' },
+                    { kind: 'subscript' },
+                    { kind: 'text.string' }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse ~', () => {
             const tex = '~'
             const doc = latexParser.parse(tex)

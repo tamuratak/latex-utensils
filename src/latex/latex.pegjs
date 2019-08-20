@@ -399,17 +399,27 @@ mathShift      = "$"                              // catcode 3
 AlignmentTab                                      // catcode 4
   = "&"
   {
-    return { kind: "alignmentTab" };
+    return { kind: "alignmentTab", location: location() };
   }
 
 commandParameter = "#"                            // catcode 6
-Superscript      = "^"                            // catcode 7
-Subscript        = "_"                            // catcode 8
+
+Superscript                            // catcode 7
+  = "^"
+  {
+    return { kind: "superscript", location: location() };
+  }
+
+Subscript                             // catcode 8
+  = "_"
+  {
+    return { kind: "subscript", location: location() };
+  }
 
 ignore                                            // catcode 9
   = "\0"
   {
-    return { kind: "ignore" };
+    return { kind: "ignore", location: location() };
   }
 
 char            = [a-zA-Z]                         // catcode 11

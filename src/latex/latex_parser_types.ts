@@ -96,13 +96,13 @@ export function isParbreak(node: Node): node is Parbreak {
     return node.kind === 'parbreak'
 }
 
-export type Supescript = {
+export type Superscript = {
     kind: 'superscript';
     content: Node[];
     location: Location;
 }
 
-export function isSupescript(node: Node): node is Supescript {
+export function isSuperscript(node: Node): node is Superscript {
     return node.kind === 'superscript'
 }
 
@@ -118,6 +118,7 @@ export function isSubscript(node: Node): node is Subscript {
 
 export type AlignmentTab = {
     kind: 'alignmentTab';
+    location: Location;
 }
 
 export function isAlignmentTab(node: Node): node is AlignmentTab {
@@ -127,6 +128,7 @@ export function isAlignmentTab(node: Node): node is AlignmentTab {
 export type CommandParameter = {
     kind: 'commandParameter';
     nargs: string;
+    location: Location;
 }
 
 export function isCommandParameter(node: Node): node is CommandParameter {
@@ -135,6 +137,7 @@ export function isCommandParameter(node: Node): node is CommandParameter {
 
 export type ActiveCharacter = {
     kind: 'activeCharacter';
+    location: Location;
 }
 
 export function isActiveCharacter(node: Node): node is ActiveCharacter {
@@ -143,6 +146,7 @@ export function isActiveCharacter(node: Node): node is ActiveCharacter {
 
 export type Ignore = {
     kind: 'ignore';
+    location: Location;
 }
 
 export function isIgnore(node: Node): node is Ignore {
@@ -258,7 +262,7 @@ export type Node
 | MathEnv
 | MathEnvAligned
 | Parbreak
-| Supescript
+| Superscript
 | Subscript
 | AlignmentTab
 | CommandParameter
