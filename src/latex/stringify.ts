@@ -6,7 +6,7 @@ function stringifyArray(arry: lp.Node[], options: { lineBreak: string }): string
     for (let i = 0; i < len; i++) {
         const cur = arry[i]
         ret += stringify(cur, options)
-        if (lp.isCommandParameter(cur)) {
+        if (lp.isCommandParameter(cur) || lp.isSubscript(cur) || lp.isSuperscript(cur)) {
             continue
         }
         if (i + 1 < len && lp.isTextString(arry[i + 1])) {

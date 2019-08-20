@@ -396,6 +396,13 @@ lmn
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
+
+        test('test stringify a_b', () => {
+            const tex = 'a_b'
+            const actualTeX = 'a_b'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
     })
 
     suite('other', () => {
