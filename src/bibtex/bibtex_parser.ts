@@ -1,6 +1,6 @@
 import * as bp from './bibtex_parser_types'
-import * as _bibexParser from './bibtex_parser_simple'
-import * as _bibexParserWithTrace from './bibtex_parser_trace'
+import * as _bibtexParser from './bibtex_parser_simple'
+import * as _bibtexParserWithTrace from './bibtex_parser_trace'
 import {ParserOptions} from '../pegjs/pegjs_types'
 import {TimeoutTracer} from '../pegjs/timeout'
 
@@ -13,10 +13,10 @@ export function parse(s: string, option?: ParserOptions): bp.BibtexAst {
     }
     if (option && option.timeout) {
         const tracer = new TimeoutTracer(option.timeout)
-        return _bibexParserWithTrace.parse(s, { tracer })
+        return _bibtexParserWithTrace.parse(s, { tracer })
     } else if (option && option.tracer) {
-        return _bibexParserWithTrace.parse(s, option)
+        return _bibtexParserWithTrace.parse(s, option)
     } else {
-        return _bibexParser.parse(s, option)
+        return _bibtexParser.parse(s, option)
     }
 }
