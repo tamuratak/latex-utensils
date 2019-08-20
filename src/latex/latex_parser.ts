@@ -1,7 +1,8 @@
 import {SyntaxError} from './latex_parser_syntaxerror'
 import * as lp from './latex_parser_types'
 export * from './latex_parser_types'
-import * as _latexParser from './latex_parser_with_trace'
+import * as _latexParser from './latex_parser_without_trace'
+import * as _latexParserWithTrace from './latex_parser_with_trace'
 import {TimeoutTracer} from '../pegjs/timeout'
 
 export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
@@ -10,9 +11,9 @@ export function parse(s: string, option?: lp.ParserOptions): lp.LatexAst {
     }
     if (option && option.timeout) {
         const tracer = new TimeoutTracer(option.timeout)
-        return _latexParser.parse(s, { tracer })
+        return _latexParserWithTrace.parse(s, { tracer })
     } else if (option && option.tracer) {
-        return _latexParser.parse(s, option)
+        return _latexParserWithTrace.parse(s, option)
     } else {
         return _latexParser.parse(s, option)
     }
