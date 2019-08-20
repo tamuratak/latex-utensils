@@ -351,7 +351,9 @@ lmn
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
+    })
 
+    suite('stringify', () => {
         test('test latexParser.stringify', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
             const doc = latexParser.parse(tex)
@@ -381,7 +383,9 @@ lmn
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
         })
+    })
 
+    suite('other', () => {
         test('test type guard', () => {
             return [
             (node: latexParser.Node): string | latexParser.Node[] => {
