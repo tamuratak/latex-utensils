@@ -1,3 +1,5 @@
+import { TimeKeeper } from './timeout'
+
 export type Location = {
     start: {
         offset: number;
@@ -23,7 +25,7 @@ export type ParserOptions = {
     startRule?: string;
     tracer?: Tracer;
     enableComment?: boolean;
-    timeout?: number;
+    timeout?: number | TimeKeeper;
 }
 
 export type TraceArg = {

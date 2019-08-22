@@ -3,20 +3,20 @@ import * as lp from './latex_parser_types'
 import * as _latexParser from './latex_parser_simple'
 import * as _latexParserWithTrace from './latex_parser_trace'
 import {ParserOptions} from '../pegjs/pegjs_types'
-import {TimeoutTracer} from '../pegjs/timeout'
+import {TimeKeeper} from '../pegjs/timeout'
 
 export {stringify} from './stringify'
 export * from './latex_parser_types'
 export {ParserOptions} from '../pegjs/pegjs_types'
 
-export function parse(s: string, option?: ParserOptions): lp.LatexAst {
-    if (option && option.timeout && option.tracer) {
-        throw new Error('tracer and timeout not allowed at the same time.')
-    }
+export function parse(s: string, _option?: ParserOptions): lp.LatexAst {
+    const option = _option ? Object.assign({}, _option) : undefined
     if (option && option.timeout) {
-        const tracer = new TimeoutTracer(option.timeout)
-        return _latexParserWithTrace.parse(s, { tracer })
-    } else if (option && option.tracer) {
+        if (typeof option.timeout !== 'object') {
+            option.timeout = new TimeKeeper(option.timeout)
+        }
+    }
+    if (option && option.tracer) {
         return _latexParserWithTrace.parse(s, option)
     } else {
         return _latexParser.parse(s, option)

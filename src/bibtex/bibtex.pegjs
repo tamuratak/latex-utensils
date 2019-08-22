@@ -1,3 +1,7 @@
+{
+  const timeKeeper = options.timeout;
+}
+
 Root
   = content:(EachEntry)* Comment*
   {
@@ -14,10 +18,12 @@ Comment
 EachEntry
   = x:Entry __
   {
+      timeKeeper && timeKeeper.check();
       return x;
   }
   / Comment+ x:Entry __
   {
+      timeKeeper && timeKeeper.check();
       return x;
   }
 

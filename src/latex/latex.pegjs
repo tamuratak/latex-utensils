@@ -30,6 +30,7 @@ https://github.com/siefkenj/latex-parser
 */
 
 {
+  const timeKeeper = options.timeout;
   const commentMap = options.enableComment ? new Map() : undefined;
 }
 
@@ -67,7 +68,11 @@ Element_p
   / Subscript
   / ActiveCharacter
   / ignore
-  / c:$((!noncharToken . )+) { return { kind: "text.string", content: c, location: location() }; }
+  / c:$((!noncharToken . )+)
+  {
+    timeKeeper && timeKeeper.check();
+    return { kind: "text.string", content: c, location: location() };
+  }
 
 MathElement =
   x:MathElement_p skip_space

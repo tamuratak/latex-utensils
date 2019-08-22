@@ -38,7 +38,7 @@ const ext = path.extname(filename)
 let ret: latexParser.LatexAst | bibtexParser.BibtexAst | latexLogParser.LatexLogAst
 const useColor = commander.color ? true : false
 const tracer = commander.debug ? new Tracer(s, { showTrace: true, useColor, }) : undefined
-const timeout = commander.timeout
+const timeout = Number(commander.timeout)
 
 try {
     if (ext === '.tex') {

@@ -1,3 +1,7 @@
+{
+  const timeKeeper = options.timeout;
+}
+
 Root
   // normal or -interaction=nonstopmode
   = x:(LogTextOutsideFileStack FileStack LogTextOutsideFileStack)
@@ -91,12 +95,14 @@ PageNumberChar
 LogTextOutsideFileStack
   = x:$((!FileStack .)+)
   {  
+      timeKeeper && timeKeeper.check();
       return { kind: 'text_string', content:x };
   }
 
 LogText
   = x:$(LogTextElement+)
   {
+      timeKeeper && timeKeeper.check();
       return { kind: 'text_string', content:x };
   }
 
