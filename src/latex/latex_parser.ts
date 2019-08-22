@@ -3,24 +3,14 @@ import * as lp from './latex_parser_types'
 import * as _latexParser from './latex_parser_simple'
 import * as _latexParserWithTrace from './latex_parser_trace'
 import {ParserOptions} from '../pegjs/pegjs_types'
-import {TimeKeeper} from '../pegjs/timeout'
+import {parse as _parse} from '../pegjs/parse'
 
 export {stringify} from './stringify'
 export * from './latex_parser_types'
 export {ParserOptions} from '../pegjs/pegjs_types'
 
 export function parse(s: string, _option?: ParserOptions): lp.LatexAst {
-    const option = _option ? Object.assign({}, _option) : undefined
-    if (option && option.timeout) {
-        if (typeof option.timeout !== 'object') {
-            option.timeout = new TimeKeeper(option.timeout)
-        }
-    }
-    if (option && option.tracer) {
-        return _latexParserWithTrace.parse(s, option)
-    } else {
-        return _latexParser.parse(s, option)
-    }
+  return _parse(s, _option, _latexParser.parse, _latexParserWithTrace.parse)
 }
 
 export function parsePreamble(s: string, option?: { timeout: number }): lp.LatexAst {
