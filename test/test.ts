@@ -184,7 +184,20 @@ lmn
             const expected = {
                 content: [
                     { kind: 'text.string' },
-                    { kind: 'subscript' },
+                    { kind: 'subscript', content: [] },
+                    { kind: 'text.string' }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse a^b', () => {
+            const tex = 'a^b'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    { kind: 'text.string' },
+                    { kind: 'superscript', content: [] },
                     { kind: 'text.string' }
                 ]
             }
