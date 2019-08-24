@@ -245,7 +245,7 @@ export function hasContent(node: Node): node is Extract<Node, {content: any}> {
 }
 
 export function hasContentArray(node: Node): node is Extract<Node, {content: Node[]}> {
-    return node.hasOwnProperty('content') && Array.isArray(node['content'])
+    return node.hasOwnProperty('content') && Array.isArray((node as any)['content'])
 }
 
 export type Node
