@@ -31,7 +31,7 @@ export type ParserOptions = {
 export type TraceArg = {
     type: 'rule.enter' | 'rule.match' | 'rule.fail';
     rule: string;
-    result: string | Node;
+    result: any;
     location: Location;
 }
 
