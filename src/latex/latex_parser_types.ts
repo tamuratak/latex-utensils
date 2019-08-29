@@ -31,6 +31,17 @@ export function isAmsMathTextCommand(node: Node): node is AmsMathTextCommand {
     return node.kind === 'command.text'
 }
 
+export type LabelCommand = {
+    kind: 'command.label';
+    name: 'label' | 'ref' | 'eqref';
+    label: string;
+    location: Location;
+}
+
+export function isLabelCommand(node: Node): node is LabelCommand {
+    return node.kind === 'command.label'
+}
+
 export type Environment = {
     kind: 'env';
     name: string;
@@ -252,6 +263,7 @@ export type Node
 = TextString
 | Command
 | AmsMathTextCommand
+| LabelCommand
 | Environment
 | Group
 | OptionalArg

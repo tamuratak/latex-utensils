@@ -220,7 +220,7 @@ displayMathShiftShift
   }
 
 Command
-  = LabelCommand
+  = LabelRelatedCommand
   / escape n:commandName args:(argumentList / Group)*
   {
     return { kind: "command", name: n, args: args, location: location() };
@@ -232,14 +232,14 @@ commandName
   / "\\*"
   / .
 
-LabelCommand
-  = escape "label" x:LabelGroup
+LabelRelatedCommand
+  = escape name:( "label" / "ref" / "eqref" ) label:LabelGroup
   {
-    return { kind: "command", name: "label", args: [x], location: location() };
+    return { kind: "command.label", name, label, location: location() };
   }
 
 MathCommand
-  = LabelCommand
+  = LabelRelatedCommand
   / escape n:commandName args:(argumentList / MathGroup)*
   {
     return { kind: "command", name: n, args: args, location: location() };
@@ -261,14 +261,10 @@ MathGroup
 LabelGroup
   = skip_space beginGroup skip_space x:LabelText endGroup
   {
-    return { kind: "arg.group", content: [x], location: location() };
+    return x;
   }
 
-LabelText
-  = c:$((!endGroup .)*)
-  {
-    return { kind: "text.string", content: c, location: location() };
-  }
+LabelText = $((!endGroup .)*)
 
 // \left( ... \right) in math mode.
 MatchingDelimiters

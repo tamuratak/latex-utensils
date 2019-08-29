@@ -164,15 +164,9 @@ lmn
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
-                    kind: 'command',
+                    kind: 'command.label',
                     name: 'label',
-                    args: [ {
-                        kind: 'arg.group',
-                        content: [ {
-                            kind: 'text.string',
-                            content: 'a_b'
-                        } ]
-                    } ]
+                    label: 'a_b'
                 } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
@@ -441,7 +435,7 @@ lmn
             }]
         })
 
-        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.LabelCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore
 
         test('test type guard with assingment and never type', () => {
             return (node: latexParser.Node) => {

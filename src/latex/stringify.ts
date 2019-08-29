@@ -42,6 +42,9 @@ export function stringify(
     if (lp.isAmsMathTextCommand(node)) {
         return '\\text{' + node.arg + '}'
     }
+    if (lp.isLabelCommand(node)) {
+        return '\\' + node.name + '{' + node.label + '}'
+    }
     if (lp.isEnvironment(node) || lp.isMathEnv(node) || lp.isMathEnvAligned(node)) {
         const begin = '\\begin{' + node.name + '}'
         const args = stringifyArray(node.args, options)
