@@ -497,7 +497,7 @@ skip_all_space
 // ctrl_space  "control space" = escape (&nl &break / nl / sp)     { return g.brsp; }          // latex.ltx, line 540
 
 break
-  = (skip_all_space escape "par" skip_all_space)+
+  = (skip_all_space escape "par" !char skip_all_space)+
   {
     return true;
   }

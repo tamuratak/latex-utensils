@@ -159,6 +159,38 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\part', () => {
+            const tex = '\\part'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'part'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\par\\par', () => {
+            const tex = '\\par\\par\\part\\par'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    {
+                        kind: 'parbreak'
+                    },
+                    {
+                        kind: 'command',
+                        name: 'part'
+                    },
+                    {
+                        kind: 'parbreak'
+                    }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\label{a_b}', () => {
             const tex = '\\label{a_b}'
             const doc = latexParser.parse(tex)
