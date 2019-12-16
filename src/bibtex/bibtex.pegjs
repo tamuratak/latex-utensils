@@ -128,7 +128,7 @@ Abbreviation
   }
 
 Number
-  = content:$([0-9]+)
+  = content:$([-0-9]+)
   {
       return { kind: 'number', content, location: location() };
   }

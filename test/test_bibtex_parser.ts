@@ -165,18 +165,10 @@ Blah Blah
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
-    test('should throw SyntaxError', () => {
+    test('should not throw SyntaxError', () => {
         const invalidBibs = ['@article{ isbn = 1-2-3 }']
         for (const bib of invalidBibs) {
-            assert.throws(
-                () => {
-                    bibtexParser.parse(bib)
-                },
-                (e: any) => {
-                    return e && bibtexParser.isSyntaxError(e)
-                },
-                `parsing ${bib}`
-            )
+            bibtexParser.parse(bib)
         }
     })
 
