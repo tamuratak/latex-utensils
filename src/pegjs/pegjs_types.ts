@@ -21,6 +21,8 @@ export class SyntaxErrorBase extends Error {
     name: 'SyntaxError'
 }
 
+export class SyntaxError extends SyntaxErrorBase {}
+
 export type ParserOptions = {
     startRule?: string;
     tracer?: Tracer;
