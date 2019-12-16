@@ -1,3 +1,4 @@
+import {SyntaxError} from './bibtex_parser_syntaxerror'
 import * as bp from './bibtex_parser_types'
 import * as _bibtexParser from './bibtex_parser_simple'
 import * as _bibtexParserWithTrace from './bibtex_parser_trace'
@@ -19,4 +20,8 @@ export function parse(s: string, _option?: ParserOptions): bp.BibtexAst {
     } else {
         return _bibtexParser.parse(s, option)
     }
+}
+
+export function isSyntaxError(e: any): e is SyntaxError {
+    return e instanceof _bibtexParser.SyntaxError || e instanceof _bibtexParserWithTrace.SyntaxError
 }
