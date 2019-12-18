@@ -53,7 +53,7 @@
     "generate:latex_log:trace": "pegjs -o out/src/latex_log/latex_log_parser_trace.js src/latex_log/latex_log.pegjs",
     "generate:latex_log": "run-p generate:latex_log:*",
     "generate": "run-p 'generate:*'",
-    "build": "run-s compile generate",
+    "build": "run-s clean compile generate",
     "compile": "tsc -p ./",
     "clean": "rimraf out/ .eslintcache",
     "lint": "eslint --cache --ext .ts .",
