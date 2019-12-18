@@ -1,6 +1,6 @@
 export type FileStack = {
     kind: 'file_stack';
-    content: LatexLogElement[]
+    content: LatexLogElement[];
 }
 
 export function isFileStack(e: LatexLogElement): e is FileStack {
@@ -32,7 +32,7 @@ export function isLatexmkError(e: LatexLogElement): e is LatexmkError {
 
 export type LogText = {
     kind: 'text_string';
-    content: string
+    content: string;
 }
 
 export function isLogText(e: LatexLogElement): e is LogText {
@@ -42,7 +42,7 @@ export function isLogText(e: LatexLogElement): e is LogText {
 export type PageNumber = {
     kind: 'page_number';
     page: number;
-    content?: string
+    content?: string;
 }
 
 export function isPageNumber(e: LatexLogElement): e is PageNumber {
