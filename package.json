@@ -59,9 +59,9 @@
     "lint": "eslint --cache --ext .ts .",
     "lint:fix": "eslint --fix --cache --ext .ts .",
     "test": "mocha --ui tdd out/test/**/*.js",
-    "watch": "npm run build && run-p 'watch:*'",
-    "watch:ts": "tsc -w -p ./",
-    "watch:pegjs": "onchange 'src/**/*.pegjs' -- npm run generate"
+    "watch": "npm run build && run-p watch:*",
+    "watch:ts": "onchange 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' -- run-s compile test",
+    "watch:pegjs": "onchange 'src/**/*.pegjs' -- run-s generate test"
   },
   "husky": {
     "hooks": {
