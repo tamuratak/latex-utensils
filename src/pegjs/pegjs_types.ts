@@ -13,6 +13,17 @@ export type Location = {
     };
 }
 
+export function isLocation(x: any): x is Location {
+    const ret =
+    x?.start?.offset !== undefined &&
+    x?.start?.line !== undefined &&
+    x?.start?.column !== undefined &&
+    x?.end?.offset !== undefined &&
+    x?.end?.line !== undefined &&
+    x?.end?.column !== undefined
+    return ret
+}
+
 export class SyntaxErrorBase extends Error {
     message: string
     expected: string | null
@@ -22,6 +33,11 @@ export class SyntaxErrorBase extends Error {
 }
 
 export class SyntaxError extends SyntaxErrorBase {}
+
+export function isSyntaxError(x: any): x is SyntaxError {
+    const ret = x?.message !== undefined && isLocation(x?.location) && x?.name === 'SyntaxError' && x instanceof Error
+    return ret
+}
 
 export type ParserOptions = {
     startRule?: string;

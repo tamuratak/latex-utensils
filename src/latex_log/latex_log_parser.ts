@@ -5,7 +5,7 @@ import {ParserOptions} from '../pegjs/pegjs_types'
 import {TimeKeeper} from '../pegjs/timeout'
 
 export * from './latex_log_types'
-export {ParserOptions} from '../pegjs/pegjs_types'
+export {isSyntaxError, ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
 
 export function parse(s: string, _option?: ParserOptions): llp.LatexLogAst {
     const option = _option ? Object.assign({}, _option) : undefined

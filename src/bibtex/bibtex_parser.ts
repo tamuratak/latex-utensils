@@ -1,11 +1,11 @@
 import * as bp from './bibtex_parser_types'
 import * as _bibtexParser from './bibtex_parser_simple'
 import * as _bibtexParserWithTrace from './bibtex_parser_trace'
-import {ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
+import {ParserOptions} from '../pegjs/pegjs_types'
 import {TimeKeeper} from '../pegjs/timeout'
 
 export * from './bibtex_parser_types'
-export {ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
+export {isSyntaxError, ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
 
 export function parse(s: string, _option?: ParserOptions): bp.BibtexAst {
     const option = _option ? Object.assign({}, _option) : undefined
@@ -19,8 +19,4 @@ export function parse(s: string, _option?: ParserOptions): bp.BibtexAst {
     } else {
         return _bibtexParser.parse(s, option)
     }
-}
-
-export function isSyntaxError(e: any): e is SyntaxError {
-    return e instanceof _bibtexParser.SyntaxError || e instanceof _bibtexParserWithTrace.SyntaxError
 }

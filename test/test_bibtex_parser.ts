@@ -172,4 +172,19 @@ Blah Blah
         }
     })
 
+    test('should throw SyntaxError', () => {
+        const invalidBibs = ['@article{ title = 1+2+3 }']
+        for (const bib of invalidBibs) {
+            assert.throws(
+                () => {
+                    bibtexParser.parse(bib)
+                },
+                (e: any) => {
+                    return e && bibtexParser.isSyntaxError(e)
+                },
+                `parsing ${bib}`
+            )
+        }
+    })
+
 })

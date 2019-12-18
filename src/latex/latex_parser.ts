@@ -1,12 +1,12 @@
 import * as lp from './latex_parser_types'
 import * as _latexParser from './latex_parser_simple'
 import * as _latexParserWithTrace from './latex_parser_trace'
-import {ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
+import {ParserOptions} from '../pegjs/pegjs_types'
 import {TimeKeeper} from '../pegjs/timeout'
 
 export {stringify} from './stringify'
 export * from './latex_parser_types'
-export {ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
+export {isSyntaxError, ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
 
 export function parse(s: string, _option?: ParserOptions): lp.LatexAst {
     const option = _option ? Object.assign({}, _option) : undefined
@@ -25,8 +25,4 @@ export function parse(s: string, _option?: ParserOptions): lp.LatexAst {
 export function parsePreamble(s: string, option?: { timeout: number }): lp.AstPreamble {
     const timeout = option && option.timeout
     return parse(s, {startRule: 'Preamble', timeout}) as lp.AstPreamble
-}
-
-export function isSyntaxError(e: any): e is SyntaxError {
-    return e instanceof _latexParser.SyntaxError || e instanceof _latexParserWithTrace.SyntaxError
 }
