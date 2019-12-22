@@ -488,7 +488,7 @@ lmn
             }]
         })
 
-        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore
 
         test('test type guard with assingment and never type', () => {
             return (node: latexParser.Node) => {

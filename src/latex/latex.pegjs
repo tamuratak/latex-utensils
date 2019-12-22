@@ -59,6 +59,7 @@ Element
 Element_p
   = SpecialCommand
   / break { return { kind: "parbreak", location: location() }; }
+  / DefCommand
   / Command
   / Group
   / InlineMathShift
@@ -243,6 +244,12 @@ MathCommand
   / escape n:commandName args:(argumentList / MathGroup)*
   {
     return { kind: "command", name: n, args: args, location: location() };
+  }
+
+DefCommand
+  = escape "def" token:$(escape (char / '@')+) brArgs:argumentList* numArgs:CommandParameterWithNumber* grArg:Group
+  {
+    return { kind: "command.def", token, args: brArgs.concat(numArgs).concat([grArg]), location: location() };
   }
 
 Group

@@ -31,6 +31,17 @@ export function isAmsMathTextCommand(node: Node): node is AmsMathTextCommand {
     return node.kind === 'command.text'
 }
 
+export type DefCommand = {
+    kind: 'command.def';
+    name: 'def';
+    toke: string;
+    args: (OptionalArg | CommandParameter |Group)[];
+}
+
+export function isDefCommand(node: Node): node is DefCommand {
+    return node.kind === 'command.def'
+}
+
 export type Environment = {
     kind: 'env';
     name: string;
@@ -252,6 +263,7 @@ export type Node
 = TextString
 | Command
 | AmsMathTextCommand
+| DefCommand
 | Environment
 | Group
 | OptionalArg
