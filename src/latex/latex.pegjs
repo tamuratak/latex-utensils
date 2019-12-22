@@ -247,9 +247,9 @@ MathCommand
   }
 
 DefCommand
-  = escape "def" token:$(escape (char / '@')+) brArgs:argumentList* numArgs:CommandParameterWithNumber* grArg:Group
+  = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(argumentList / CommandParameterWithNumber)* skip_space grArg:Group
   {
-    return { kind: "command.def", token, args: brArgs.concat(numArgs).concat([grArg]), location: location() };
+    return { kind: "command.def", token, args: numArgs.concat([grArg]), location: location() };
   }
 
 Group

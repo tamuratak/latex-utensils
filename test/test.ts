@@ -136,6 +136,40 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\def\\abc{abc}', () => {
+            const tex = '\\def\\abc{abc}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.def',
+                    token: '\\abc',
+                    args: [ {
+                        kind: 'arg.group'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\def\\abc [#1]#2 {#2#1abc}', () => {
+            const tex = '\\def\\abc [#1]#2 {#2#1abc}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.def',
+                    token: '\\abc',
+                    args: [{
+                        kind: 'arg.optional'
+                    }, {
+                        kind: 'commandParameter'
+                    }, {
+                        kind: 'arg.group'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse a command whose name has @', () => {
             const tex = '\\a@c{abc}'
             const doc = latexParser.parse(tex)
@@ -460,6 +494,13 @@ lmn
         test('test stringify a_b', () => {
             const tex = 'a_b'
             const actualTeX = 'a_b'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
+        test('test stringify \\def\\abc [#1]#2 {#2#1abc}', () => {
+            const tex = '\\def\\abc [#1]#2 {#2#1abc}'
+            const actualTeX = '\\def\\abc[#1]#2{#2#1abc}'
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
         })

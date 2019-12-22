@@ -34,7 +34,7 @@ export function isAmsMathTextCommand(node: Node): node is AmsMathTextCommand {
 export type DefCommand = {
     kind: 'command.def';
     name: 'def';
-    toke: string;
+    token: string;
     args: (OptionalArg | CommandParameter |Group)[];
 }
 

@@ -43,7 +43,7 @@ export function stringify(
         return '\\text{' + node.arg + '}'
     }
     if (lp.isDefCommand(node)) {
-        return ' '
+        return '\\def' + node.token + stringifyArray(node.args, options)
     }
     if (lp.isEnvironment(node) || lp.isMathEnv(node) || lp.isMathEnvAligned(node)) {
         const begin = '\\begin{' + node.name + '}'
