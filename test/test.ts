@@ -121,6 +121,21 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\node[label={abc}, efg]', () => {
+            const tex = '\\node[label={abc}, efg]'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'node',
+                    args: [ {
+                        kind: 'arg.optional'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse a command whose name has @', () => {
             const tex = '\\a@c{abc}'
             const doc = latexParser.parse(tex)

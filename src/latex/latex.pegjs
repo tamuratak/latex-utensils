@@ -286,7 +286,7 @@ mathDelimiter
   / escape char+
 
 argumentList
-  = skip_space "[" body:(!"]" x:(argsDelimiter / argsToken) {return x;})* "]"
+  = skip_space "[" body:(!"]" skip_space x:(argsDelimiter / argsToken) skip_space {return x;})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
