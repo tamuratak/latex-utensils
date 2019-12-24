@@ -259,6 +259,11 @@ export function hasContentArray(node: Node): node is Extract<Node, {content: Nod
     return node.hasOwnProperty('content') && Array.isArray((node as any)['content'])
 }
 
+export function hasArgsArray(node: Node): node is Extract<Node, {args: Node[]}> {
+    return node.hasOwnProperty('args') && Array.isArray((node as any)['args'])
+}
+
+
 export type Node
 = TextString
 | Command

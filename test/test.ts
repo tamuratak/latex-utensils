@@ -521,6 +521,12 @@ lmn
                 }
                 return []
             },
+            (node: latexParser.Node): latexParser.Node[] => {
+                if (latexParser.hasArgsArray(node)) {
+                    return node.args
+                }
+                return []
+            },
             (node: latexParser.Node): string => {
                 if (latexParser.hasContent(node) && !latexParser.hasContentArray(node)) {
                     return node.content
