@@ -35,7 +35,7 @@ export type DefCommand = {
     kind: 'command.def';
     name: 'def';
     token: string;
-    args: (OptionalArg | CommandParameter |Group)[];
+    args: (OptionalArg | CommandParameter | Group)[];
 }
 
 export function isDefCommand(node: Node): node is DefCommand {
