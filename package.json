@@ -1,6 +1,6 @@
 {
   "name": "latex-utensils",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "license": "MIT",
   "description": "A LaTeX parser and utilities",
   "homepage": "https://github.com/tamuratak/latex-utensils",
