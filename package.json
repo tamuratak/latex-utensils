@@ -18,7 +18,7 @@
   "devDependencies": {
     "@types/commander": "^2.12.2",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^10.12.12",
+    "@types/node": "^12.12.21",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "eslint": "^6.7.2",
@@ -58,7 +58,7 @@
     "clean": "rimraf out/ .eslintcache",
     "lint": "eslint --cache --ext .ts .",
     "lint:fix": "eslint --fix --cache --ext .ts .",
-    "prepare": "run-s build test",
+    "prepare": "run-s build lint test",
     "test": "mocha --ui tdd out/test/**/*.js",
     "watch": "run-p -c prepare 'watch:*'",
     "watch:ts": "onchange 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' -- run-s compile test",

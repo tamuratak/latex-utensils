@@ -123,3 +123,17 @@ Convert AST to a string.
 ### `latexParser.isSyntaxError(e: any): boolean`
 
 A Type Guard for SyntaxError thrown by `latexParser.parse`.
+
+## Development
+
+To lint changes, run
+
+    npm run lint
+
+To build, run
+
+    npm run build
+
+To test, run
+
+    npm run test
