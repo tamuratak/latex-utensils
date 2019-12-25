@@ -13,7 +13,8 @@
     "luparse": "./bin/luparse"
   },
   "dependencies": {
-    "commander": "^2.20.0"
+    "commander": "^2.20.0",
+    "pegjs-backtrace": "^0.2.0"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
@@ -28,7 +29,6 @@
     "npm-run-all": "^4.1.5",
     "onchange": "^6.1.0",
     "pegjs": "^0.10.0",
-    "pegjs-backtrace": "^0.2.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.7.3"
   },
@@ -58,9 +58,9 @@
     "clean": "rimraf out/ .eslintcache",
     "lint": "eslint --cache --ext .ts .",
     "lint:fix": "eslint --fix --cache --ext .ts .",
-    "prepare": "run-s build lint test",
+    "prerelease": "run-s build lint test",
     "test": "mocha --ui tdd out/test/**/*.js",
-    "watch": "run-p -c prepare 'watch:*'",
+    "watch": "run-p -c prerelease 'watch:*'",
     "watch:ts": "onchange 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' -- run-s compile test",
     "watch:pegjs": "onchange 'src/**/*.pegjs' -- run-s generate test"
   },
