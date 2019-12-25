@@ -1,6 +1,6 @@
 {
   "name": "latex-utensils",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "license": "MIT",
   "description": "A LaTeX parser and utilities",
   "homepage": "https://github.com/tamuratak/latex-utensils",
@@ -12,12 +12,11 @@
   "bin": {
     "luparse": "./bin/luparse"
   },
-  "dependencies": {
+  "optionalDependencies": {
     "commander": "^2.20.0",
     "pegjs-backtrace": "^0.2.0"
   },
   "devDependencies": {
-    "@types/commander": "^2.12.2",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.21",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
