@@ -58,8 +58,9 @@
     "clean": "rimraf out/ .eslintcache",
     "lint": "eslint --cache --ext .ts .",
     "lint:fix": "eslint --fix --cache --ext .ts .",
+    "prepare": "run-s build test",
     "test": "mocha --ui tdd out/test/**/*.js",
-    "watch": "npm run build && run-p watch:*",
+    "watch": "run-p -c prepare 'watch:*'",
     "watch:ts": "onchange 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' -- run-s compile test",
     "watch:pegjs": "onchange 'src/**/*.pegjs' -- run-s generate test"
   },
