@@ -109,7 +109,7 @@ type AstPreamble = {
 }
 ```
 
-For the details of `Node` and `Comment`, please see [src/latex_parser_types.ts](https://github.com/tamuratak/latex-utensils/blob/master/src/latex_parser_types.ts).
+For the details of `Node` and `Comment`, please see [src/latex/latex_parser_types.ts](https://github.com/tamuratak/latex-utensils/blob/master/src/latex/latex_parser_types.ts).
 
 
 ### `latexParser.parsePreamble(texString): AstPreamble`
