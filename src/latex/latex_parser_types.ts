@@ -166,6 +166,7 @@ export function isIgnore(node: Node): node is Ignore {
 
 export type Verb = {
     kind: 'verb';
+    name: string;
     escape: string;
     content: string;
     location: Location;
@@ -177,7 +178,7 @@ export function isVerb(node: Node): node is Verb {
 
 export type Verbatim = {
     kind: 'env.verbatim';
-    name: 'verbatim';
+    name: string;
     content: string;
     location: Location;
 }

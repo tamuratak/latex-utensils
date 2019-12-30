@@ -47,6 +47,20 @@ lmn
             const expected = {
                 content: [ {
                     kind: 'verb',
+                    name: 'verb',
+                    content: '1'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\verb*|1|', () => {
+            const tex = '\\verb*|1|'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'verb',
+                    name: 'verb*',
                     content: '1'
                 } ]
             }
@@ -59,6 +73,20 @@ lmn
             const expected: any = {
                 content: [ {
                     kind: 'env.verbatim',
+                    name: 'verbatim',
+                    content: '1'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\begin{verbatim*}...', () => {
+            const tex = '\\begin{verbatim*}1\\end{verbatim*}'
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.verbatim',
+                    name: 'verbatim*',
                     content: '1'
                 } ]
             }

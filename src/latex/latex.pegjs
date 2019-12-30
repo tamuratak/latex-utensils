@@ -131,11 +131,11 @@ SpecialCommand "special command"
 
 // \verb|xxx|
 Verb
-  = escape "verb" e:.
+  = escape name:("verb*" / "verb") e:.
       x:$((!(end:. & {return end === e;}) . )*)
     (end:. & {return end === e;})
   {
-    return { kind: "verb", escape: e, content: x, location: location() };
+    return { kind: "verb", name, escape: e, content: x, location: location() };
   }
 
 // verbatim environment
@@ -145,6 +145,12 @@ Verbatim
     escape "end{verbatim}"
   {
     return { kind: "env.verbatim", name: "verbatim", content: x, location: location() };
+  }
+  / escape "begin{verbatim*}"
+      x:$((!(escape "end{verbatim*}") . )*)
+    escape "end{verbatim*}"
+  {
+    return { kind: "env.verbatim", name: "verbatim*", content: x, location: location() };
   }
 
 
