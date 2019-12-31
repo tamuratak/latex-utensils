@@ -502,7 +502,7 @@ skip_comment
   }
 
 skip_all_space
-  = (nl / sp / comment)*
+  = (nl / sp / skip_comment)*
   {
     return undefined;
   }
@@ -514,7 +514,7 @@ break
   {
     return true;
   }
-  / sp* (nl comment* / comment+) ((sp* nl)+ / &endDoc / EOF) (sp / nl / comment)*
+  / sp* (nl skip_comment* / skip_comment+) ((sp* nl)+ / &endDoc / EOF) (sp / nl / skip_comment)*
   {
     return true;
   }

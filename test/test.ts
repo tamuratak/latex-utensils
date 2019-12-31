@@ -118,6 +118,41 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse comments', () => {
+            const tex = `
+\\documentclass{article}
+
+%comment1
+
+\\begin{document}
+
+\\section{A} %comment2
+%comment3
+
+Some sentences.
+
+\\end{document}
+`
+            const doc = latexParser.parse(tex, {enableComment: true})
+            const expected = {
+                comment: [
+                    {
+                        kind: 'comment',
+                        content: 'comment1'
+                    },
+                    {
+                        kind: 'comment',
+                        content: 'comment2'
+                    },
+                    {
+                        kind: 'comment',
+                        content: 'comment3'
+                    }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\begin{align}...', () => {
             const tex = '\\begin{align}\n 1 \n\\end{align}'
             const doc = latexParser.parse(tex)
