@@ -1,5 +1,15 @@
 # Change Log
 
+
+## [1.2.3](https://github.com/tamuratak/latex-utensils/compare/v1.2.2...v1.2.3) (2019-12-31)
+
+### Fixed
+
+- (#11) Fix persing `\verb*`.
+- (#12) Fix persing `verbatim*` env.
+- (#13) Fix picking comments.
+
+
 ## [1.2.2](https://github.com/tamuratak/latex-utensils/compare/v1.2.1...v1.2.2) (2019-12-26)
 
 
