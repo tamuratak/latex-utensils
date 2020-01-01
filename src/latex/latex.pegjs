@@ -140,19 +140,15 @@ Verb
 
 // verbatim environment
 Verbatim
-  = escape "begin{verbatim}"
-      x:$((!(escape "end{verbatim}") . )*)
-    escape "end{verbatim}"
+  = beginEnv skip_space beginGroup name:verbatimEnvName endGroup
+      x:$((!(endEnv n:groupedEnvname & {return name === n;}) . )*)
+    endEnv skip_space beginGroup verbatimEnvName endGroup
   {
-    return { kind: "env.verbatim", name: "verbatim", content: x, location: location() };
-  }
-  / escape "begin{verbatim*}"
-      x:$((!(escape "end{verbatim*}") . )*)
-    escape "end{verbatim*}"
-  {
-    return { kind: "env.verbatim", name: "verbatim*", content: x, location: location() };
+    return { kind: "env.verbatim", name, content: x, location: location() };
   }
 
+verbatimEnvName
+  = $(("verbatim" / "Verbatim" / "fboxverbatim" / "boxedverbatim") "*"?)
 
 // minted environment
 Minted
