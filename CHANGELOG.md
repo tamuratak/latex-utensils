@@ -5,8 +5,8 @@
 
 ### Fixed
 
-- (#11) Fix persing `\verb*`.
-- (#12) Fix persing `verbatim*` env.
+- (#11) Fix parsing `\verb*`.
+- (#12) Fix parsing `verbatim*` env.
 - (#13) Fix picking comments.
 
 
