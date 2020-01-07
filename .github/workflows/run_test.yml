@@ -22,8 +22,8 @@ jobs:
         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
         restore-keys: |
           ${{ runner.os }}-node-${{ matrix.node-version }}-
-    - name: npm install, build, and test
+    - name: npm ci, build, and test
       run: |
-        npm install
+        npm ci
         npm run build
         npm run test
