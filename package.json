@@ -29,6 +29,7 @@
     "onchange": "^6.1.0",
     "pegjs": "^0.10.0",
     "rimraf": "^3.0.0",
+    "typepark": "^0.8.0",
     "typescript": "^3.7.3"
   },
   "files": [
