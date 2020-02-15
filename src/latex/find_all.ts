@@ -1,7 +1,10 @@
 import * as lp from './latex_parser_types'
 
 
-export function findAll<T extends lp.Node>(nodes: lp.Node[], typeguard: (x: any) => x is T): T[] {
+export function findAll<T extends lp.Node>(
+    nodes: lp.Node[],
+    typeguard: (x: any) => x is T = (z: any): z is T => z || true
+): T[] {
     let ret: T[] = []
     for(const node of nodes) {
         if (typeguard(node)) {
