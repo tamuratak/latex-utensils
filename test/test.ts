@@ -575,6 +575,16 @@ Some sentences.
             const tex = '\\newcommand{\\ABC}{ABC}'
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.findAll(doc.content, latexParser.isCommand).length, 2)
+            assert.strictEqual(latexParser.findAll(doc.content, latexParser.isTextString).length, 1)
+            assert.strictEqual(latexParser.findAll(doc.content).length, 5)
+
+            assert.deepStrictEqual(
+                latexParser
+                .findAll(doc.content, latexParser.isCommand)
+                .map(node => node.name)
+                .sort(),
+                ['ABC', 'newcommand']
+            )
         })
     })
 
