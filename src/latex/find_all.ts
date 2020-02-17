@@ -25,23 +25,25 @@ export function findAll<T extends Node>(
 }
 
 export class Matcher<T extends Node> {
-    parentMatcher?: Matcher<any>
-    childMatcher?: Matcher<any>
+    parentMatcher?: Matcher<Node>
+    childMatcher?: Matcher<Node>
 
     constructor(readonly typeguard: (x: Node) => x is T) {
 
     }
 
     child<C extends Node>(typeguard: (x: Node) => x is C): Matcher<C> {
-        this.childMatcher = new Matcher(typeguard)
-        this.childMatcher.parentMatcher = this
-        return this.childMatcher
+        const childMatcher = new Matcher(typeguard)
+        childMatcher.parentMatcher = this
+        this.childMatcher = childMatcher
+        return childMatcher
     }
 
     parent<P extends Node>(typeguard: (x: Node) => x is P): Matcher<P> {
-        this.parentMatcher = new Matcher(typeguard)
-        this.parentMatcher.childMatcher = this
-        return this.parentMatcher
+        const parentMatcher = new Matcher(typeguard)
+        parentMatcher.childMatcher = this
+        this.parentMatcher = parentMatcher
+        return parentMatcher
     }
 
 }
