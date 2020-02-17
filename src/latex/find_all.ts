@@ -1,9 +1,10 @@
 import * as lp from './latex_parser_types'
+import {Node} from './latex_parser_types'
 
 
-export function findAll<T extends lp.Node>(
-    nodes: lp.Node[],
-    typeguard: (x: any) => x is T = (z: any): z is T => z || true
+export function findAll<T extends Node>(
+    nodes: Node[],
+    typeguard: (x: Node) => x is T = (z: Node): z is T => z as any || true
 ): T[] {
     let ret: T[] = []
     for(const node of nodes) {
@@ -21,4 +22,26 @@ export function findAll<T extends lp.Node>(
         }
     }
     return ret
+}
+
+export class Matcher<T extends Node> {
+    parentMatcher?: Matcher<any>
+    childMatcher?: Matcher<any>
+
+    constructor(readonly typeguard: (x: Node) => x is T) {
+
+    }
+
+    child<C extends Node>(typeguard: (x: Node) => x is C): Matcher<C> {
+        this.childMatcher = new Matcher(typeguard)
+        this.childMatcher.parentMatcher = this
+        return this.childMatcher
+    }
+
+    parent<P extends Node>(typeguard: (x: Node) => x is P): Matcher<P> {
+        this.parentMatcher = new Matcher(typeguard)
+        this.parentMatcher.childMatcher = this
+        return this.parentMatcher
+    }
+
 }
