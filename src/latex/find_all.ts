@@ -1,9 +1,9 @@
 import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
-type MatchResult<T extends Node> = {
+type MatchResult<T extends Node, P extends Node = Node> = {
     target: T;
-    parent?: MatchResult<Node>;
+    parent?: MatchResult<P>;
 }
 
 export function findAll<T extends Node>(
@@ -30,12 +30,12 @@ export function findAll<T extends Node>(
     return ret
 }
 
-export class Pattern<T extends Node> {
-    parentMatcher?: Pattern<Node>
+export class Pattern<T extends Node, ParentPattern extends Pattern<Node> = any> {
+    parentMatcher?: ParentPattern
 
-    constructor(readonly typeguard: (x: Node) => x is T) {}
+    constructor(readonly typeguard: ((x: Node) => x is T) | ((x: Node) => boolean) ) {}
 
-    child<C extends Node>(typeguard: (x: Node) => x is C): Pattern<C> {
+    child<C extends Node>(typeguard: ((x: Node) => x is C) | ((x: Node) => boolean) ): Pattern<C, Pattern<T, ParentPattern>> {
         const childMatcher = new Pattern(typeguard)
         childMatcher.parentMatcher = this
         return childMatcher
