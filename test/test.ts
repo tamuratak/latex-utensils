@@ -581,7 +581,7 @@ Some sentences.
             assert.deepStrictEqual(
                 latexParser
                 .findAll(doc.content, latexParser.isCommand)
-                .map(node => node.name)
+                .map(result => result.target.name)
                 .sort(),
                 ['ABC', 'newcommand']
             )
