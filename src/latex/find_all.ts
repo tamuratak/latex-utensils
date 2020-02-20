@@ -44,7 +44,6 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
         typeguard: ((x: Node) => x is C) | ((x: Node) => boolean)
     ): Pattern<C, Pattern<T, ParentPattern>> {
         const childMatcher = new Pattern(typeguard, this)
-//        childMatcher.parentMatcher = this
         return childMatcher
     }
 
