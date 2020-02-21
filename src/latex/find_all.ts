@@ -32,18 +32,18 @@ export function findAll<T extends Node>(
 
 type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
     target: T;
-    parent?: MatchResult<NonNullable<P>['target'], NonNullable<NonNullable<P>['parentPattern']>>;
+    parent: P extends undefined ? undefined : MatchResult<NonNullable<P>['target'], NonNullable<P>['parentPattern']>;
 }
 
 export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefined = undefined > {
-    parentPattern?: ParentPattern
+    parentPattern: ParentPattern
     target: T
 
     constructor(
         readonly typeguard: ((x: Node) => x is T) | ((x: Node) => boolean),
         parentPattern?: ParentPattern
     ) {
-        this.parentPattern = parentPattern
+        this.parentPattern = parentPattern || this.parentPattern
     }
 
     child<C extends Node>(
@@ -58,23 +58,25 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
         if (!this.parentPattern){
             const results = findAll(nodes, this.typeguard)
             for (const result of results) {
-                ret.push( { target: result.target, parent: undefined } )
+                ret.push( { target: result.target, parent: undefined as any } )
             }
         } else {
             const parentMatchResults = this.parentPattern.match(nodes)
             for(const parentMatchResult of parentMatchResults) {
-                const node = parentMatchResult.target
-                let results: FindResult<T, lp.Node>[] | undefined
-                if (lp.hasContentArray(node)) {
-                    results = findAll(node.content, this.typeguard)
-                } else if (lp.hasArgsArray(node)) {
-                    results = findAll(node.args, this.typeguard)
-                } else if ('arg' in node && node.arg) {
-                    results = findAll([node.arg], this.typeguard)
+                const parentNode = parentMatchResult.target
+                let childNodes: Node[]
+                if (lp.hasContentArray(parentNode)) {
+                    childNodes = parentNode.content
+                } else if (lp.hasArgsArray(parentNode)) {
+                    childNodes = parentNode.args
+                } else if ('arg' in parentNode && parentNode.arg) {
+                    childNodes = [parentNode.arg]
+                } else {
+                    continue
                 }
-                if (results) {
-                    for (const result of results) {
-                        ret.push( { target: result.target, parent: parentMatchResult } )
+                for (const node of childNodes) {
+                    if (this.typeguard(node)) {
+                        ret.push( { target: node, parent: parentMatchResult as any } )
                     }
                 }
             }
