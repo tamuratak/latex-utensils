@@ -30,7 +30,7 @@ export function findAll<T extends Node>(
     return ret
 }
 
-type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined = any> = {
+type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
     target: T;
     parent?: MatchResult<NonNullable<P>['target'], NonNullable<NonNullable<P>['parentPattern']>>;
 }
@@ -81,11 +81,4 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
         }
         return ret
     }
-}
-
-const pat = new Pattern(lp.isCommand).child(lp.isGroup).child(lp.isTextString)
-const results = pat.match([])
-for ( const result of results ) {
-    const p = result.parent?.parent?.target
-    console.log(p)
 }
