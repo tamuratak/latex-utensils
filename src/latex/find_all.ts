@@ -80,7 +80,7 @@ class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefin
                 }
             }
         } else {
-            const parentMatchResults = this.parentPattern.match(nodes)
+            const parentMatchResults = this.parentPattern.match(nodes, opt)
             for(const parentMatchResult of parentMatchResults) {
                 const parentNode = parentMatchResult.node
                 const childNodes = getChildNodes(parentNode)
