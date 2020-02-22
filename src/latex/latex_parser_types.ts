@@ -243,7 +243,7 @@ export function isMathCharacter(node: Node): node is MathCharacter {
 }
 
 export type MathMatchingParen = {
-    kind: 'math.matching_paren';
+    kind: 'math.matching_delimiters';
     left: string;
     right: string;
     content: Node[];
@@ -251,7 +251,7 @@ export type MathMatchingParen = {
 }
 
 export function isMathMatchingParen(node: Node): node is MathMatchingParen {
-    return node.kind === 'math.matching_paren'
+    return node.kind === 'math.matching_delimiters'
 }
 
 export function hasContent(node: Node): node is Extract<Node, {content: any}> {

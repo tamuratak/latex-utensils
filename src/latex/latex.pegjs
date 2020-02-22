@@ -290,7 +290,7 @@ MatchingDelimiters
       skip_space x:(!(escape "right" mathDelimiter) c:MathElement {return c;})*
     escape "right" r:$mathDelimiter
   {
-    return { kind: "math.matching_paren", left: l, right: r, content: x, location: location() };
+    return { kind: "math.matching_delimiters", left: l, right: r, content: x, location: location() };
   }
 
 mathDelimiter

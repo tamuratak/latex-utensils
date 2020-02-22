@@ -397,7 +397,7 @@ Some sentences.
                 content: [ {
                     kind: 'inlineMath',
                     content: [ {
-                        kind: 'math.matching_paren',
+                        kind: 'math.matching_delimiters',
                         left: '(',
                         right: ']',
                         content: [ {
