@@ -1,5 +1,4 @@
 import * as assert from 'assert'
-import {assertType, TypeEq} from 'typepark'
 import {latexParser} from '../src/main'
 import {equalOnlyOnExpectedOwnedProperties} from './assert_partially'
 
@@ -597,15 +596,6 @@ Some sentences.
                 }
                 return ''
             }]
-        })
-
-        type KeyOfUnion<T> = T extends any ? keyof T : never
-        type KeyWithNoneNodeValue = Exclude<KeyOfUnion<latexParser.Node>, 'content' | 'args' | 'arg'>
-        type ValueType<T, C = any> = T extends any ? T[Extract<keyof T, C>] : never
-        type NoneNodeType = ValueType<latexParser.Node, KeyWithNoneNodeValue>
-
-        test('test that properties having a Node-related-type value are only content, args, and arg.', () => {
-            assertType<TypeEq<NoneNodeType, string | latexParser.Location>>()
         })
 
         type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore

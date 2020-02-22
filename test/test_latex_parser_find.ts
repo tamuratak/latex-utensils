@@ -1,8 +1,9 @@
 import * as assert from 'assert'
+import {assertType, TypeEq} from 'typepark'
 import {latexParser as lp} from '../src/main'
 
 
-suite('latexParser find', () => {
+suite('latexParser matchers', () => {
     suite('findAll', () => {
         test('test latexParser.findAll', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
@@ -39,9 +40,27 @@ suite('latexParser find', () => {
                 1
             )
         })
-    })
 
-    suite('pattern', () => {
+        test('test latexParser.pattern.match', () => {
+            const tex = '\\newcommand{\\ABC}{ABC}'
+            const doc = lp.parse(tex)
+            const results = lp.pattern(lp.isCommand)
+                          .child(lp.isGroup)
+                          .child(lp.isTextString)
+                          .match(doc.content)
+            for (const ret of results) {
+                assert.strictEqual(
+                    ret.parent.parent.parent,
+                    undefined
+                )
+                assert.strictEqual(
+                    ret.node.content,
+                    'ABC'
+                )
+                assertType<TypeEq<typeof ret.parent.node, lp.Group>>()
+            }
+        })
+
         test('test latexParser.pattern', () => {
             const tex =
 `
@@ -64,4 +83,16 @@ suite('latexParser find', () => {
             )
         })
     })
+
+    suite('type', () => {
+        type KeyOfUnion<T> = T extends any ? keyof T : never
+        type KeyWithNoneNodeValue = Exclude<KeyOfUnion<lp.Node>, 'content' | 'args' | 'arg'>
+        type ValueType<T, C = any> = T extends any ? T[Extract<keyof T, C>] : never
+        type NoneNodeType = ValueType<lp.Node, KeyWithNoneNodeValue>
+
+        test('test that properties having a Node-related-type value are only content, args, and arg.', () => {
+            assertType<TypeEq<NoneNodeType, string | lp.Location>>()
+        })
+    })
+
 })
