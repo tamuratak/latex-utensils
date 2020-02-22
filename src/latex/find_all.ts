@@ -46,7 +46,7 @@ type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
     parent: P extends undefined ? undefined : MatchResult<NonNullable<P>['target'], NonNullable<P>['parentPattern']>;
 }
 
-export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefined = undefined > {
+class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefined = undefined > {
     parentPattern: ParentPattern
     target: T
 
@@ -93,4 +93,8 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
         }
         return ret
     }
+}
+
+export function pattern<T extends Node>(typeguard: ((x: Node) => x is T) | ((x: Node) => boolean)) {
+    return new Pattern(typeguard)
 }
