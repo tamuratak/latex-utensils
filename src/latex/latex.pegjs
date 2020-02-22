@@ -86,6 +86,7 @@ MathElement_p
   / AmsmathTextCommand
   / SpecialCommand
   / MatchingDelimiters
+  / MathematicalDelimiters
   / Command
   / MathGroup
   / AlignmentTab
@@ -286,9 +287,9 @@ LabelText
 // \left( ... \right) in math mode.
 MatchingDelimiters
   = skip_space
-    escape "left" l:$mathDelimiter
+    escape "left" skip_space l:$mathDelimiter
       skip_space x:(!(escape "right" mathDelimiter) c:MathElement {return c;})*
-    escape "right" r:$mathDelimiter
+    escape "right" skip_space r:$mathDelimiter
   {
     return { kind: "math.matching_delimiters", left: l, right: r, content: x, location: location() };
   }
@@ -297,6 +298,35 @@ mathDelimiter
   = [()\[\]|/]
   / escape [.{}|]
   / escape char+
+
+MathematicalDelimiters
+  = skip_space
+    l:sizeCommand? skip_space "(" skip_space
+      x:(!(r:sizeCommand? ")") c:MathElement { return c;} )*
+    r:sizeCommand? skip_space ")"
+  {
+    return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "(", right: ")", content: x, location: location() };
+  }
+  / skip_space
+    l:sizeCommand? skip_space "[" skip_space
+      x:(!(r:sizeCommand? "]") c:MathElement { return c;} )*
+    r:sizeCommand? skip_space "]"
+  {
+    return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "[", right: "]", content: x, location: location() };
+  }
+  / skip_space
+    l:sizeCommand? skip_space "\\{" skip_space
+      x:(!(r:sizeCommand? "\\}") c:MathElement { return c;} )*
+    r:sizeCommand? skip_space "\\}"
+  {
+    return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "\\{", right: "\\}", content: x, location: location() };
+  }
+
+sizeCommand
+  = escape c:$(("bigg" / "Bigg" / "big" / "Big") [rlm]?)
+  {
+    return c;
+  }
 
 argumentList
   = skip_space "[" body:(!"]" skip_space x:(argsDelimiter / argsToken) skip_space {return x;})* "]"
