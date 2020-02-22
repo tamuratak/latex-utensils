@@ -1,19 +1,19 @@
 import * as assert from 'assert'
-import {latexParser} from '../src/main'
+import {latexParser as lp} from '../src/main'
 
 
 suite('latexParser find', () => {
     suite('findAll', () => {
         test('test latexParser.findAll', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
-            const doc = latexParser.parse(tex)
-            assert.strictEqual(latexParser.findAll(doc.content, latexParser.isCommand).length, 2)
-            assert.strictEqual(latexParser.findAll(doc.content, latexParser.isTextString).length, 1)
-            assert.strictEqual(latexParser.findAll(doc.content).length, 5)
+            const doc = lp.parse(tex)
+            assert.strictEqual(lp.findAll(doc.content, lp.isCommand).length, 2)
+            assert.strictEqual(lp.findAll(doc.content, lp.isTextString).length, 1)
+            assert.strictEqual(lp.findAll(doc.content).length, 5)
 
             assert.deepStrictEqual(
-                latexParser
-                .findAll(doc.content, latexParser.isCommand)
+                lp
+                .findAll(doc.content, lp.isCommand)
                 .map(result => result.node.name)
                 .sort(),
                 ['ABC', 'newcommand']
@@ -24,12 +24,19 @@ suite('latexParser find', () => {
     suite('pattern', () => {
         test('test latexParser.pattern', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
-            const doc = latexParser.parse(tex)
-            const pat = latexParser.pattern(latexParser.isCommand).child(latexParser.isGroup)
-            console.log(pat.match(doc.content))
+            const doc = lp.parse(tex)
             assert.strictEqual(
-                pat.match(doc.content).length,
+                lp.pattern(lp.isCommand)
+                .child(lp.isGroup)
+                .match(doc.content).length,
                 2
+            )
+            assert.strictEqual(
+                lp.pattern(lp.isCommand)
+                .child(lp.isGroup)
+                .child(lp.isTextString)
+                .match(doc.content).length,
+                1
             )
         })
     })
