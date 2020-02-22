@@ -2,7 +2,7 @@ import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
 type FindResult<T extends Node, P extends Node = Node> = {
-    target: T;
+    node: T;
     parent?: FindResult<P>;
 }
 
@@ -13,9 +13,9 @@ export function findAll<T extends Node>(
 ): FindResult<T>[] {
     let ret: FindResult<T>[] = []
     for(const node of nodes) {
-        const cur = { target: node, parent }
+        const cur = { node, parent }
         if (typeguard(node)) {
-            ret.push({ target: node, parent })
+            ret.push({ node, parent })
         }
         if (lp.hasContentArray(node)) {
             ret = ret.concat(findAll(node.content, typeguard, cur))
@@ -30,8 +30,19 @@ export function findAll<T extends Node>(
     return ret
 }
 
+function getChildNodes(node: Node): Node[] {
+    if (lp.hasContentArray(node)) {
+        return node.content
+    } else if (lp.hasArgsArray(node)) {
+        return node.args
+    } else if ('arg' in node && node.arg) {
+        return [node.arg]
+    }
+    return []
+}
+
 type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
-    target: T;
+    node: T;
     parent: P extends undefined ? undefined : MatchResult<NonNullable<P>['target'], NonNullable<P>['parentPattern']>;
 }
 
@@ -53,30 +64,29 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
         return childMatcher
     }
 
-    match(nodes: Node[]): MatchResult<T, ParentPattern>[] {
+    match(nodes: Node[], opt: { traverseAll: boolean } = { traverseAll: false } ): MatchResult<T, ParentPattern>[] {
         const ret: MatchResult<T, ParentPattern>[] = []
         if (!this.parentPattern){
-            const results = findAll(nodes, this.typeguard)
-            for (const result of results) {
-                ret.push( { target: result.target, parent: undefined as any } )
+            if (opt.traverseAll) {
+                const results = findAll(nodes, this.typeguard)
+                for (const result of results) {
+                    ret.push( { node: result.node, parent: undefined as any } )
+                }
+            } else {
+                for (const node of nodes) {
+                    if (this.typeguard(node)) {
+                        ret.push( { node, parent: undefined as any })
+                    }
+                }
             }
         } else {
             const parentMatchResults = this.parentPattern.match(nodes)
             for(const parentMatchResult of parentMatchResults) {
-                const parentNode = parentMatchResult.target
-                let childNodes: Node[]
-                if (lp.hasContentArray(parentNode)) {
-                    childNodes = parentNode.content
-                } else if (lp.hasArgsArray(parentNode)) {
-                    childNodes = parentNode.args
-                } else if ('arg' in parentNode && parentNode.arg) {
-                    childNodes = [parentNode.arg]
-                } else {
-                    continue
-                }
+                const parentNode = parentMatchResult.node
+                const childNodes = getChildNodes(parentNode)
                 for (const node of childNodes) {
                     if (this.typeguard(node)) {
-                        ret.push( { target: node, parent: parentMatchResult as any } )
+                        ret.push( { node, parent: parentMatchResult as any } )
                     }
                 }
             }
