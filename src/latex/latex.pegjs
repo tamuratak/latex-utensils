@@ -87,7 +87,7 @@ MathElement_p
   / SpecialCommand
   / MatchingDelimiters
   / MathematicalDelimiters
-  / Command
+  / MathCommand
   / MathGroup
   / AlignmentTab
   / CommandParameterWithNumber
@@ -95,7 +95,10 @@ MathElement_p
   / Subscript skip_space x:MathElement { return { kind: "subscript", content: x, location: location() }; }
   / ActiveCharacter
   / ignore
-  / c:. { return { kind: "math.character", content: c }; }
+  / c:$(!nonMathcharToken .) { return { kind: "math.character", content: c }; }
+
+nonMathcharToken
+  = escape
 
 noncharToken
   = escape
@@ -248,7 +251,7 @@ LabelCommand
 
 MathCommand
   = LabelCommand
-  / escape n:commandName args:(argumentList / MathGroup)*
+  / escape n:$(!("end" [^a-zA-Z]) commandName) args:(argumentList / MathGroup)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
