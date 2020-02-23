@@ -304,32 +304,29 @@ mathDelimiter
 
 MathematicalDelimiters
   = skip_space
-    l:sizeCommand? skip_space "(" skip_space
+    l:$sizeCommand? skip_space "(" skip_space
       x:(!(r:sizeCommand? ")") c:MathElement { return c;} )*
-    r:sizeCommand? skip_space ")"
+    r:$sizeCommand? skip_space ")"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "(", right: ")", content: x, location: location() };
   }
   / skip_space
-    l:sizeCommand? skip_space "[" skip_space
+    l:$sizeCommand? skip_space "[" skip_space
       x:(!(r:sizeCommand? "]") c:MathElement { return c;} )*
-    r:sizeCommand? skip_space "]"
+    r:$sizeCommand? skip_space "]"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "[", right: "]", content: x, location: location() };
   }
   / skip_space
-    l:sizeCommand? skip_space "\\{" skip_space
+    l:$sizeCommand? skip_space "\\{" skip_space
       x:(!(r:sizeCommand? "\\}") c:MathElement { return c;} )*
-    r:sizeCommand? skip_space "\\}"
+    r:$sizeCommand? skip_space "\\}"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "\\{", right: "\\}", content: x, location: location() };
   }
 
 sizeCommand
-  = escape c:$(("bigg" / "Bigg" / "big" / "Big") [rlm]?)
-  {
-    return c;
-  }
+  = escape ("bigg" / "Bigg" / "big" / "Big") [rlm]?
 
 argumentList
   = skip_space "[" body:(!"]" skip_space x:(argsDelimiter / argsToken) skip_space {return x;})* "]"

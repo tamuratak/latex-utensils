@@ -242,7 +242,7 @@ export function isMathCharacter(node: Node): node is MathCharacter {
     return node.kind === 'math.character'
 }
 
-export type MathMatchingParen = {
+export type MatchingDelimiters = {
     kind: 'math.matching_delimiters';
     left: string;
     right: string;
@@ -250,8 +250,22 @@ export type MathMatchingParen = {
     location: Location;
 }
 
-export function isMathMatchingParen(node: Node): node is MathMatchingParen {
+export function isMatchingDelimiters(node: Node): node is MatchingDelimiters {
     return node.kind === 'math.matching_delimiters'
+}
+
+export type MathDelimiters = {
+    kind: 'math.math_delimiters';
+    lcommand: string;
+    rcommand: string;
+    left: string;
+    right: string;
+    content: Node[];
+    location: Location;
+}
+
+export function isMathDelimiters(node: Node): node is MathDelimiters {
+    return node.kind === 'math.math_delimiters'
 }
 
 export function hasContent(node: Node): node is Extract<Node, {content: any}> {
@@ -278,7 +292,8 @@ export type Node
 | InlienMath
 | DisplayMath
 | MathCharacter
-| MathMatchingParen
+| MatchingDelimiters
+| MathDelimiters
 | MathEnv
 | MathEnvAligned
 | Parbreak

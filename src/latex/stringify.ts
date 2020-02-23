@@ -102,8 +102,11 @@ export function stringify(
     if (lp.isMathCharacter(node)) {
         return node.content
     }
-    if (lp.isMathMatchingParen(node)) {
+    if (lp.isMatchingDelimiters(node)) {
         return '\\left' + node.left + stringifyArray(node.content, options) + '\\right' + node.right
+    }
+    if (lp.isMathDelimiters(node)) {
+        return node.lcommand + node.left + stringifyArray(node.content, options) + node.rcommand + node.right
     }
 
     // node must be the never type here.
