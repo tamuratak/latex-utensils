@@ -48,13 +48,13 @@ export function findNodeAt(
         const cur = { node, parent }
         if (nodeLoc && pos.line !== undefined && pos.column !== undefined
             && nodeLoc.start.line <= pos.line
-            && nodeLoc.start.column <= pos.column
+            && nodeLoc.start.column < pos.column
             && nodeLoc.end.line >= pos.line
             && nodeLoc.end.column > pos.column) {
             const childNodes = getChildNodes(node)
             return findNodeAt(childNodes, pos, cur)
         } else if (nodeLoc && pos.offset !== undefined
-            && nodeLoc.start.offset <= pos.offset
+            && nodeLoc.start.offset < pos.offset
             && nodeLoc.end.offset > pos.offset) {
             const childNodes = getChildNodes(node)
             return findNodeAt(childNodes, pos, cur)

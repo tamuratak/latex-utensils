@@ -84,16 +84,24 @@ suite('latexParser matchers', () => {
         })
 
         test('test latexParser.findNodeAt', () => {
-            const tex =
-`
-\\begin{document}
-\\newcommand{\\ABC}{ABC}
-\\end{document}
-`
+            const tex = '{}'
             const doc = lp.parse(tex)
             assert.ok(!lp.findNodeAt(doc.content, {offset: 0}))
-            assert.ok(lp.findNodeAt(doc.content, {offset: 20}))
-            assert.ok(!lp.findNodeAt(doc.content, {offset: 200}))
+            assert.ok( lp.findNodeAt(doc.content, {offset: 1}))
+            assert.ok(!lp.findNodeAt(doc.content, {offset: 2}))
+        })
+
+        test('test latexParser.findNodeAt with line and column', () => {
+            const tex =
+`
+{}
+`
+            const doc = lp.parse(tex)
+            assert.ok(!lp.findNodeAt(doc.content, { line: 1, column: 2 }))
+            assert.ok(!lp.findNodeAt(doc.content, { line: 2, column: 1 }))
+            assert.ok( lp.findNodeAt(doc.content, { line: 2, column: 2 }))
+            assert.ok(!lp.findNodeAt(doc.content, { line: 2, column: 3 }))
+            assert.ok(!lp.findNodeAt(doc.content, { line: 3, column: 2 }))
         })
     })
 
