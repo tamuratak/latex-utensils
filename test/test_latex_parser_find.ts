@@ -87,11 +87,17 @@ suite('latexParser matchers', () => {
     suite('type', () => {
         type KeyOfUnion<T> = T extends any ? keyof T : never
         type KeyWithNoneNodeValue = Exclude<KeyOfUnion<lp.Node>, 'content' | 'args' | 'arg'>
-        type ValueType<T, C = any> = T extends any ? T[Extract<keyof T, C>] : never
+        type ValueType<T, C = any> = T extends lp.Node ? T[Extract<keyof T, C>] : never
         type NoneNodeType = ValueType<lp.Node, KeyWithNoneNodeValue>
 
         test('test that properties having a Node-related-type value are only content, args, and arg.', () => {
             assertType<TypeEq<NoneNodeType, string | lp.Location>>()
+        })
+
+        test('test the types of content, arg, and args.', () => {
+            assertType< ValueType<lp.Node, 'content'> extends string | lp.Node[] ? true : false >()
+            assertType< ValueType<lp.Node, 'arg'> extends undefined | lp.Node ? true : false >()
+            assertType< ValueType<lp.Node, 'args'> extends lp.Node[] ? true : false >()
         })
     })
 
