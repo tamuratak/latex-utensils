@@ -13,32 +13,28 @@ export function findAll<T extends Node>(
 ): FindResult<T>[] {
     let ret: FindResult<T>[] = []
     for(const node of nodes) {
-        const cur = { node, parent }
         if (typeguard(node)) {
             ret.push({ node, parent })
         }
-        if (lp.hasContentArray(node)) {
-            ret = ret.concat(findAll(node.content, typeguard, cur))
-        }
-        if (lp.hasArgsArray(node)) {
-            ret = ret.concat(findAll(node.args, typeguard, cur))
-        }
-        if ('arg' in node && node.arg) {
-            ret = ret.concat(findAll([node.arg], typeguard, cur))
-        }
+        const cur = { node, parent }
+        const childNodes = getChildNodes(node)
+        ret = ret.concat(findAll(childNodes, typeguard, cur))
     }
     return ret
 }
 
 function getChildNodes(node: Node): Node[] {
+    let results: Node[] = []
     if (lp.hasContentArray(node)) {
-        return node.content
-    } else if (lp.hasArgsArray(node)) {
-        return node.args
-    } else if ('arg' in node && node.arg) {
-        return [node.arg]
+        results = results.concat(node.content)
     }
-    return []
+    if (lp.hasArgsArray(node)) {
+        results = results.concat(node.args)
+    }
+    if ('arg' in node && node.arg) {
+        results = results.concat([node.arg])
+    }
+    return results
 }
 
 type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
