@@ -1,6 +1,9 @@
 {
   "name": "latex-utensils",
-  "version": "1.3.0-beta.0",
+  "version": "2.0.0-beta.0",
+  "publishConfig": {
+    "tag": "canary"
+  },
   "license": "MIT",
   "description": "A LaTeX parser and utilities",
   "homepage": "https://github.com/tamuratak/latex-utensils",
