@@ -38,9 +38,23 @@ export function findAll<T extends Node>(
     return ret
 }
 
+type Position = {
+    line: number;
+    column: number;
+    offset?: number;
+    includeStart?: boolean;
+    includeEnd?: boolean;
+} | {
+    line?: number;
+    column?: number;
+    offset: number;
+    includeStart?: boolean;
+    includeEnd?: boolean;
+}
+
 export function findNodeAt(
     nodes: Node[],
-    pos: { line: number; column: number; offset?: number } | { line?: number; column?: number; offset: number },
+    pos: Position,
     parent?: FindResult<Node>
 ): FindResult<Node> | undefined {
     for (const node of nodes) {
@@ -48,14 +62,14 @@ export function findNodeAt(
         const cur = { node, parent }
         if (nodeLoc && pos.line !== undefined && pos.column !== undefined
             && nodeLoc.start.line <= pos.line
-            && nodeLoc.start.column < pos.column
+            && (pos.includeStart ? nodeLoc.start.column <= pos.column : nodeLoc.start.column < pos.column)
             && nodeLoc.end.line >= pos.line
-            && nodeLoc.end.column > pos.column) {
+            && (pos.includeEnd ? nodeLoc.end.column >= pos.column : nodeLoc.end.column > pos.column) ) {
             const childNodes = getChildNodes(node)
             return findNodeAt(childNodes, pos, cur)
         } else if (nodeLoc && pos.offset !== undefined
-            && nodeLoc.start.offset < pos.offset
-            && nodeLoc.end.offset > pos.offset) {
+            && (pos.includeStart ? nodeLoc.start.offset <= pos.offset : nodeLoc.start.offset < pos.offset)
+            && (pos.includeEnd ? nodeLoc.end.offset >= pos.offset : nodeLoc.end.offset > pos.offset) ) {
             const childNodes = getChildNodes(node)
             return findNodeAt(childNodes, pos, cur)
         }
