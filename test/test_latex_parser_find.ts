@@ -82,6 +82,19 @@ suite('latexParser matchers', () => {
                 2
             )
         })
+
+        test('test latexParser.findNodeAt', () => {
+            const tex =
+`
+\\begin{document}
+\\newcommand{\\ABC}{ABC}
+\\end{document}
+`
+            const doc = lp.parse(tex)
+            assert.ok(!lp.findNodeAt(doc.content, {offset: 0}))
+            assert.ok(lp.findNodeAt(doc.content, {offset: 20}))
+            assert.ok(!lp.findNodeAt(doc.content, {offset: 200}))
+        })
     })
 
     suite('type', () => {
@@ -91,7 +104,7 @@ suite('latexParser matchers', () => {
         type NoneNodeType = ValueType<lp.Node, KeyWithNoneNodeValue>
 
         test('test that properties having a Node-related-type value are only content, args, and arg.', () => {
-            assertType<TypeEq<NoneNodeType, string | lp.Location>>()
+            assertType<TypeEq<NoneNodeType, undefined | string | lp.Location>>()
         })
 
         test('test the types of content, arg, and args.', () => {

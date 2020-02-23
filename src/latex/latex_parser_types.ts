@@ -36,6 +36,7 @@ export type DefCommand = {
     name: 'def';
     token: string;
     args: (OptionalArg | CommandParameter | Group)[];
+    location: Location;
 }
 
 export function isDefCommand(node: Node): node is DefCommand {
@@ -234,6 +235,7 @@ export function isDisplayMath(node: Node): node is DisplayMath {
 export type MathCharacter = {
     kind: 'math.character';
     content: string;
+    location: undefined;
 }
 
 export function isMathCharacter(node: Node): node is MathCharacter {

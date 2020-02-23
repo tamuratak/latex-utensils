@@ -1,6 +1,21 @@
 import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
+
+function getChildNodes(node: Node): Node[] {
+    let results: Node[] = []
+    if (lp.hasContentArray(node)) {
+        results = results.concat(node.content)
+    }
+    if (lp.hasArgsArray(node)) {
+        results = results.concat(node.args)
+    }
+    if ('arg' in node && node.arg) {
+        results = results.concat([node.arg])
+    }
+    return results
+}
+
 type FindResult<T extends Node, P extends Node = Node> = {
     node: T;
     parent?: FindResult<P>;
@@ -23,18 +38,29 @@ export function findAll<T extends Node>(
     return ret
 }
 
-function getChildNodes(node: Node): Node[] {
-    let results: Node[] = []
-    if (lp.hasContentArray(node)) {
-        results = results.concat(node.content)
+export function findNodeAt(
+    nodes: Node[],
+    pos: { line: number; column: number; offset?: number } | { line?: number; column?: number; offset: number },
+    parent?: FindResult<Node>
+): FindResult<Node> | undefined {
+    for (const node of nodes) {
+        const nodeLoc = node.location
+        const cur = { node, parent }
+        if (nodeLoc && pos.line !== undefined && pos.column !== undefined
+            && nodeLoc.start.line <= pos.line
+            && nodeLoc.start.column <= pos.column
+            && nodeLoc.end.line >= pos.line
+            && nodeLoc.end.column >= pos.column) {
+            const childNodes = getChildNodes(node)
+            return findNodeAt(childNodes, pos, cur)
+        } else if (nodeLoc && pos.offset !== undefined
+            && nodeLoc.start.offset <= pos.offset
+            && nodeLoc.end.offset >= pos.offset) {
+            const childNodes = getChildNodes(node)
+            return findNodeAt(childNodes, pos, cur)
+        }
     }
-    if (lp.hasArgsArray(node)) {
-        results = results.concat(node.args)
-    }
-    if ('arg' in node && node.arg) {
-        results = results.concat([node.arg])
-    }
-    return results
+    return parent
 }
 
 type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
