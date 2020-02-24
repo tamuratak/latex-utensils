@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.0.0]
+
+
+### BREAKING CHANGES
+
+- Rename `latexParser.MathMatchingParen` to `latexParser.MatchingDelimiters`.
+- `latexParser.parse` parses mathematical delimiters without `\left` and `\right`, `(...)`, `[...]`, and so on now. The type of delimiters is `latexParser.MathDelimiters`.
 
 ## [1.2.3](https://github.com/tamuratak/latex-utensils/compare/v1.2.2...v1.2.3) (2019-12-31)
 
