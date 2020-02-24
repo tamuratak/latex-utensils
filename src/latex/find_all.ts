@@ -34,7 +34,9 @@ export function findAll<T extends Node>(
         }
         const cur = { node, parent }
         const childNodes = getChildNodes(node)
-        ret = ret.concat(findAll(childNodes, typeguard, cur))
+        if (childNodes.length > 0) {
+            ret = ret.concat(findAll(childNodes, typeguard, cur))
+        }
     }
     return ret
 }
@@ -100,7 +102,9 @@ export function findAllSequences(
         const curNode = nodes[i]
         const cur = { node: curNode, parent }
         const childNodes = getChildNodes(curNode)
-        ret = ret.concat(findAllSequences(childNodes, typeguards, cur))
+        if (childNodes.length > 0) {
+            ret = ret.concat(findAllSequences(childNodes, typeguards, cur))
+        }
     }
     return ret
 }

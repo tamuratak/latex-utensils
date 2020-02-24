@@ -22,7 +22,7 @@ suite('latexParser matchers', () => {
         })
     })
 
-    suite('findAll', () => {
+    suite('findAllSeqences', () => {
         test('test latexParser.findAllSeqences', () => {
             const tex = '{A B C}'
             const doc = lp.parse(tex)
