@@ -22,6 +22,25 @@ suite('latexParser matchers', () => {
         })
     })
 
+    suite('findAll', () => {
+        test('test latexParser.findAllSeqences', () => {
+            const tex = '{A B C}'
+            const doc = lp.parse(tex)
+            const ret = lp.findAllSequences(doc.content, [lp.isTextString])
+            assert.strictEqual(ret.length, 3)
+            const ret2 = lp.findAllSequences(doc.content, [
+                (node) => lp.isTextString(node) && node.content === 'A',
+                (node) => lp.isTextString(node) && node.content === 'B',
+            ])
+            assert.strictEqual(ret2.length, 1)
+            const ret3 = lp.findAllSequences(doc.content, [
+                (node) => lp.isTextString(node) && node.content === 'C',
+                (node) => lp.isTextString(node) && node.content === 'A',
+            ])
+            assert.strictEqual(ret3.length, 0)
+        })
+    })
+
     suite('pattern', () => {
         test('test latexParser.pattern', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
