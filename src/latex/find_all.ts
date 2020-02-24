@@ -1,7 +1,7 @@
 import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
-type Typegurad<T extends Node> = ((x: Node) => x is T) | ((x: Node) => boolean)
+type Typeguard<T extends Node> = ((x: Node) => x is T) | ((x: Node) => boolean)
 
 export function getChildNodes(node: Node): Node[] {
     let results: Node[] = []
@@ -24,7 +24,7 @@ type FindResult<T extends Node, P extends Node = Node> = {
 
 export function findAll<T extends Node>(
     nodes: Node[],
-    typeguard: ((x: Node) => x is T) | ((x: Node) => boolean) = (_z: Node): _z is T => true,
+    typeguard: Typeguard<T> = (_z: Node): _z is T => true,
     parent?: FindResult<Node>
 ): FindResult<T>[] {
     let ret: FindResult<T>[] = []
@@ -46,22 +46,37 @@ type SequenceResult<Ts extends Node[], P extends Node = Node> = {
 
 export function findAllSequences<T extends Node>(
     nodes: Node[],
-    typeguards: [Typegurad<T>],
+    typeguards: [Typeguard<T>],
     parent?: FindResult<Node>
 ): SequenceResult<[T]>[]
 export function findAllSequences<T1 extends Node, T2 extends Node>(
     nodes: Node[],
-    typeguards: [Typegurad<T1>, Typegurad<T2>],
+    typeguards: [Typeguard<T1>, Typeguard<T2>],
     parent?: FindResult<Node>
 ): SequenceResult<[T1, T2]>[]
+export function findAllSequences<T1 extends Node, T2 extends Node, T3 extends Node>(
+    nodes: Node[],
+    typeguards: [Typeguard<T1>, Typeguard<T2>, Typeguard<T3>],
+    parent?: FindResult<Node>
+): SequenceResult<[T1, T2, T3]>[]
+export function findAllSequences<T1 extends Node, T2 extends Node, T3 extends Node, T4 extends Node>(
+    nodes: Node[],
+    typeguards: [Typeguard<T1>, Typeguard<T2>, Typeguard<T3>, Typeguard<T4>],
+    parent?: FindResult<Node>
+): SequenceResult<[T1, T2, T3, T4]>[]
+export function findAllSequences<T1 extends Node, T2 extends Node, T3 extends Node, T4 extends Node, T5 extends Node>(
+    nodes: Node[],
+    typeguards: [Typeguard<T1>, Typeguard<T2>, Typeguard<T3>, Typeguard<T4>, Typeguard<T5>],
+    parent?: FindResult<Node>
+): SequenceResult<[T1, T2, T3, T4, T5]>[]
 export function findAllSequences(
     nodes: Node[],
-    typeguards: Typegurad<Node>[],
+    typeguards: Typeguard<Node>[],
     parent?: FindResult<Node>
 ): SequenceResult<Node[]>[]
 export function findAllSequences(
     nodes: Node[],
-    typeguards: Typegurad<Node>[],
+    typeguards: Typeguard<Node>[],
     parent?: FindResult<Node>
 ): SequenceResult<Node[]>[] {
     let ret: SequenceResult<Node[]>[] = []
