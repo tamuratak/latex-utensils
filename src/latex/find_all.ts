@@ -1,6 +1,7 @@
 import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
+type Typegurad<T extends Node> = ((x: Node) => x is T) | ((x: Node) => boolean)
 
 function getChildNodes(node: Node): Node[] {
     let results: Node[] = []
@@ -34,6 +35,57 @@ export function findAll<T extends Node>(
         const cur = { node, parent }
         const childNodes = getChildNodes(node)
         ret = ret.concat(findAll(childNodes, typeguard, cur))
+    }
+    return ret
+}
+
+type SequenceResult<Ts extends Node[], P extends Node = Node> = {
+    nodes: Ts;
+    parent?: FindResult<P>;
+}
+
+export function findAllSequences<T extends Node>(
+    nodes: Node[],
+    typeguards: [Typegurad<T>],
+    parent?: FindResult<Node>
+): SequenceResult<[T]>[]
+export function findAllSequences<T1 extends Node, T2 extends Node>(
+    nodes: Node[],
+    typeguards: [Typegurad<T1>, Typegurad<T2>],
+    parent?: FindResult<Node>
+): SequenceResult<[T1, T2]>[]
+export function findAllSequences(
+    nodes: Node[],
+    typeguards: Typegurad<Node>[],
+    parent?: FindResult<Node>
+): SequenceResult<Node[]>[]
+export function findAllSequences(
+    nodes: Node[],
+    typeguards: Typegurad<Node>[],
+    parent?: FindResult<Node>
+): SequenceResult<Node[]>[] {
+    let ret: SequenceResult<Node[]>[] = []
+    for(let i = 0; i < nodes.length; i++) {
+        let flag = true
+        const curResult: Node[] = []
+        for (let j = 0; j < typeguards.length; j++) {
+            if (i+j < nodes.length) {
+                const cur = nodes[i+j]
+                if (typeguards[j](cur)) {
+                    curResult.push(cur)
+                    continue
+                }
+            }
+            flag = false
+            break
+        }
+        if (flag) {
+            ret.push( {nodes: curResult, parent})
+        }
+        const curNode = nodes[i]
+        const cur = { node: curNode, parent }
+        const childNodes = getChildNodes(curNode)
+        ret = ret.concat(findAllSequences(childNodes, typeguards, cur))
     }
     return ret
 }
