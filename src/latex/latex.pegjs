@@ -98,7 +98,10 @@ MathElement_p
   / c:$(!nonMathcharToken .) { return { kind: "math.character", content: c }; }
 
 nonMathcharToken
-  = escape
+  = mathShift
+  / endInlineMath
+  / endDisplayMath
+  / escape
 
 noncharToken
   = escape
@@ -251,7 +254,7 @@ LabelCommand
 
 MathCommand
   = LabelCommand
-  / escape n:$(!("end" [^a-zA-Z]) commandName) args:(argumentList / MathGroup)*
+  / escape n:$(!("end" [^a-zA-Z] / "]" / ")") commandName) args:(argumentList / MathGroup)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
