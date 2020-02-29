@@ -6,8 +6,8 @@ export type TextString = {
     location: Location;
 }
 
-export function isTextString(node: Node): node is TextString {
-    return node.kind === 'text.string'
+export function isTextString(node: Node | undefined): node is TextString {
+    return !!node && node.kind === 'text.string'
 }
 
 export type Command = {
@@ -17,8 +17,8 @@ export type Command = {
     location: Location;
 }
 
-export function isCommand(node: Node): node is Command {
-    return node.kind === 'command'
+export function isCommand(node: Node | undefined): node is Command {
+    return !!node && node.kind === 'command'
 }
 
 export type AmsMathTextCommand = {
@@ -27,8 +27,8 @@ export type AmsMathTextCommand = {
     location: Location;
 }
 
-export function isAmsMathTextCommand(node: Node): node is AmsMathTextCommand {
-    return node.kind === 'command.text'
+export function isAmsMathTextCommand(node: Node | undefined): node is AmsMathTextCommand {
+    return !!node && node.kind === 'command.text'
 }
 
 export type DefCommand = {
@@ -39,8 +39,8 @@ export type DefCommand = {
     location: Location;
 }
 
-export function isDefCommand(node: Node): node is DefCommand {
-    return node.kind === 'command.def'
+export function isDefCommand(node: Node | undefined): node is DefCommand {
+    return !!node && node.kind === 'command.def'
 }
 
 export type Environment = {
@@ -51,8 +51,8 @@ export type Environment = {
     location: Location;
 }
 
-export function isEnvironment(node: Node): node is Environment {
-    return node.kind === 'env'
+export function isEnvironment(node: Node | undefined): node is Environment {
+    return !!node && node.kind === 'env'
 }
 
 export type MathEnv = {
@@ -63,8 +63,8 @@ export type MathEnv = {
     location: Location;
 }
 
-export function isMathEnv(node: Node): node is MathEnv {
-    return node.kind === 'env.math.align'
+export function isMathEnv(node: Node | undefined): node is MathEnv {
+    return !!node && node.kind === 'env.math.align'
 }
 
 export type MathEnvAligned = {
@@ -75,8 +75,8 @@ export type MathEnvAligned = {
     location: Location;
 }
 
-export function isMathEnvAligned(node: Node): node is MathEnvAligned {
-    return node.kind === 'env.math.aligned'
+export function isMathEnvAligned(node: Node | undefined): node is MathEnvAligned {
+    return !!node && node.kind === 'env.math.aligned'
 }
 
 export type Group = {
@@ -85,8 +85,8 @@ export type Group = {
     location: Location;
 }
 
-export function isGroup(node: Node): node is Group {
-    return node.kind === 'arg.group'
+export function isGroup(node: Node | undefined): node is Group {
+    return !!node && node.kind === 'arg.group'
 }
 
 export type OptionalArg = {
@@ -95,8 +95,8 @@ export type OptionalArg = {
     location: Location;
 }
 
-export function isOptionalArg(node: Node): node is OptionalArg {
-    return node.kind === 'arg.optional'
+export function isOptionalArg(node: Node | undefined): node is OptionalArg {
+    return !!node && node.kind === 'arg.optional'
 }
 
 export type Parbreak = {
@@ -104,8 +104,8 @@ export type Parbreak = {
     location: Location;
 }
 
-export function isParbreak(node: Node): node is Parbreak {
-    return node.kind === 'parbreak'
+export function isParbreak(node: Node | undefined): node is Parbreak {
+    return !!node && node.kind === 'parbreak'
 }
 
 export type Superscript = {
@@ -114,8 +114,8 @@ export type Superscript = {
     location: Location;
 }
 
-export function isSuperscript(node: Node): node is Superscript {
-    return node.kind === 'superscript'
+export function isSuperscript(node: Node | undefined): node is Superscript {
+    return !!node && node.kind === 'superscript'
 }
 
 export type Subscript = {
@@ -124,8 +124,8 @@ export type Subscript = {
     location: Location;
 }
 
-export function isSubscript(node: Node): node is Subscript {
-    return node.kind === 'subscript'
+export function isSubscript(node: Node | undefined): node is Subscript {
+    return !!node && node.kind === 'subscript'
 }
 
 export type AlignmentTab = {
@@ -133,8 +133,8 @@ export type AlignmentTab = {
     location: Location;
 }
 
-export function isAlignmentTab(node: Node): node is AlignmentTab {
-    return node.kind === 'alignmentTab'
+export function isAlignmentTab(node: Node | undefined): node is AlignmentTab {
+    return !!node && node.kind === 'alignmentTab'
 }
 
 export type CommandParameter = {
@@ -143,8 +143,8 @@ export type CommandParameter = {
     location: Location;
 }
 
-export function isCommandParameter(node: Node): node is CommandParameter {
-    return node.kind === 'commandParameter'
+export function isCommandParameter(node: Node | undefined): node is CommandParameter {
+    return !!node && node.kind === 'commandParameter'
 }
 
 export type ActiveCharacter = {
@@ -152,8 +152,8 @@ export type ActiveCharacter = {
     location: Location;
 }
 
-export function isActiveCharacter(node: Node): node is ActiveCharacter {
-    return node.kind === 'activeCharacter'
+export function isActiveCharacter(node: Node | undefined): node is ActiveCharacter {
+    return !!node && node.kind === 'activeCharacter'
 }
 
 export type Ignore = {
@@ -161,8 +161,8 @@ export type Ignore = {
     location: Location;
 }
 
-export function isIgnore(node: Node): node is Ignore {
-    return node.kind === 'ignore'
+export function isIgnore(node: Node | undefined): node is Ignore {
+    return !!node && node.kind === 'ignore'
 }
 
 export type Verb = {
@@ -173,8 +173,8 @@ export type Verb = {
     location: Location;
 }
 
-export function isVerb(node: Node): node is Verb {
-    return node.kind === 'verb'
+export function isVerb(node: Node | undefined): node is Verb {
+    return !!node && node.kind === 'verb'
 }
 
 export type Verbatim = {
@@ -184,8 +184,8 @@ export type Verbatim = {
     location: Location;
 }
 
-export function isVerbatim(node: Node): node is Verbatim {
-    return node.kind === 'env.verbatim'
+export function isVerbatim(node: Node | undefined): node is Verbatim {
+    return !!node && node.kind === 'env.verbatim'
 }
 
 export type Minted = {
@@ -196,8 +196,8 @@ export type Minted = {
     location: Location;
 }
 
-export function isMinted(node: Node): node is Minted {
-    return node.kind === 'env.minted'
+export function isMinted(node: Node | undefined): node is Minted {
+    return !!node && node.kind === 'env.minted'
 }
 
 export type Lstlisting = {
@@ -208,8 +208,8 @@ export type Lstlisting = {
     location: Location;
 }
 
-export function isLstlisting(node: Node): node is Lstlisting {
-    return node.kind === 'env.lstlisting'
+export function isLstlisting(node: Node | undefined): node is Lstlisting {
+    return !!node && node.kind === 'env.lstlisting'
 }
 
 export type InlienMath = {
@@ -218,8 +218,8 @@ export type InlienMath = {
     location: Location;
 }
 
-export function isInlienMath(node: Node): node is InlienMath {
-    return node.kind === 'inlineMath'
+export function isInlienMath(node: Node | undefined): node is InlienMath {
+    return !!node && node.kind === 'inlineMath'
 }
 
 export type DisplayMath = {
@@ -228,8 +228,8 @@ export type DisplayMath = {
     location: Location;
 }
 
-export function isDisplayMath(node: Node): node is DisplayMath {
-    return node.kind === 'displayMath'
+export function isDisplayMath(node: Node | undefined): node is DisplayMath {
+    return !!node && node.kind === 'displayMath'
 }
 
 export type MathCharacter = {
@@ -238,8 +238,8 @@ export type MathCharacter = {
     location: undefined;
 }
 
-export function isMathCharacter(node: Node): node is MathCharacter {
-    return node.kind === 'math.character'
+export function isMathCharacter(node: Node | undefined): node is MathCharacter {
+    return !!node && node.kind === 'math.character'
 }
 
 export type MatchingDelimiters = {
@@ -250,8 +250,8 @@ export type MatchingDelimiters = {
     location: Location;
 }
 
-export function isMatchingDelimiters(node: Node): node is MatchingDelimiters {
-    return node.kind === 'math.matching_delimiters'
+export function isMatchingDelimiters(node: Node | undefined): node is MatchingDelimiters {
+    return !!node && node.kind === 'math.matching_delimiters'
 }
 
 export type MathDelimiters = {
@@ -264,20 +264,20 @@ export type MathDelimiters = {
     location: Location;
 }
 
-export function isMathDelimiters(node: Node): node is MathDelimiters {
-    return node.kind === 'math.math_delimiters'
+export function isMathDelimiters(node: Node | undefined): node is MathDelimiters {
+    return !!node && node.kind === 'math.math_delimiters'
 }
 
-export function hasContent(node: Node): node is Extract<Node, {content: any}> {
-      return node.hasOwnProperty('content')
+export function hasContent(node: Node | undefined): node is Extract<Node, {content: any}> {
+      return !!node && node.hasOwnProperty('content')
 }
 
-export function hasContentArray(node: Node): node is Extract<Node, {content: Node[]}> {
-    return node.hasOwnProperty('content') && Array.isArray((node as any)['content'])
+export function hasContentArray(node: Node | undefined): node is Extract<Node, {content: Node[]}> {
+    return !!node && node.hasOwnProperty('content') && Array.isArray((node as any)['content'])
 }
 
-export function hasArgsArray(node: Node): node is Extract<Node, {args: Node[]}> {
-    return node.hasOwnProperty('args') && Array.isArray((node as any)['args'])
+export function hasArgsArray(node: Node | undefined): node is Extract<Node, {args: Node[]}> {
+    return !!node && node.hasOwnProperty('args') && Array.isArray((node as any)['args'])
 }
 
 
