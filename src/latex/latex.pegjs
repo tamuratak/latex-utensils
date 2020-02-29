@@ -99,8 +99,6 @@ MathElement_p
 
 nonMathcharToken
   = mathShift
-  / endInlineMath
-  / endDisplayMath
   / escape
 
 noncharToken
@@ -254,10 +252,17 @@ LabelCommand
 
 MathCommand
   = LabelCommand
-  / escape n:$(!("end" [^a-zA-Z] / "]" / ")") commandName) args:(argumentList / MathGroup)*
+  / escape n:$(!nonMathCommandName commandName) args:(argumentList / MathGroup)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
+
+nonMathCommandName
+  = "end" [^a-zA-Z]
+  / "["
+  / "]"
+  / "("
+  / ")"
 
 DefCommand
   = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(argumentList / CommandParameterWithNumber)* skip_space grArg:Group
