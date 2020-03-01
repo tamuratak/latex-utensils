@@ -4,7 +4,7 @@ import * as _latexParserWithTrace from './latex_parser_trace'
 import {ParserOptions} from '../pegjs/pegjs_types'
 import {TimeKeeper} from '../pegjs/timeout'
 
-export {findAll, findAllSequences, findNodeAt} from './find_all'
+export {find, findAll, findAllSequences, findNodeAt} from './find_all'
 export {pattern} from './matcher'
 export {stringify} from './stringify'
 export * from './latex_parser_types'

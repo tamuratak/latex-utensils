@@ -22,6 +22,24 @@ type FindResult<T extends Node, P extends Node = Node> = {
     parent?: FindResult<P>;
 }
 
+export function find<T extends Node>(
+    nodes: Node[],
+    typeguard: Typeguard<T> = (_z: Node): _z is T => true,
+    parent?: FindResult<Node>
+): FindResult<T> | undefined {
+    for(const node of nodes) {
+        if (typeguard(node)) {
+            return { node, parent }
+        }
+        const cur = { node, parent }
+        const childNodes = getChildNodes(node)
+        if (childNodes.length > 0) {
+            return find(childNodes, typeguard, cur)
+        }
+    }
+    return undefined
+}
+
 export function findAll<T extends Node>(
     nodes: Node[],
     typeguard: Typeguard<T> = (_z: Node): _z is T => true,
