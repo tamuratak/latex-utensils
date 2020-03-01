@@ -48,14 +48,14 @@ suite('latexParser matchers', () => {
             assert.strictEqual(
                 lp.pattern(lp.isCommand)
                 .child(lp.isGroup)
-                .match(doc.content).length,
+                .matchAll(doc.content).length,
                 2
             )
             assert.strictEqual(
                 lp.pattern(lp.isCommand)
                 .child(lp.isGroup)
                 .child(lp.isTextString)
-                .match(doc.content).length,
+                .matchAll(doc.content).length,
                 1
             )
         })
@@ -66,7 +66,7 @@ suite('latexParser matchers', () => {
             const results = lp.pattern(lp.isCommand)
                           .child(lp.isGroup)
                           .child(lp.isTextString)
-                          .match(doc.content)
+                          .matchAll(doc.content)
             for (const ret of results) {
                 assert.strictEqual(
                     ret.parent.parent.parent,
@@ -91,13 +91,13 @@ suite('latexParser matchers', () => {
             assert.strictEqual(
                 lp.pattern(lp.isCommand)
                 .child(lp.isGroup)
-                .match(doc.content).length,
+                .matchAll(doc.content).length,
                 0
             )
             assert.strictEqual(
                 lp.pattern(lp.isCommand)
                 .child(lp.isGroup)
-                .match(doc.content, { traverseAll: true }).length,
+                .matchAll(doc.content, { traverseAll: true }).length,
                 2
             )
         })

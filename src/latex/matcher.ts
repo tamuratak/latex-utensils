@@ -25,7 +25,7 @@ class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefin
         return childMatcher
     }
 
-    match(nodes: Node[], opt: { traverseAll: boolean } = { traverseAll: false } ): MatchResult<T, ParentPattern>[] {
+    matchAll(nodes: Node[], opt: { traverseAll: boolean } = { traverseAll: false } ): MatchResult<T, ParentPattern>[] {
         const ret: MatchResult<T, ParentPattern>[] = []
         if (!this.parentPattern){
             if (opt.traverseAll) {
@@ -41,7 +41,7 @@ class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefin
                 }
             }
         } else {
-            const parentMatchResults = this.parentPattern.match(nodes, opt)
+            const parentMatchResults = this.parentPattern.matchAll(nodes, opt)
             for(const parentMatchResult of parentMatchResults) {
                 const parentNode = parentMatchResult.node
                 const childNodes = getChildNodes(parentNode)
