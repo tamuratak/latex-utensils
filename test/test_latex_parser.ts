@@ -382,7 +382,7 @@ Some sentences.
                         { kind: 'math.character', content: 'a'},
                         {
                             kind: 'superscript',
-                            content: { kind: 'math.character', content: 'b' }
+                            content: [{ kind: 'math.character', content: 'b' }]
                         }
                     ]
                 } ]

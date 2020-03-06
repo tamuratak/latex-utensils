@@ -91,8 +91,8 @@ MathElement_p
   / MathGroup
   / AlignmentTab
   / CommandParameterWithNumber
-  / Superscript skip_space x:MathElement { return { kind: "superscript", content: x, location: location() }; }
-  / Subscript skip_space x:MathElement { return { kind: "subscript", content: x, location: location() }; }
+  / Superscript skip_space x:MathElement { return { kind: "superscript", content: [x], location: location() }; }
+  / Subscript skip_space x:MathElement { return { kind: "subscript", content: [x], location: location() }; }
   / ActiveCharacter
   / ignore
   / c:$(!nonMathcharToken .) { return { kind: "math.character", content: c }; }
