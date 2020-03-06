@@ -62,10 +62,18 @@ export function stringify(
         return '\\par' + lineBreak
     }
     if (lp.isSuperscript(node)) {
-        return '^' + stringifyArray(node.content, options)
+        if (node.arg) {
+            return '^' + stringify(node.arg, options)
+        } else {
+            return '^'
+        }
     }
     if (lp.isSubscript(node)) {
-        return '_' + stringifyArray(node.content, options)
+        if (node.arg) {
+            return '_' + stringify(node.arg, options)
+        } else {
+            return '_'
+        }
     }
     if (lp.isAlignmentTab(node)) {
         return '&'
