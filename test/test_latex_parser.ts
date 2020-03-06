@@ -328,7 +328,7 @@ Some sentences.
             const expected = {
                 content: [
                     { kind: 'text.string' },
-                    { kind: 'subscript', content: [] },
+                    { kind: 'subscript', content: undefined },
                     { kind: 'text.string' }
                 ]
             }
@@ -341,9 +341,31 @@ Some sentences.
             const expected = {
                 content: [
                     { kind: 'text.string' },
-                    { kind: 'superscript', content: [] },
+                    { kind: 'superscript', content: undefined },
                     { kind: 'text.string' }
                 ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+
+        test('parse $a^b$', () => {
+            const tex = '$a^b$'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'inlineMath',
+                    content: [ {
+                        kind: 'math.character',
+                        content: 'a'
+                    }, {
+                        kind: 'superscript',
+                        arg: {
+                            kind: 'math.character',
+                            content: 'b'
+                        }
+                    } ]
+                } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -382,7 +404,7 @@ Some sentences.
                         { kind: 'math.character', content: 'a'},
                         {
                             kind: 'superscript',
-                            content: { kind: 'math.character', content: 'b' }
+                            arg: { kind: 'math.character', content: 'b' }
                         }
                     ]
                 } ]
@@ -581,6 +603,13 @@ Some sentences.
             assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
         })
 
+        test('test stringify $a^b$', () => {
+            const tex = '$a^b$'
+            const actualTeX = '$a^b$'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
         test('test stringify \\def\\abc [#1]#2 {#2#1abc}', () => {
             const tex = '\\def\\abc [#1]#2 {#2#1abc}'
             const actualTeX = '\\def\\abc[#1]#2{#2#1abc}'
@@ -618,7 +647,7 @@ Some sentences.
             }]
         })
 
-        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
 
         test('test type guard with assingment and never type', () => {
             return (node: latexParser.Node) => {

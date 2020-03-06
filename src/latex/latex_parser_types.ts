@@ -110,7 +110,7 @@ export function isParbreak(node: Node | undefined): node is Parbreak {
 
 export type Superscript = {
     kind: 'superscript';
-    content: Node[];
+    arg: Node | undefined;
     location: Location;
 }
 
@@ -120,7 +120,7 @@ export function isSuperscript(node: Node | undefined): node is Superscript {
 
 export type Subscript = {
     kind: 'subscript';
-    content: Node[];
+    arg: Node | undefined;
     location: Location;
 }
 
