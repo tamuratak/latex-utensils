@@ -410,6 +410,26 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(root, expected)
         })
 
+        test('parse $\\left.1\\right]$', () => {
+            const tex = '$\\left.1\\right]$'
+            const root = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'inlineMath',
+                    content: [ {
+                        kind: 'math.matching_delimiters',
+                        left: '.',
+                        right: ']',
+                        content: [ {
+                            kind: 'math.character',
+                            content: '1'
+                        } ]
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(root, expected)
+        })
+
         test('parse { }, including only spaces', () => {
             const tex = '{ }'
             const root = latexParser.parse(tex)

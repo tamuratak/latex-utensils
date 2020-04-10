@@ -306,8 +306,8 @@ MatchingDelimiters
   }
 
 mathDelimiter
-  = [()\[\]|/]
-  / escape [.{}|]
+  = [()\[\]|/.]
+  / escape [{}]
   / escape char+
 
 MathematicalDelimiters
