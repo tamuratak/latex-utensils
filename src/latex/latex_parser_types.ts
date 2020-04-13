@@ -36,6 +36,7 @@ export type LetCommand = {
     name: 'let';
     token: string;
     aliasTarget: string;
+    location: Location;
 }
 
 export function isLetCommand(node: Node): node is LetCommand {
