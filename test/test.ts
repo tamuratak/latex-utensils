@@ -199,6 +199,45 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\let\\abc\\cde', () => {
+            const tex = '\\let\\abc\\cde'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.let',
+                    token: '\\abc',
+                    aliasTarget: '\\cde'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\let\\abc=\\cde', () => {
+            const tex = '\\let\\abc=\\cde'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.let',
+                    token: '\\abc',
+                    aliasTarget: '\\cde'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\let \\abc = \\cde', () => {
+            const tex = '\\let \\abc = \\cde'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.let',
+                    token: '\\abc',
+                    aliasTarget: '\\cde'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\def\\abc{abc}', () => {
             const tex = '\\def\\abc{abc}'
             const doc = latexParser.parse(tex)
@@ -557,6 +596,19 @@ Some sentences.
         test('test stringify a_b', () => {
             const tex = 'a_b'
             const actualTeX = 'a_b'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
+        test('test stringify \\let\\abc\\cde', () => {
+            const tex = '\\let\\abc\\cde'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
+        test('test stringify \\let \\abc = \\cde', () => {
+            const tex = '\\let \\abc = \\cde'
+            const actualTeX = '\\let\\abc\\cde'
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
         })
