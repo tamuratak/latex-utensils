@@ -42,6 +42,9 @@ export function stringify(
     if (lp.isAmsMathTextCommand(node)) {
         return '\\text{' + node.arg + '}'
     }
+    if (lp.isLetCommand(node)) {
+        return '\\let' + node.token + node.aliasTarget
+    }
     if (lp.isDefCommand(node)) {
         return '\\def' + node.token + stringifyArray(node.args, options)
     }
