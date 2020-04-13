@@ -199,6 +199,45 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\let\\abc\\cde', () => {
+            const tex = '\\let\\abc\\cde'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.let',
+                    token: '\\abc',
+                    aliasTarget: '\\cde'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\let\\abc=\\cde', () => {
+            const tex = '\\let\\abc=\\cde'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.let',
+                    token: '\\abc',
+                    aliasTarget: '\\cde'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\let \\abc = \\cde', () => {
+            const tex = '\\let \\abc = \\cde'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.let',
+                    token: '\\abc',
+                    aliasTarget: '\\cde'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\def\\abc{abc}', () => {
             const tex = '\\def\\abc{abc}'
             const doc = latexParser.parse(tex)
@@ -610,6 +649,19 @@ Some sentences.
             assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
         })
 
+        test('test stringify \\let\\abc\\cde', () => {
+            const tex = '\\let\\abc\\cde'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
+        test('test stringify \\let \\abc = \\cde', () => {
+            const tex = '\\let \\abc = \\cde'
+            const actualTeX = '\\let\\abc\\cde'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
         test('test stringify \\def\\abc [#1]#2 {#2#1abc}', () => {
             const tex = '\\def\\abc [#1]#2 {#2#1abc}'
             const actualTeX = '\\def\\abc[#1]#2{#2#1abc}'
@@ -647,7 +699,7 @@ Some sentences.
             }]
         })
 
-        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.LetCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
 
         test('test type guard with assingment and never type', () => {
             return (node: latexParser.Node) => {

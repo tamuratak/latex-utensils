@@ -59,6 +59,7 @@ Element
 Element_p
   = SpecialCommand
   / break { return { kind: "parbreak", location: location() }; }
+  / LetCommand
   / DefCommand
   / Command
   / Group
@@ -263,6 +264,12 @@ nonMathCommandName
   / "]"
   / "("
   / ")"
+
+LetCommand
+  = escape "let" skip_space token:$(escape (char / '@')+) skip_space "="? skip_space aliasTarget:$(escape (char / '@')+)
+  {
+    return { kind: "command.let", token, aliasTarget, location: location() };
+  }
 
 DefCommand
   = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(argumentList / CommandParameterWithNumber)* skip_space grArg:Group

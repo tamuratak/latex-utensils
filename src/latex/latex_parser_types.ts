@@ -31,6 +31,17 @@ export function isAmsMathTextCommand(node: Node | undefined): node is AmsMathTex
     return !!node && node.kind === 'command.text'
 }
 
+export type LetCommand = {
+    kind: 'command.let';
+    name: 'let';
+    token: string;
+    aliasTarget: string;
+}
+
+export function isLetCommand(node: Node): node is LetCommand {
+    return node.kind === 'command.let'
+}
+
 export type DefCommand = {
     kind: 'command.def';
     name: 'def';
@@ -285,6 +296,7 @@ export type Node
 = TextString
 | Command
 | AmsMathTextCommand
+| LetCommand
 | DefCommand
 | Environment
 | Group
