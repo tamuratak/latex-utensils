@@ -328,7 +328,7 @@ Some sentences.
             const expected = {
                 content: [
                     { kind: 'text.string' },
-                    { kind: 'subscript', content: undefined },
+                    { kind: 'subscript', arg: undefined },
                     { kind: 'text.string' }
                 ]
             }
@@ -341,7 +341,7 @@ Some sentences.
             const expected = {
                 content: [
                     { kind: 'text.string' },
-                    { kind: 'superscript', content: undefined },
+                    { kind: 'superscript', arg: undefined },
                     { kind: 'text.string' }
                 ]
             }
