@@ -3,6 +3,15 @@
 ## [2.0.0]
 
 
+### Added
+
+- latexParser.find, findAll, findAllSequences, findNodeAt
+- latexParser.pattern
+
+### Fixed
+
+- (#17) Performance issue matching \left and \right
+
 ### BREAKING CHANGES
 
 - Rename `latexParser.MathMatchingParen` to `latexParser.MatchingDelimiters`.
