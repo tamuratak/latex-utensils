@@ -18,10 +18,22 @@ export function getChildNodes(node: Node): Node[] {
 }
 
 type FindResult<T extends Node, P extends Node = Node> = {
+    /**
+     * The matched node
+     */
     node: T;
+    /**
+     * The parent node of the matched node
+     */
     parent?: FindResult<P>;
 }
 
+/**
+ * Find a node satisfying `typeguard` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched
+ * @param typeguard If this is actually a type guard, the matched result will be typed.
+ * @param parent internal-use only
+ */
 export function find<T extends Node>(
     nodes: Node[],
     typeguard: Typeguard<T> = (_z: Node): _z is T => true,
@@ -40,6 +52,12 @@ export function find<T extends Node>(
     return undefined
 }
 
+/**
+ * Find all the nodes satisfying `typeguard` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched
+ * @param typeguard If this is actually a type guard, the matched result will be typed.
+ * @param parent internal-use only
+ */
 export function findAll<T extends Node>(
     nodes: Node[],
     typeguard: Typeguard<T> = (_z: Node): _z is T => true,
@@ -64,6 +82,13 @@ type SequenceResult<Ts extends Node[], P extends Node = Node> = {
     parent?: FindResult<P>;
 }
 
+/**
+ * Find the sequence of nodes satisfying `typeguard[]` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched
+ * @param typeguards The array of `typeguard`s. Each node must satisfy each `typeguard`, respectively.
+ *                   If this is actually a type guard, the matched result will be typed.
+ * @param parent
+ */
 export function findAllSequences<T extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T>],
@@ -159,6 +184,12 @@ type Position = {
     includeEnd?: boolean;
 }
 
+/**
+ * Find a node at the position.
+ * @param nodes The array of nodes where to be searched
+ * @param pos
+ * @param parent internal-use only
+ */
 export function findNodeAt(
     nodes: Node[],
     pos: Position,
