@@ -122,6 +122,21 @@ suite('latexParser matchers', () => {
             assert.ok(!lp.findNodeAt(doc.content, { line: 2, column: 3 }))
             assert.ok(!lp.findNodeAt(doc.content, { line: 3, column: 2 }))
         })
+        test('test latexParser.findNodeAt with line and column for multiple lines', () => {
+            const tex =
+`
+ {
+    
+ }
+`
+            const doc = lp.parse(tex)
+            assert.ok(!lp.findNodeAt(doc.content, { line: 1, column: 2 }))
+            assert.ok(!lp.findNodeAt(doc.content, { line: 2, column: 2 }))
+            assert.ok( lp.findNodeAt(doc.content, { line: 2, column: 3 }))
+            assert.ok( lp.findNodeAt(doc.content, { line: 3, column: 1 }))
+            assert.ok( lp.findNodeAt(doc.content, { line: 4, column: 2 }))
+            assert.ok(!lp.findNodeAt(doc.content, { line: 4, column: 3 }))
+        })
     })
 
     suite('type', () => {
