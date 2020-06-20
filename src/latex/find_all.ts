@@ -22,6 +22,12 @@ type FindResult<T extends Node, P extends Node = Node> = {
     parent?: FindResult<P>;
 }
 
+/**
+ * Try finding a node satisfying `typeguard` in `nodes` traversely.
+ * @param nodes
+ * @param typeguard
+ * @param parent internal-use only
+ */
 export function find<T extends Node>(
     nodes: Node[],
     typeguard: Typeguard<T> = (_z: Node): _z is T => true,
@@ -40,6 +46,12 @@ export function find<T extends Node>(
     return undefined
 }
 
+/**
+ * Try finding all the nodes satisfying `typeguard` in `nodes` traversely.
+ * @param nodes
+ * @param typeguard
+ * @param parent internal-use only
+ */
 export function findAll<T extends Node>(
     nodes: Node[],
     typeguard: Typeguard<T> = (_z: Node): _z is T => true,
@@ -64,6 +76,12 @@ type SequenceResult<Ts extends Node[], P extends Node = Node> = {
     parent?: FindResult<P>;
 }
 
+/**
+ * Try finding the sequence of nodes satisfying `typeguard[]` in `nodes` traversely.
+ * @param nodes
+ * @param typeguards
+ * @param parent
+ */
 export function findAllSequences<T extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T>],
