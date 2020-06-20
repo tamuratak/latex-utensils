@@ -128,14 +128,32 @@ export function findAllSequences(
 }
 
 type Position = {
+    /**
+     * The one-based line value.
+     */
     line: number;
+    /**
+     * The one-based column value.
+     */
     column: number;
+    /**
+     * The zero-based offset value.
+     */
     offset?: number;
     includeStart?: boolean;
     includeEnd?: boolean;
 } | {
+    /**
+     * The one-based line value.
+     */
     line?: number;
+    /**
+     * The one-based column value.
+     */
     column?: number;
+    /**
+     * The zero-based offset value.
+     */
     offset: number;
     includeStart?: boolean;
     includeEnd?: boolean;

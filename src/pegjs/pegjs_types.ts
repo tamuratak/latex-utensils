@@ -2,13 +2,31 @@ import { TimeKeeper } from './timeout'
 
 export type Location = {
     start: {
+        /**
+         * The zero-based offset value.
+         */
         offset: number;
+        /**
+         * The one-based line value.
+         */
         line: number;
+        /**
+         * The one-based column value.
+         */
         column: number;
     };
     end: {
+        /**
+         * The zero-based offset value.
+         */
         offset: number;
+        /**
+         * The one-based line value.
+         */
         line: number;
+        /**
+         * The one-based column value.
+         */
         column: number;
     };
 }
