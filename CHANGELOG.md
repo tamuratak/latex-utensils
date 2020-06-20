@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.0.2]
+
+### Fixed
+
+- Fix latexParser.findNodeAt.
+
 ## [2.0.0]
 
 
