@@ -18,14 +18,20 @@ export function getChildNodes(node: Node): Node[] {
 }
 
 type FindResult<T extends Node, P extends Node = Node> = {
+    /**
+     * The matched node
+     */
     node: T;
+    /**
+     * The parent node of the matched node
+     */
     parent?: FindResult<P>;
 }
 
 /**
- * Try finding a node satisfying `typeguard` in `nodes` traversely.
- * @param nodes
- * @param typeguard
+ * Find a node satisfying `typeguard` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched
+ * @param typeguard If this is actually a type guard, the matched result will be typed.
  * @param parent internal-use only
  */
 export function find<T extends Node>(
@@ -47,9 +53,9 @@ export function find<T extends Node>(
 }
 
 /**
- * Try finding all the nodes satisfying `typeguard` in `nodes` traversely.
- * @param nodes
- * @param typeguard
+ * Find all the nodes satisfying `typeguard` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched
+ * @param typeguard If this is actually a type guard, the matched result will be typed.
  * @param parent internal-use only
  */
 export function findAll<T extends Node>(
@@ -77,9 +83,10 @@ type SequenceResult<Ts extends Node[], P extends Node = Node> = {
 }
 
 /**
- * Try finding the sequence of nodes satisfying `typeguard[]` in `nodes` traversely.
- * @param nodes
- * @param typeguards
+ * Find the sequence of nodes satisfying `typeguard[]` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched
+ * @param typeguards The array of `typeguard`s. Each node must satisfy each `typeguard`, respectively.
+ *                   If this is actually a type guard, the matched result will be typed.
  * @param parent
  */
 export function findAllSequences<T extends Node>(
@@ -177,6 +184,12 @@ type Position = {
     includeEnd?: boolean;
 }
 
+/**
+ * Find a node at the position.
+ * @param nodes The array of nodes where to be searched
+ * @param pos
+ * @param parent internal-use only
+ */
 export function findNodeAt(
     nodes: Node[],
     pos: Position,
