@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.3]
+
+- Executed `npm audit fix`
+
 ## [2.0.2]
 
 ### Fixed
