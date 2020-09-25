@@ -446,6 +446,12 @@ mahtAlignedEnvName
   / "cases*"
   / "gathered"
   / "split"
+  / "matrix"
+  / "bmatrix"
+  / "pmatrix"
+  / "vmatrix"
+  / "Bmatrix"
+  / "Vmatrix"
 
 escape         = "\\"                             // catcode 0
 beginGroup     = "{"                              // catcode 1
