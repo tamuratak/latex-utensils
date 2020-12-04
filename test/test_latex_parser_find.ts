@@ -146,7 +146,7 @@ suite('latexParser matchers', () => {
         type NoneNodeType = ValueType<lp.Node, KeyWithNoneNodeValue>
 
         test('test that properties having a Node-related-type value are only content, args, and arg.', () => {
-            assertType<TypeEq<NoneNodeType, string | lp.Location>>()
+            assertType<TypeEq<NoneNodeType, undefined | string | lp.Location>>()
         })
 
         test('test the types of content, arg, and args.', () => {

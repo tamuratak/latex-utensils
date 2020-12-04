@@ -235,7 +235,7 @@ export function isDisplayMath(node: Node | undefined): node is DisplayMath {
 export type MathCharacter = {
     kind: 'math.character';
     content: string;
-    location: Location;
+    location: undefined;
 }
 
 export function isMathCharacter(node: Node | undefined): node is MathCharacter {
