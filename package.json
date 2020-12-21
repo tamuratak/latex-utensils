@@ -36,7 +36,8 @@
   "files": [
     "bin/**/*",
     "out/src/**/*",
-    "out/bin/**/*"
+    "out/bin/**/*",
+    "out/types/**/*"
   ],
   "keywords": [
     "latex",
