@@ -1,21 +1,21 @@
 # Change Log
 
-## [2.1.0]
+## [2.1.0] (2020-12-21)
 
 - Add `pmatrix` and others to `MathEnvAligned`.
 - Set `"types": "./out/types/src/main.d.ts"`.
 
-## [2.0.3]
+## [2.0.3] (2020-07-17)
 
 - Executed `npm audit fix`
 
-## [2.0.2]
+## [2.0.2] (2020-06-20)
 
 ### Fixed
 
 - Fix latexParser.findNodeAt.
 
-## [2.0.0]
+## [2.0.0] (2020-06-09)
 
 
 ### Added
