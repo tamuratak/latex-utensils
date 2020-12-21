@@ -267,10 +267,12 @@ export function isDisplayMath(node: Node | undefined): node is DisplayMath {
     return !!node && node.kind === 'displayMath'
 }
 
-export type MathCharacter = {
+export type MathCharacter<
+  T extends Location | undefined = Location | undefined
+> = {
     kind: 'math.character';
     content: string;
-    location: undefined;
+    location: T;
 }
 
 export function isMathCharacter(node: Node | undefined): node is MathCharacter {
@@ -316,7 +318,9 @@ export function hasArgsArray(node: Node | undefined): node is Extract<Node, {arg
 }
 
 
-export type Node
+export type Node<
+  T extends Location | undefined = Location | undefined
+>
 = TextString
 | Command
 | AmsMathTextCommand
@@ -329,7 +333,7 @@ export type Node
 | OptionalArg
 | InlienMath
 | DisplayMath
-| MathCharacter
+| MathCharacter<T>
 | MatchingDelimiters
 | MathDelimiters
 | MathEnv
