@@ -95,7 +95,13 @@ MathElement_p
   / Subscript skip_space x:MathElement { return { kind: "subscript", arg: x, location: location() }; }
   / ActiveCharacter
   / ignore
-  / c:$(!nonMathcharToken .) { return { kind: "math.character", content: c }; }
+  / c:$(!nonMathcharToken .) {
+    if (options.enableMathCharacterLocation) {
+      return { kind: "math.character", content: c, location: location() };
+    } else {
+      return { kind: "math.character", content: c };
+    }
+  }
 
 nonMathcharToken
   = mathShift
