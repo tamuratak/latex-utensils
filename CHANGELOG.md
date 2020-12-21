@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.1.0]
+
+- Add `pmatrix` and others to `MathEnvAligned`.
+- Set `"types": "./out/types/src/main.d.ts"`.
+
 ## [2.0.3]
 
 - Executed `npm audit fix`
