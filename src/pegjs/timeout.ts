@@ -5,7 +5,7 @@ export class TimeoutError extends Error {
 }
 
 export class TimeKeeper {
-    private _start: number
+    private readonly _start: number
 
     constructor(readonly timeout: number) {
         this._start = Date.now()
