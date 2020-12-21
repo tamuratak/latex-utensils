@@ -137,6 +137,14 @@ suite('latexParser matchers', () => {
             assert.ok( lp.findNodeAt(doc.content, { line: 4, column: 2 }))
             assert.ok(!lp.findNodeAt(doc.content, { line: 4, column: 3 }))
         })
+
+        test('test latexParser.findNodeAt', () => {
+            const tex = '$\\left(       1 \\right)$'
+            const doc = lp.parse(tex)
+            assert.ok(!lp.findNodeAt(doc.content, {offset: 0}))
+            assert.ok( lp.findNodeAt(doc.content, {offset: 10}))
+            console.log( JSON.stringify(lp.findNodeAt(doc.content, {offset: 10})))
+        })
     })
 
     suite('type', () => {
