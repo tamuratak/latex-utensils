@@ -6,6 +6,7 @@
   "description": "A LaTeX parser and utilities",
   "homepage": "https://github.com/tamuratak/latex-utensils",
   "main": "./out/src/main.js",
+  "types": "./out/types/src/main.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/tamuratak/latex-utensils.git"
