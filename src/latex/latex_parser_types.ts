@@ -344,9 +344,11 @@ export type Comment = {
     location: Location;
 }
 
-export type AstRoot = {
+export type AstRoot<
+  T extends Location | undefined = Location | undefined
+> = {
     kind: 'ast.root';
-    content: Node[];
+    content: Node<T>[];
     comment?: Comment[];
 }
 
@@ -365,4 +367,7 @@ export function isAstPreamble(ast: LatexAst): ast is AstPreamble {
     return ast.kind === 'ast.preamble'
 }
 
-export type LatexAst = AstRoot | AstPreamble
+export type LatexAst<
+  T extends Location | undefined = Location | undefined
+>
+= AstRoot<T> | AstPreamble

@@ -452,6 +452,39 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse $a^b$ with {enableMathCharacterLocation: true}', () => {
+            const tex = '$a^b$'
+            const doc = latexParser.parse(tex, {enableMathCharacterLocation: true})
+            const expected = {
+                content: [ {
+                    kind: 'inlineMath',
+                    content: [ {
+                        kind: 'math.character',
+                        content: 'a',
+                        location: {
+                            end: {
+                                column: 3,
+                                line: 1,
+                                offset: 2
+                            },
+                            start: {
+                                column: 2,
+                                line: 1,
+                                offset: 1
+                            }
+                        }
+                    }, {
+                        kind: 'superscript',
+                        arg: {
+                            kind: 'math.character',
+                            content: 'b'
+                        }
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse ~', () => {
             const tex = '~'
             const doc = latexParser.parse(tex)

@@ -61,6 +61,7 @@ export type ParserOptions = {
     startRule?: string;
     tracer?: Tracer;
     enableComment?: boolean;
+    enableMathCharacterLocation?: boolean;
     timeout?: number | TimeKeeper;
 }
 
