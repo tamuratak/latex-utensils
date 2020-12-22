@@ -184,6 +184,36 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse an optional argument having only spaces', () => {
+            const tex = `
+\\newcommand{\\Hi}[1][ ]{Hi}
+            `
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'newcommand',
+                    args: [ {kind: 'arg.group'}, {kind: 'arg.optional'}, {kind: 'arg.optional'}, {kind: 'arg.group'} ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse optional arguments having spaces', () => {
+            const tex = `
+\\newcommand{\\Hi}[ 1 2 3 ][ ]{Hi}
+            `
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'newcommand',
+                    args: [ {kind: 'arg.group'}, {kind: 'arg.optional'}, {kind: 'arg.optional'}, {kind: 'arg.group'} ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\node[label={abc}, efg]', () => {
             const tex = '\\node[label={abc}, efg]'
             const doc = latexParser.parse(tex)

@@ -337,7 +337,7 @@ sizeCommand
   = escape ("bigg" / "Bigg" / "big" / "Big") [rlm]?
 
 argumentList
-  = skip_space "[" body:(!"]" skip_space x:(argsDelimiter / argsToken) skip_space {return x;})* "]"
+  = skip_space "[" skip_space body:(!"]" x:(argsDelimiter / argsToken) skip_space {return x;})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
