@@ -30,6 +30,7 @@ suite('latexParser matchers', () => {
             assert.strictEqual(ret.length, 3)
             const ret2 = lp.findAllSequences(doc.content, [
                 (node) => lp.isTextString(node) && node.content === 'A',
+                () => true,
                 (node) => lp.isTextString(node) && node.content === 'B',
             ])
             assert.strictEqual(ret2.length, 1)

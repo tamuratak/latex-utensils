@@ -43,8 +43,8 @@ Root
 
 Preamble
   = skip_space
-  x:(!(escape "begin{document}") e:Element { return e; })*
-  rest:$(( escape "begin{document}" .* )?)
+  x:(!(skip_space escape "begin{document}") e:Element { return e; })*
+  skip_space rest:$((escape "begin{document}" .* )?)
   {
     const comment = commentMap ? Array.from(commentMap.values()) : undefined;
     return { kind: "ast.preamble", content: x, rest, comment };
@@ -59,9 +59,10 @@ Element
 Element_p
   = SpecialCommand
   / break
+  / Linebreak
   / DefCommand
   / Command
-  / Group
+  / Group_p
   / InlineMathShift
   / AlignmentTab
   / CommandParameterWithNumber
@@ -69,12 +70,13 @@ Element_p
   / Subscript
   / ActiveCharacter
   / ignore
-  / skip_space c:$((!noncharToken . )+)
+  / Softbreak
+  / c:$((!noncharToken . )+)
   {
     timeKeeper && timeKeeper.check();
     return { kind: "text.string", content: c, location: location() };
   }
-  / Whitespace
+  / Space
 
 MathElement =
   x:MathElement_p skip_space
@@ -84,6 +86,7 @@ MathElement =
 
 MathElement_p
   = MathAlignedEnvironment
+  / Linebreak
   / AmsmathTextCommand
   / SpecialCommand
   / MatchingDelimiters
@@ -166,7 +169,7 @@ UrlCommand
   }
 
 HrefCommand
-  = escape "href" arg:argumentList? skip_space beginGroup x:$urlString endGroup grp:Group
+  = escape "href" arg:ArgumentList? skip_space beginGroup x:$urlString endGroup grp:Group
   {
     return { kind: "command.href", name: "href", url: x, content: grp.content, arg: arg || undefined, location: location() };
   }
@@ -188,6 +191,12 @@ Verb
 
 // verbatim environment
 Verbatim
+  = x:Verbatim_p skip_space
+  {
+    return x;
+  }
+
+Verbatim_p
   = beginEnv beginGroup "verbatim" endGroup
       x:$((!(endEnv beginGroup "verbatim" endGroup) . )*)
     endEnv beginGroup "verbatim" endGroup
@@ -204,7 +213,13 @@ Verbatim
 
 // minted environment
 Minted
-  = beginEnv beginGroup "minted" endGroup args:((argumentList Group) / Group)
+  = x:Minted_p skip_space
+  {
+    return x;
+  }
+
+Minted_p
+  = beginEnv beginGroup "minted" endGroup args:((ArgumentList Group) / Group)
       x:$((!(endEnv beginGroup "minted" endGroup) . )*)
     endEnv beginGroup "minted" endGroup
   {
@@ -213,7 +228,13 @@ Minted
 
 // lstlisting environment
 Lstlisting
-  = beginEnv beginGroup "lstlisting" endGroup arg:argumentList?
+  = x:Lstlisting_p skip_space
+  {
+    return x;
+  }
+
+Lstlisting_p
+  = beginEnv beginGroup "lstlisting" endGroup arg:ArgumentList?
       x:$((!(endEnv beginGroup "lstlisting" endGroup) . )*)
     endEnv beginGroup "lstlisting" endGroup
   {
@@ -224,7 +245,7 @@ Lstlisting
 commentenv
   = beginEnv beginGroup "comment" endGroup
       x:$((!(endEnv beginGroup "comment" endGroup) . )*)
-    endEnv beginGroup "comment" endGroup
+    endEnv beginGroup "comment" endGroup skip_space
   {
     return { kind: "env.comment", content: x, location: location() };
   }
@@ -274,11 +295,23 @@ displayMathShiftShift
     return { kind: "displayMath", content: x, location: location() };
   }
 
+// \abc, \abc[...]{...}{...}
 Command
-  = LabelCommand
-  / escape n:commandName args:(argumentList / Group)*
+  = PrimitiveCharacterCommand
+  / LabelCommand
+  / escape n:commandName args:(ArgumentList / Group)+
   {
     return { kind: "command", name: n, args: args, location: location() };
+  }
+  / x:Command_p skip_space
+  {
+    return x;
+  }
+
+Command_p
+  = escape n:commandName
+  {
+    return { kind: "command", name: n, args: [], location: location() };
   }
 
 commandName
@@ -287,9 +320,15 @@ commandName
   / "\\*"
   / .
 
+PrimitiveCharacterCommand
+  = escape c:[ $%#&{}_\-,/@]
+  {
+    return { kind: "command", name: c, args: [], location: location() };
+  }
+
 MathCommand
   = LabelCommand
-  / escape n:$(!nonMathCommandName commandName) args:(argumentList / MathGroup)*
+  / escape n:$(!nonMathCommandName commandName) args:(ArgumentList / MathGroup)*
   {
     return { kind: "command", name: n, args: args, location: location() };
   }
@@ -302,28 +341,45 @@ nonMathCommandName
   / ")"
 
 DefCommand
-  = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(argumentList / CommandParameterWithNumber)* grArg:Group
+  = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(ArgumentList / CommandParameterWithNumber)* grArg:Group
   {
     return { kind: "command.def", token, args: numArgs.concat([grArg]), location: location() };
   }
 
 Group
-  = skip_space beginGroup skip_space x:(!endGroup c:Element {return c;})* endGroup
+  = skip_space x:Group_p
+  {
+    return x;
+  }
+
+Group_p
+  = beginGroup skip_comment* x:(!endGroup c:Element {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
 
 // group that assumes you're in math mode.
 MathGroup
-  = skip_space beginGroup skip_space x:(!endGroup c:MathElement {return c;})* endGroup
+  = skip_space x:MathGroup_p
+  {
+    return x;
+  }
+
+MathGroup_p
+  = beginGroup skip_space x:(!endGroup c:MathElement {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
 
 // \left( ... \right) in math mode.
 MatchingDelimiters
-  = skip_space
-    escape "left" skip_space l:$mathDelimiter
+  = skip_space x:MatchingDelimiters_p
+  {
+    return x;
+  }
+
+MatchingDelimiters_p
+  = escape "left" skip_space l:$mathDelimiter
       skip_space x:(!(escape "right" mathDelimiter) c:MathElement {return c;})*
     escape "right" skip_space r:$mathDelimiter
   {
@@ -335,24 +391,29 @@ mathDelimiter
   / escape [{}]
   / escape char+
 
+
+// (..) [..] \{..\}
 MathematicalDelimiters
-  = skip_space
-    l:$sizeCommand? skip_space "(" skip_space
-      x:(!(r:sizeCommand? ")") c:MathElement { return c;} )*
+  = skip_space x:MathematicalDelimiters_p
+  {
+    return x;
+  }
+
+MathematicalDelimiters_p
+  = l:$sizeCommand? skip_space "(" skip_space
+      x:(!(r:sizeCommand? ")") c:MathElement {return c;} )*
     r:$sizeCommand? skip_space ")"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "(", right: ")", content: x, location: location() };
   }
-  / skip_space
-    l:$sizeCommand? skip_space "[" skip_space
-      x:(!(r:sizeCommand? "]") c:MathElement { return c;} )*
+  / l:$sizeCommand? skip_space "[" skip_space
+      x:(!(r:sizeCommand? "]") c:MathElement {return c;} )*
     r:$sizeCommand? skip_space "]"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "[", right: "]", content: x, location: location() };
   }
-  / skip_space
-    l:$sizeCommand? skip_space "\\{" skip_space
-      x:(!(r:sizeCommand? "\\}") c:MathElement { return c;} )*
+  / l:$sizeCommand? skip_space "\\{" skip_space
+      x:(!(r:sizeCommand? "\\}") c:MathElement {return c;} )*
     r:$sizeCommand? skip_space "\\}"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "\\{", right: "\\}", content: x, location: location() };
@@ -361,8 +422,15 @@ MathematicalDelimiters
 sizeCommand
   = escape ("bigg" / "Bigg" / "big" / "Big") [rlm]?
 
-argumentList
-  = skip_space "[" skip_space body:(!"]" x:(argsDelimiter / argsToken) skip_space {return x;})* "]"
+// [...]
+ArgumentList
+  = skip_space x:ArgumentList_p
+  {
+    return x;
+  }
+
+ArgumentList_p
+  = "[" skip_space body:(!"]" x:(argsDelimiter / argsToken) skip_space {return x;})* "]"
   {
     return { kind: "arg.optional", content: body, location: location() };
   }
@@ -388,17 +456,29 @@ argsDelimiter
   }
 
 Environment
-  = beginEnv name:groupedEnvname args:(argumentList / Group)*
-      skip_space body:(!endEnv x:Element {return x;})*
-    endEnv n:groupedEnvname &{return name === n;}
+  = skip_space x:Environment_p skip_space
+  {
+    return x;
+  }
+
+Environment_p
+  = beginEnv name:groupedEnvname args:(ArgumentList / Group)*
+      skip_space body:(!(skip_space endEnv) x:Element {return x;})* skip_space
+    endEnv n:groupedEnvname &{ return name === n; }
   {
     return { kind: "env", name, args, content: body, location: location() };
   }
 
 MathEnvironment
+  = x:MathEnvironment_p skip_space
+  {
+    return x;
+  }
+
+MathEnvironment_p
   = beginEnv skip_space beginGroup name:mathEnvName endGroup
-      skip_space body:(!endEnv x:MathElement {return x;})*
-    endEnv skip_space beginGroup n:mathEnvName endGroup &{return name === n;}
+      skip_space body:(!(skip_space endEnv) x:MathElement {return x;})* skip_space
+    endEnv skip_space beginGroup n:mathEnvName endGroup &{ return name === n; }
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
   }
@@ -406,7 +486,7 @@ MathEnvironment
 MathAlignedEnvironment
   = beginEnv skip_space beginGroup name:mahtAlignedEnvName endGroup
       skip_space body:(!endEnv x:MathElement {return x;})*
-    endEnv skip_space beginGroup n:mahtAlignedEnvName endGroup &{return name === n;}
+    endEnv skip_space beginGroup n:mahtAlignedEnvName endGroup &{ return name === n; }
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
   }
@@ -548,15 +628,42 @@ endDoc = endEnv skip_space beginGroup "document" endGroup
 
 // catcode 14, including the newline
 comment 
-  = "%"  c:$((!nl . )*) (nl / EOF)
+  = "%" c:$((!nl . )*) (nl / EOF)
   {
     return c;
   }
 
-Whitespace
+// \linebreak, \linebreak[...], \\, \\[...], \\*, \\*[...], \newline
+Linebreak
+  = skip_space x:Linebreak_p skip_space
+  {
+    return x;
+  }
+
+Linebreak_p
+  = escape n:"linebreak" arg:ArgumentList?
+  {
+    return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
+  }
+  / escape n:(escape "*" / escape) arg:ArgumentList?
+  {
+    return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
+  }
+  / escape n:("newline*" / "newline")
+  {
+    return { kind: "linebreak", name: n, arg: undefined, location: location() }
+  }
+
+Softbreak
+  = (!break (sp / skip_comment))* !break nl (!break (sp / skip_comment))*
+  {
+    return { kind: "softbreak", location: location() };
+  }
+
+Space
   = (!break (nl / sp))+
   {
-    return { kind: "space" };
+    return { kind: "space", location: location() };
   }
 
 whitespace
