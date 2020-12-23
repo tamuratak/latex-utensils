@@ -7,11 +7,10 @@ suite('latexParser', () => {
 
     suite('parse', () => {
         test('parse \\begin{center}...', () => {
-            const tex = `
-\\begin{center}
+            const tex =
+`\\begin{center}
 lmn
-\\end{center}
-            `
+\\end{center}`
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -19,7 +18,7 @@ lmn
                     content: [ {
                         kind: 'text.string',
                         content: 'lmn',
-                        location: { start: {line: 3, column: 1}, end: {line: 3, column: 4} }
+                        location: { start: {line: 2, column: 1}, end: {line: 2, column: 4} }
                     } ]
                 } ]
             }
@@ -27,13 +26,12 @@ lmn
         })
 
         test('parse \\begin{center} \\begin{itemize}', () => {
-            const tex = `
-\\begin {center}
+            const tex =
+`\\begin {center}
 \\begin {itemize}
    
 \\end   {itemize}
-\\end {center}
-`
+\\end {center}`
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -47,11 +45,10 @@ lmn
         })
 
         test('parse unbalanced \\begin', () => {
-            const tex = `
-\\begin{center}
+            const tex =
+`\\begin{center}
 \\begin{itemize}
-\\end{center}
-`
+\\end{center}`
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -66,14 +63,13 @@ lmn
         })
 
         test('parse unbalanced \\end', () => {
-            const tex = `
-\\begin{center}
+            const tex =
+`\\begin{center}
 \\end{itemize}
-\\end{center}
-`
+\\end{center}`
             const doc = latexParser.parse(tex)
             const expected = {
-                content: [ { kind: 'command' }, { kind: 'command' }, { kind: 'command' } ]
+                content: [ { kind: 'command' }, {kind: 'softbreak'}, { kind: 'command' }, {kind: 'softbreak'}, { kind: 'command' } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -174,7 +170,7 @@ lmn
         test('parse \\begin{verbatim}...', () => {
             const tex = '\\begin{verbatim}1\\end{verbatim}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.verbatim',
                     name: 'verbatim',
@@ -187,7 +183,7 @@ lmn
         test('parse \\begin{verbatim*}...', () => {
             const tex = '\\begin{verbatim*}1\\end{verbatim*}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.verbatim',
                     name: 'verbatim*',
@@ -200,7 +196,7 @@ lmn
         test('parse \\begin{minted}...', () => {
             const tex = '\\begin{minted}[abc]{xxx}1\\end{minted}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.minted',
                     content: '1'
@@ -213,7 +209,7 @@ lmn
         test('parse \\begin{lstlisting}...', () => {
             const tex = '\\begin{lstlisting}[caption=hoge,label=fuga]1\\end{lstlisting}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.lstlisting',
                     content: '1'
@@ -260,7 +256,7 @@ Some sentences.
         test('parse \\begin{align}...', () => {
             const tex = '\\begin{align}\n 1 \n\\end{align}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.math.align',
                     content: [ {
@@ -272,13 +268,13 @@ Some sentences.
         })
 
         test('parse unbalanced \\begin{aligned}', () => {
-            const tex = `
-\\begin{align}
+            const tex =
+`\\begin{align}
 \\begin{aligned}
 \\end{align}`
 
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.math.align',
                     content: [ {
@@ -290,11 +286,10 @@ Some sentences.
         })
 
         test('parse newenvironment command', () => {
-            const tex = `
-\\newenvironment{newabc}
+            const tex =
+`\\newenvironment{newabc}
 {\\begin{abc}}
-{\\end{abc}}
-            `
+{\\end{abc}}`
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -307,9 +302,7 @@ Some sentences.
         })
 
         test('parse an optional argument having only spaces', () => {
-            const tex = `
-\\newcommand{\\Hi}[1][ ]{Hi}
-            `
+            const tex = '\\newcommand{\\Hi}[1][ ]{Hi}'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -322,9 +315,7 @@ Some sentences.
         })
 
         test('parse optional arguments having spaces', () => {
-            const tex = `
-\\newcommand{\\Hi}[ 1 2 3 ][ ]{Hi}
-            `
+            const tex = '\\newcommand{\\Hi}[ 1 2 3 ][ ]{Hi}'
             const doc = latexParser.parse(tex)
             const expected = {
                 content: [ {
@@ -694,7 +685,7 @@ Some sentences.
         test('parse \\begin{align} \\end{align}', () => {
             const tex = '\\begin{align} \\end{align}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.math.align',
                     content: []
@@ -706,7 +697,7 @@ Some sentences.
         test('parse \\begin{align} \\begin{aligned}', () => {
             const tex = '\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.math.align',
                     content: [ {
@@ -721,7 +712,7 @@ Some sentences.
         test('parse \\begin{align} \\begin{alignedat}', () => {
             const tex = '\\begin{align} \\begin{alignedat}{1} a & b \\end{alignedat} \\end{align}'
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.math.align',
                     content: [ {
@@ -734,13 +725,12 @@ Some sentences.
         })
 
         test('parse unbalanced \\begin{aligned}', () => {
-            const tex = `
-\\begin{align}
+            const tex =
+`\\begin{align}
 \\begin{aligned}
-\\end{align}
-`
+\\end{align}`
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env.math.align',
                     content: [ { kind: 'command' } ]
@@ -750,14 +740,13 @@ Some sentences.
         })
 
         test('parse unbalanced \\end{aligned}', () => {
-            const tex = `
-\\begin{align}
+            const tex =
+`\\begin{align}
 \\end{aligned}
-\\end{align}
-`
+\\end{align}`
             const doc = latexParser.parse(tex)
-            const expected: any = {
-                content: [ { kind: 'command' }, { kind: 'command' }, { kind: 'command' } ]
+            const expected = {
+                content: [ { kind: 'command' }, { kind: 'softbreak'}, { kind: 'command' }, { kind: 'softbreak'}, { kind: 'command' } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -765,13 +754,15 @@ Some sentences.
         test('parse preamble', () => {
             const tex = '\\newcommand{\\ABC}{ABC} \\begin{document} \\end{document}'
             const doc = latexParser.parsePreamble(tex)
-            const expected: any = {
+            const expected = {
                 kind: 'ast.preamble',
                 rest: '\\begin{document} \\end{document}',
                 content: [ {
                     kind: 'command',
                     name: 'newcommand',
                     args: [ {kind: 'arg.group'}, {kind: 'arg.group'}]
+                }, {
+                    kind: 'space'
                 } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
@@ -780,10 +771,39 @@ Some sentences.
         test('parse empty preamble', () => {
             const tex = '\\begin{document} \\end{document}'
             const doc = latexParser.parse(tex, {startRule: 'Preamble'})
-            const expected: any = {
+            const expected = {
                 kind: 'ast.preamble',
                 rest: '\\begin{document} \\end{document}',
                 content: []
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+    })
+
+    suite('parse 2', () => {
+        test('parse \\"\\i', () => {
+            const tex = '\\"\\i'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ { kind: 'command' }, { kind: 'command' } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse Sch\\"onbrunner Schlo\\ss{} Stra\\ss e', () => {
+            const tex = 'Sch\\"onbrunner Schlo\\ss{} Stra\\ss e'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {}, { kind: 'command', name: '"' }, {}, {}, {}, { kind: 'command', name: 'ss' }, {}, {}, { kind: 'command', name: 'ss' }, {} ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse a\\\\b c\\newline', () => {
+            const tex = 'a\\\\b c\\newline \\par d'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {}, { kind: 'linebreak' }, {}, { kind: 'space' }, {}, { kind: 'linebreak' }, { kind: 'parbreak' }, {} ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -809,7 +829,7 @@ Some sentences.
     \\begin{center} {\\itshape #1} \\end{center}%
 }`
             const doc = latexParser.parse(tex)
-            const expected = '\\newcommand{\\topic}[1]{\\needspace{5\\baselineskip}\\begin{center}{\\itshape #1}\\end{center}}'
+            const expected = '\\newcommand{\\topic}[1]{\\needspace{5\\baselineskip} \\begin{center}{\\itshape #1}\\end{center}}'
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '' }), expected)
         })
 
@@ -893,7 +913,7 @@ Some sentences.
             }]
         })
 
-        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.UrlCommand | latexParser.LabelCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.UrlCommand | latexParser.LabelCommand | latexParser.Parbreak | latexParser.Space | latexParser.Softbreak | latexParser.Linebreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
 
         test('test type guard with assingment and never type', () => {
             return (node: latexParser.Node) => {

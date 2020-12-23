@@ -75,6 +75,15 @@ export function stringify(
     if (lp.isParbreak(node)) {
         return '\\par' + lineBreak
     }
+    if (lp.isSpace(node)) {
+        return ' '
+    }
+    if (lp.isSoftbreak(node)) {
+        return '\n'
+    }
+    if (lp.isLinebreak(node)) {
+        return '\\\\'
+    }
     if (lp.isSuperscript(node)) {
         if (node.arg) {
             return '^' + stringify(node.arg, options)
