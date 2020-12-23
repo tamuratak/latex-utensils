@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.2.0] (2020-12-23)
+
+- (#22) Fix parsing [] having spaces.
+
 ## [2.1.0] (2020-12-21)
 
 - Add `pmatrix` and others to `MathEnvAligned`.
