@@ -59,6 +59,7 @@ Element
 Element_p
   = SpecialCommand
   / break { return { kind: "parbreak", location: location() }; }
+  / Linebreak
   / DefCommand
   / Command
   / Group
@@ -69,7 +70,8 @@ Element_p
   / Subscript
   / ActiveCharacter
   / ignore
-  / skip_space c:$((!noncharToken . )+)
+  / SoftLinebreak
+  / c:$((!noncharToken . )+)
   {
     timeKeeper && timeKeeper.check();
     return { kind: "text.string", content: c, location: location() };
@@ -84,6 +86,7 @@ MathElement =
 
 MathElement_p
   = MathAlignedEnvironment
+  / Linebreak
   / AmsmathTextCommand
   / SpecialCommand
   / MatchingDelimiters
@@ -276,9 +279,13 @@ displayMathShiftShift
 
 Command
   = LabelCommand
-  / escape n:commandName args:(argumentList / Group)*
+  / escape n:commandName args:(argumentList / Group)+
   {
     return { kind: "command", name: n, args: args, location: location() };
+  }
+  / escape n:commandName skip_space
+  {
+    return { kind: "command", name: n, args: [], location: location() };
   }
 
 commandName
@@ -539,6 +546,22 @@ comment
   = "%"  c:$((!nl . )*) (nl / EOF)
   {
     return c;
+  }
+
+Linebreak
+  = skip_space (escape escape / escape "newline") skip_space
+  {
+    return { kind: "linebreak" };
+  }
+  / skip_space escape escape "*" skip_space
+  {
+    return { kind: "linebreak", star: true }
+  }
+
+SoftLinebreak
+  = (!break (sp / skip_comment))* !break nl
+  {
+    return { kind: "softlinebreak" };
   }
 
 Whitespace

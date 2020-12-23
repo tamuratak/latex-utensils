@@ -143,6 +143,33 @@ export function isParbreak(node: Node | undefined): node is Parbreak {
     return !!node && node.kind === 'parbreak'
 }
 
+export type Whitespace = {
+    kind: 'space';
+    location: Location;
+}
+
+export function isWhitespace(node: Node | undefined): node is Whitespace {
+    return !!node && node.kind === 'space'
+}
+
+export type SoftLinebreak = {
+    kind: 'softlinebreak';
+    location: Location;
+}
+
+export function isSoftLinebreak(node: Node | undefined): node is SoftLinebreak {
+    return !!node && node.kind === 'softlinebreak'
+}
+
+export type Linebreak = {
+    kind: 'linebreak';
+    location: Location;
+}
+
+export function isLinebreak(node: Node | undefined): node is Linebreak {
+    return !!node && node.kind === 'linebreak'
+}
+
 export type Superscript = {
     kind: 'superscript';
     arg: Node | undefined;
@@ -335,6 +362,9 @@ export type Node
 | MathEnv
 | MathEnvAligned
 | Parbreak
+| Whitespace
+| SoftLinebreak
+| Linebreak
 | Superscript
 | Subscript
 | AlignmentTab
