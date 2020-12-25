@@ -124,7 +124,9 @@ number
 
 // for the special commands like \[ \] and \begin{} \end{} etc.
 SpecialCommand "special command"
-  = Verb
+  = UrlCommand
+  / HrefCommand
+  / Verb
   / Verbatim
   / Minted
   / Lstlisting
@@ -133,6 +135,26 @@ SpecialCommand "special command"
   / InlineMathParen
   / MathEnvironment
   / Environment
+
+// \url{...}
+
+UrlCommand
+  = escape "url" beginGroup x:$urlString endGroup
+  {
+    return { kind: "command.url", name: "url", url: x, location: location() };
+  }
+
+HrefCommand
+  = escape "href" arg:argumentList? skip_space beginGroup x:$urlString endGroup skip_space grp:Group
+  {
+    return { kind: "command.href", name: "href", url: x, content: grp.content, arg: arg || undefined, location: location() };
+  }
+
+urlString
+  = ( pairedCurly / (!"}" .) )*
+
+pairedCurly
+  = "{" ( pairedCurly / (!"}" .) )* "}"
 
 // \verb|xxx|
 Verb

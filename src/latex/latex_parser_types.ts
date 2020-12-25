@@ -43,6 +43,30 @@ export function isDefCommand(node: Node | undefined): node is DefCommand {
     return !!node && node.kind === 'command.def'
 }
 
+export type UrlCommand = {
+    kind: 'command.url';
+    name: 'url';
+    url: string;
+    location: Location;
+}
+
+export function isUrlCommand(node: Node | undefined): node is UrlCommand {
+    return !!node && node.kind === 'command.url'
+}
+
+export type HrefCommand = {
+    kind: 'command.href';
+    name: 'href';
+    url: string;
+    arg: OptionalArg | undefined;
+    content: Node[];
+    location: Location;
+}
+
+export function isHrefCommand(node: Node | undefined): node is HrefCommand {
+    return !!node && node.kind === 'command.href'
+}
+
 export type Environment = {
     kind: 'env';
     name: string;
@@ -286,6 +310,8 @@ export type Node
 | Command
 | AmsMathTextCommand
 | DefCommand
+| UrlCommand
+| HrefCommand
 | Environment
 | Group
 | OptionalArg

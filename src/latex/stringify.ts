@@ -45,6 +45,17 @@ export function stringify(
     if (lp.isDefCommand(node)) {
         return '\\def' + node.token + stringifyArray(node.args, options)
     }
+    if (lp.isUrlCommand(node)) {
+        return `\\url{${node.url}}`
+    }
+    if (lp.isHrefCommand(node)) {
+        const content = stringifyArray(node.content, options)
+        if (node.arg) {
+            return '\\href' + stringify(node.arg, options) + `{${node.url}}{${content}}`
+        } else {
+            return `\\href{${node.url}}{${content}}`
+        }
+    }
     if (lp.isEnvironment(node) || lp.isMathEnv(node) || lp.isMathEnvAligned(node)) {
         const begin = '\\begin{' + node.name + '}'
         const args = stringifyArray(node.args, options)
