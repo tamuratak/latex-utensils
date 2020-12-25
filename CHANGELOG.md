@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.3.0] (2020-12-25)
+
+- Fix parsing `alignedat` and `cases*`.
+
 ## [2.2.0] (2020-12-23)
 
 - (#22) Fix parsing [] having spaces.
