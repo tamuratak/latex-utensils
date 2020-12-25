@@ -554,14 +554,30 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
-        test('parse \\begin{align} \\begin{aligned} \\end{aligned} \\end{align}', () => {
+        test('parse \\begin{align} \\begin{aligned}', () => {
             const tex = '\\begin{align} \\begin{aligned} \\end{aligned} \\end{align}'
             const doc = latexParser.parse(tex)
             const expected: any = {
                 content: [ {
                     kind: 'env.math.align',
                     content: [ {
-                        kind: 'env.math.aligned'
+                        kind: 'env.math.aligned',
+                        name: 'aligned'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\begin{align} \\begin{alignedat}', () => {
+            const tex = '\\begin{align} \\begin{alignedat}{1} a & b \\end{alignedat} \\end{align}'
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: [ {
+                        kind: 'env.math.aligned',
+                        name: 'alignedat'
                     } ]
                 } ]
             }

@@ -440,10 +440,10 @@ mathEnvName
   / "displaymath"
 
 mahtAlignedEnvName
-  = "aligned"
-  / "alignedat"
-  / "cases"
+  = "alignedat"
+  / "aligned"
   / "cases*"
+  / "cases"
   / "gathered"
   / "split"
   / "matrix"
