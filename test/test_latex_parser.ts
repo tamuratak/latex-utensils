@@ -41,6 +41,58 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\url', () => {
+            const tex = '\\url{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.url',
+                    name: 'url',
+                    url: 'https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\url', () => {
+            const tex = '\\url{ https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83 {}}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.url',
+                    name: 'url',
+                    url: ' https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83 {}'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\href', () => {
+            const tex = '\\href{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}{link}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.href',
+                    name: 'href',
+                    url: 'https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\href', () => {
+            const tex = '\\href{ https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83{} }{link}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command.href',
+                    name: 'href',
+                    url: ' https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83{} '
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\verb|1|', () => {
             const tex = '\\verb|1|'
             const doc = latexParser.parse(tex)
@@ -662,6 +714,28 @@ Some sentences.
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
         })
+
+        test('test stringify \\url', () => {
+            const tex = '\\url{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}'
+            const actualTeX = '\\url{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
+        test('test stringify \\href[]{}{}', () => {
+            const tex = '\\href[page=1]{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}{link}'
+            const actualTeX = '\\href[page=1]{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}{link}'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
+        test('test stringify \\href{}{}', () => {
+            const tex = '\\href{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}{link}'
+            const actualTeX = '\\href{https://ja.wikipedia.org/wiki/%E5%9C%B0%E7%90%83}{link}'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
     })
 
     suite('other', () => {
@@ -693,7 +767,7 @@ Some sentences.
             }]
         })
 
-        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
+        type NotHaveContent = latexParser.Command | latexParser.AmsMathTextCommand | latexParser.DefCommand | latexParser.UrlCommand | latexParser.Parbreak | latexParser.AlignmentTab | latexParser.CommandParameter | latexParser.ActiveCharacter | latexParser.Ignore | latexParser.Subscript | latexParser.Superscript
 
         test('test type guard with assingment and never type', () => {
             return (node: latexParser.Node) => {
