@@ -67,6 +67,17 @@ export function isHrefCommand(node: Node | undefined): node is HrefCommand {
     return !!node && node.kind === 'command.href'
 }
 
+export type LabelCommand = {
+    kind: 'command.label';
+    name: 'label' | 'ref' | 'eqref' | 'autoref';
+    label: string;
+    location: Location;
+}
+
+export function isLabelCommand(node: Node | undefined): node is LabelCommand {
+    return !!node && node.kind === 'command.label'
+}
+
 export type Environment = {
     kind: 'env';
     name: string;
@@ -312,6 +323,7 @@ export type Node
 | DefCommand
 | UrlCommand
 | HrefCommand
+| LabelCommand
 | Environment
 | Group
 | OptionalArg

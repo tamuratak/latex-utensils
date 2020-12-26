@@ -136,10 +136,23 @@ SpecialCommand "special command"
   / MathEnvironment
   / Environment
 
-// \url{...}
 
+// \label{...} \ref{...}
+LabelCommand
+  = escape name:("label" / "ref" / "eqref" / "autoref") skip_space beginGroup label:labelString endGroup
+  {
+    return { kind: "command.label", name, label: label.join(''), location: location() };
+  }
+
+labelString
+  = ( skip_comment / $pairedCurlySkippingComment / $(!"}" .) )+
+
+pairedCurlySkippingComment
+  = "{" ( skip_comment / $pairedCurlySkippingComment / $(!"}" .) )* "}"
+
+// \url{...} \href{url}{content}
 UrlCommand
-  = escape "url" beginGroup x:$urlString endGroup
+  = escape "url" skip_space beginGroup x:$urlString endGroup
   {
     return { kind: "command.url", name: "url", url: x, location: location() };
   }
@@ -266,12 +279,6 @@ commandName
   / "\\*"
   / .
 
-LabelCommand
-  = escape "label" x:LabelGroup
-  {
-    return { kind: "command", name: "label", args: [x], location: location() };
-  }
-
 MathCommand
   = LabelCommand
   / escape n:$(!nonMathCommandName commandName) args:(argumentList / MathGroup)*
@@ -303,18 +310,6 @@ MathGroup
   = skip_space beginGroup skip_space x:(!endGroup c:MathElement {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
-  }
-
-LabelGroup
-  = skip_space beginGroup skip_space x:LabelText endGroup
-  {
-    return { kind: "arg.group", content: [x], location: location() };
-  }
-
-LabelText
-  = c:$((!endGroup .)*)
-  {
-    return { kind: "text.string", content: c, location: location() };
   }
 
 // \left( ... \right) in math mode.
