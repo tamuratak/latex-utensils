@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.0.0]
+
+### BREAKING CHANGES
+
+- (#23) Parse `\url{...}` as `UrlCommand`.
+- (#23) Parse `\href{...}{...}` as `HrefCommand`.
+
 ## [2.3.0] (2020-12-25)
 
 - Fix parsing `alignedat` and `cases*`.
