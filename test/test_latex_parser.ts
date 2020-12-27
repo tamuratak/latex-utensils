@@ -13,7 +13,7 @@ lmn
 \\end{center}
             `
             const doc = latexParser.parse(tex)
-            const expected: any = {
+            const expected = {
                 content: [ {
                     kind: 'env',
                     content: [ {
@@ -22,6 +22,58 @@ lmn
                         location: { start: {line: 3, column: 1}, end: {line: 3, column: 4} }
                     } ]
                 } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\begin{center} \\begin{itemize}', () => {
+            const tex = `
+\\begin {center}
+\\begin {itemize}
+   
+\\end   {itemize}
+\\end {center}
+`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'env',
+                    content: [ {
+                        kind: 'env'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse unbalanced \\begin', () => {
+            const tex = `
+\\begin{center}
+\\begin{itemize}
+\\end{center}
+`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'env',
+                    name: 'center',
+                    content: [ {
+                        kind: 'command',
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse unbalanced \\end', () => {
+            const tex = `
+\\begin{center}
+\\end{itemize}
+\\end{center}
+`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ { kind: 'command' }, { kind: 'command' }, { kind: 'command' } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
@@ -213,6 +265,24 @@ Some sentences.
                     kind: 'env.math.align',
                     content: [ {
                         kind: 'math.character'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse unbalanced \\begin{aligned}', () => {
+            const tex = `
+\\begin{align}
+\\begin{aligned}
+\\end{align}`
+
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: [ {
+                        kind: 'command'
                     } ]
                 } ]
             }
@@ -659,6 +729,35 @@ Some sentences.
                         name: 'alignedat'
                     } ]
                 } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse unbalanced \\begin{aligned}', () => {
+            const tex = `
+\\begin{align}
+\\begin{aligned}
+\\end{align}
+`
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: [ { kind: 'command' } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse unbalanced \\end{aligned}', () => {
+            const tex = `
+\\begin{align}
+\\end{aligned}
+\\end{align}
+`
+            const doc = latexParser.parse(tex)
+            const expected: any = {
+                content: [ { kind: 'command' }, { kind: 'command' }, { kind: 'command' } ]
             }
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })

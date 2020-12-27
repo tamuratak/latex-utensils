@@ -387,24 +387,24 @@ argsDelimiter
 
 Environment
   = beginEnv name:groupedEnvname args:(argumentList / Group)*
-      skip_space body:(!(endEnv n:groupedEnvname & {return name === n;}) x:Element {return x;})*
-    endEnv groupedEnvname
+      skip_space body:(!endEnv x:Element {return x;})*
+    endEnv n:groupedEnvname &{return name === n;}
   {
     return { kind: "env", name, args, content: body, location: location() };
   }
 
 MathEnvironment
   = beginEnv skip_space beginGroup name:mathEnvName endGroup
-      skip_space body:(!(endEnv n:groupedEnvname & {return name === n;}) x:MathElement {return x;})*
-    endEnv skip_space beginGroup mathEnvName endGroup
+      skip_space body:(!endEnv x:MathElement {return x;})*
+    endEnv skip_space beginGroup n:mathEnvName endGroup &{return name === n;}
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
   }
 
 MathAlignedEnvironment
   = beginEnv skip_space beginGroup name:mahtAlignedEnvName endGroup
-      skip_space body: (!(endEnv n:groupedEnvname & {return name === n;}) x:MathElement {return x;})*
-    endEnv skip_space beginGroup mahtAlignedEnvName endGroup
+      skip_space body:(!endEnv x:MathElement {return x;})*
+    endEnv skip_space beginGroup n:mahtAlignedEnvName endGroup &{return name === n;}
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
   }
