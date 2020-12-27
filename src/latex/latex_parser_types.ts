@@ -267,12 +267,10 @@ export function isDisplayMath(node: Node | undefined): node is DisplayMath {
     return !!node && node.kind === 'displayMath'
 }
 
-export type MathCharacter<
-  T extends Location | undefined = Location | undefined
-> = {
+export type MathCharacter = {
     kind: 'math.character';
     content: string;
-    location: T;
+    location: Location | undefined;
 }
 
 export function isMathCharacter(node: Node | undefined): node is MathCharacter {
