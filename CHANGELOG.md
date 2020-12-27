@@ -2,6 +2,8 @@
 
 ## [3.0.0]
 
+- `latexParser.parse` accepts `enableMathCharacterLocation` as an option.
+
 ### BREAKING CHANGES
 
 - (#23) Parse `\url{...}` as `UrlCommand`.
