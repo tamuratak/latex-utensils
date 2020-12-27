@@ -6,9 +6,9 @@
 
 ### BREAKING CHANGES
 
-- (#23) Parse `\url{...}` as `UrlCommand`.
-- (#23) Parse `\href{...}{...}` as `HrefCommand`.
-- Parse `\label{...}`, `\ref{...}`, and others as `LabelCommand`.
+- (#23) `\url{...}` parsed as `UrlCommand`.
+- (#23) `\href{...}{...}` parsed as `HrefCommand`.
+- `\label{...}`, `\ref{...}`, and others parsed as `LabelCommand`.
 
 ## [2.3.0] (2020-12-25)
 
