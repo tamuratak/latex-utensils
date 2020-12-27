@@ -318,9 +318,7 @@ export function hasArgsArray(node: Node | undefined): node is Extract<Node, {arg
 }
 
 
-export type Node<
-  T extends Location | undefined = Location | undefined
->
+export type Node
 = TextString
 | Command
 | AmsMathTextCommand
@@ -333,7 +331,7 @@ export type Node<
 | OptionalArg
 | InlienMath
 | DisplayMath
-| MathCharacter<T>
+| MathCharacter
 | MatchingDelimiters
 | MathDelimiters
 | MathEnv
@@ -356,11 +354,9 @@ export type Comment = {
     location: Location;
 }
 
-export type AstRoot<
-  T extends Location | undefined = Location | undefined
-> = {
+export type AstRoot = {
     kind: 'ast.root';
-    content: Node<T>[];
+    content: Node[];
     comment?: Comment[];
 }
 
@@ -379,7 +375,4 @@ export function isAstPreamble(ast: LatexAst): ast is AstPreamble {
     return ast.kind === 'ast.preamble'
 }
 
-export type LatexAst<
-  T extends Location | undefined = Location | undefined
->
-= AstRoot<T> | AstPreamble
+export type LatexAst = AstRoot | AstPreamble
