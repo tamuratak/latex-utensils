@@ -7,6 +7,9 @@ import * as commander from 'commander'
 import Tracer = require('pegjs-backtrace')
 
 function deleteLocation(node: any) {
+    if (!node) {
+        return
+    }
     if (node.hasOwnProperty('location')) {
         delete node.location
     }
