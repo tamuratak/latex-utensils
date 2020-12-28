@@ -581,7 +581,7 @@ break
   {
     return true;
   }
-  / sp* (nl skip_comment* / skip_comment+) ((sp* nl)+ / &endDoc / EOF) (sp / nl / skip_comment)*
+  / sp* (nl skip_comment* / skip_comment+) (sp* nl)+ (sp / nl / skip_comment)*
   {
     return true;
   }
