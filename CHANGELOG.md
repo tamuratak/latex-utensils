@@ -3,12 +3,15 @@
 ## [3.0.0]
 
 - `latexParser.parse` accepts `enableMathCharacterLocation` as an option.
+- Fix a null check in `luparse`.
 
 ### BREAKING CHANGES
 
 - (#23) `\url{...}` parsed as `UrlCommand`.
 - (#23) `\href{...}{...}` parsed as `HrefCommand`.
 - `\label{...}`, `\ref{...}`, and others parsed as `LabelCommand`.
+- Stop parsing `\end{document}` and `EOF` as parbreak.
+- `\begin{abc} \end{efg} \end{abc}` parsed as three commands.
 
 ## [2.3.0] (2020-12-25)
 
