@@ -164,7 +164,7 @@ UrlCommand
   }
 
 HrefCommand
-  = escape "href" arg:argumentList? skip_space beginGroup x:$urlString endGroup skip_space grp:Group
+  = escape "href" arg:argumentList? skip_space beginGroup x:$urlString endGroup grp:Group
   {
     return { kind: "command.href", name: "href", url: x, content: grp.content, arg: arg || undefined, location: location() };
   }
@@ -300,7 +300,7 @@ nonMathCommandName
   / ")"
 
 DefCommand
-  = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(argumentList / CommandParameterWithNumber)* skip_space grArg:Group
+  = escape "def" skip_space token:$(escape (char / '@')+) numArgs:(argumentList / CommandParameterWithNumber)* grArg:Group
   {
     return { kind: "command.def", token, args: numArgs.concat([grArg]), location: location() };
   }
