@@ -186,15 +186,15 @@ Verb
 
 // verbatim environment
 Verbatim
-  = escape "begin{verbatim}"
-      x:$((!(escape "end{verbatim}") . )*)
-    escape "end{verbatim}"
+  = beginEnv beginGroup "verbatim" endGroup
+      x:$((!(endEnv beginGroup "verbatim" endGroup) . )*)
+    endEnv beginGroup "verbatim" endGroup
   {
     return { kind: "env.verbatim", name: "verbatim", content: x, location: location() };
   }
-  / escape "begin{verbatim*}"
-      x:$((!(escape "end{verbatim*}") . )*)
-    escape "end{verbatim*}"
+  / beginEnv beginGroup "verbatim*" endGroup
+      x:$((!(endEnv beginGroup "verbatim*" endGroup) . )*)
+    endEnv beginGroup "verbatim*" endGroup
   {
     return { kind: "env.verbatim", name: "verbatim*", content: x, location: location() };
   }
@@ -202,27 +202,27 @@ Verbatim
 
 // minted environment
 Minted
-  = escape "begin{minted}" args:((argumentList Group) / Group)
-      x:$((!(escape "end{minted}") . )*)
-    escape "end{minted}"
+  = beginEnv beginGroup "minted" endGroup args:((argumentList Group) / Group)
+      x:$((!(endEnv beginGroup "minted" endGroup) . )*)
+    endEnv beginGroup "minted" endGroup
   {
     return { kind: "env.minted", name: "minted", args: args, content: x, location: location() };
   }
 
 // lstlisting environment
 Lstlisting
-  = escape "begin{lstlisting}" arg:argumentList?
-      x:$((!(escape "end{lstlisting}") . )*)
-    escape "end{lstlisting}"
+  = beginEnv beginGroup "lstlisting" endGroup arg:argumentList?
+      x:$((!(endEnv beginGroup "lstlisting" endGroup) . )*)
+    endEnv beginGroup "lstlisting" endGroup
   {
     return { kind: "env.lstlisting", name: "lstlisting", arg: arg, content: x, location: location() };
   }
 
 // comment environment provided by \usepackage{verbatim}
 commentenv
-  = escape "begin{comment}"
-      x:$((!(escape "end{comment}") . )*)
-    escape "end{comment}"
+  = beginEnv beginGroup "comment" endGroup
+      x:$((!(endEnv beginGroup "comment" endGroup) . )*)
+    endEnv beginGroup "comment" endGroup
   {
     return { kind: "env.comment", content: x, location: location() };
   }
