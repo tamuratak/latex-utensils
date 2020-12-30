@@ -30,6 +30,7 @@
     "onchange": "^6.1.0",
     "pegjs": "^0.10.0",
     "rimraf": "^3.0.0",
+    "source-map-support": "^0.5.19",
     "typepark": "^0.8.0",
     "typescript": "^4.1.3"
   },
@@ -62,7 +63,7 @@
     "lint": "eslint --cache --ext .ts .",
     "lint:fix": "eslint --fix --cache --ext .ts .",
     "prerelease": "run-s build lint test",
-    "test": "mocha --ui tdd out/test/**/*.js",
+    "test": "mocha --require source-map-support/register --reporter json --ui tdd out/test/**/*.js",
     "watch": "run-p -c build:continue 'watch:*'",
     "watch:ts": "onchange 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' -- run-s compile test",
     "watch:pegjs": "onchange 'src/**/*.pegjs' -- run-s generate test"
