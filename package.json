@@ -63,7 +63,7 @@
     "lint": "eslint --cache --ext .ts .",
     "lint:fix": "eslint --fix --cache --ext .ts .",
     "prerelease": "run-s build lint test",
-    "test": "mocha --require source-map-support/register --ui tdd out/test/**/*.js",
+    "test": "mocha --require source-map-support/register --reporter xunit --ui tdd out/test/**/*.js",
     "watch": "run-p -c build:continue 'watch:*'",
     "watch:ts": "onchange 'src/**/*.ts' 'test/**/*.ts' 'bin/**/*.ts' -- run-s compile test",
     "watch:pegjs": "onchange 'src/**/*.pegjs' -- run-s generate test"

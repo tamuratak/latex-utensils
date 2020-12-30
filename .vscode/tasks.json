@@ -9,6 +9,11 @@
             "group": "build",
             "isBackground": true,
             "problemMatcher": {
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "testsuite name=\"Mocha Tests\"",
+                    "endsPattern": "/testsuite"
+                },
                 "pattern": {
                     "regexp": "(test/test_.*?.ts):(\\d+):(\\d+)",
                     "file": 1,
