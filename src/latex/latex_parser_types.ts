@@ -344,7 +344,6 @@ export function hasArgsArray(node: Node | undefined): node is Extract<Node, {arg
     return !!node && node.hasOwnProperty('args') && Array.isArray((node as any)['args'])
 }
 
-
 export type Node
 = TextString
 | Command
@@ -377,6 +376,12 @@ export type Node
 | Verbatim
 | Minted
 | Lstlisting
+
+export type Element = Exclude<Node, Space | Softbreak>
+
+export function isElement(node: Node): node is Element {
+    return !!node && !isSpace(node) && !isSoftbreak(node)
+}
 
 export type Comment = {
     kind: 'comment';
