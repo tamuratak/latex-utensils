@@ -557,15 +557,21 @@ comment
 
 // \linebreak, \linebreak[...], \\, \\[...], \\*, \\*[...], \newline
 Linebreak
-  = skip_space escape n:"linebreak" arg:ArgumentList? skip_space
+  = skip_space x:Linebreak_p skip_space
+  {
+    return x;
+  }
+
+Linebreak_p
+  = escape n:"linebreak" arg:ArgumentList?
   {
     return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
   }
-  / skip_space escape n:(escape "*" / escape) arg:ArgumentList? skip_space
+  / escape n:(escape "*" / escape) arg:ArgumentList?
   {
     return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
   }
-  / skip_space escape n:("newline*" / "newline") skip_space
+  / escape n:("newline*" / "newline")
   {
     return { kind: "linebreak", name: n, arg: undefined, location: location() }
   }
