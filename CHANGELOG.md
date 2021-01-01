@@ -11,7 +11,7 @@
 - (#23) `\href{...}{...}` parsed as `HrefCommand`.
 - `\label{...}`, `\ref{...}`, and others parsed as `LabelCommand`.
 - Stop parsing `\end{document}` and `EOF` as parbreak.
-- `\begin{abc} \end{efg} \end{abc}` parsed as three commands.
+- Unbalanced `\begin{abc} \end{efg} \end{abc}` parsed as three commands.
 
 ## [2.3.0] (2020-12-25)
 
