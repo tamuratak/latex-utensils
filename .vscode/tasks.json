@@ -8,19 +8,29 @@
             "script": "watch",
             "group": "build",
             "isBackground": true,
-            "problemMatcher": {
-                "background": {
-                    "activeOnStart": true,
-                    "beginsPattern": "testsuite name=\"Mocha Tests\"",
-                    "endsPattern": "/testsuite"
+            "problemMatcher": [
+                {
+                    "base": "$tsc",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "^> tsc -p",
+                        "endsPattern": "^(> mocha |> run-p |npm ERR)"
+                    }
                 },
-                "pattern": {
-                    "regexp": "(test/test_.*?.ts):(\\d+):(\\d+)",
-                    "file": 1,
-                    "location": 2,
-                    "message": 3
+                {
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "testsuite name=\"Mocha Tests\"",
+                        "endsPattern": "/testsuite"
+                    },
+                    "pattern": {
+                        "regexp": "(test/test_.*?.ts):(\\d+):(\\d+)",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    }
                 }
-            }
+            ]
         }
     ]
 }
