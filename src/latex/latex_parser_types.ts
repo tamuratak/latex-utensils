@@ -145,7 +145,6 @@ export function isParbreak(node: Node | undefined): node is Parbreak {
 
 export type Space = {
     kind: 'space';
-    location: Location;
 }
 
 export function isSpace(node: Node | undefined): node is Space {
@@ -154,7 +153,6 @@ export function isSpace(node: Node | undefined): node is Space {
 
 export type Softbreak = {
     kind: 'softbreak';
-    location: Location;
 }
 
 export function isSoftbreak(node: Node | undefined): node is Softbreak {

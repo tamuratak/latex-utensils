@@ -657,13 +657,13 @@ Linebreak_p
 Softbreak
   = (!break (sp / skip_comment))* !break nl (!break (sp / skip_comment))*
   {
-    return { kind: "softbreak", location: location() };
+    return { kind: "softbreak" };
   }
 
 Space
   = (!break (nl / sp))+
   {
-    return { kind: "space", location: location() };
+    return { kind: "space" };
   }
 
 whitespace

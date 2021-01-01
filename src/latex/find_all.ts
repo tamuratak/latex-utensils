@@ -165,6 +165,9 @@ export function findNodeAt(
     parent?: FindResult<Node>
 ): FindResult<Node> | undefined {
     for (const node of nodes) {
+        if (!lp.isElement(node)) {
+            continue
+        }
         const nodeLoc = node.location
         const cur = { node, parent }
         if (nodeLoc && pos.line !== undefined && pos.column !== undefined) {
