@@ -1,6 +1,6 @@
 # Change Log
 
-## [3.0.0]
+## [3.0.0] (2021-01-01)
 
 - `latexParser.parse` accepts `enableMathCharacterLocation` as an option.
 - Fix a null check in `luparse`.
