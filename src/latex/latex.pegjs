@@ -470,7 +470,7 @@ Environment_p
   }
 
 MathEnvironment
-  = x:MathEnvironment_p skip_space
+  = skip_space x:MathEnvironment_p skip_space
   {
     return x;
   }
