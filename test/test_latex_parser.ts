@@ -818,6 +818,24 @@ a
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse { a }d', () => {
+            const tex = '{ a }d'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'arg.group',
+                    content: [
+                        { kind: 'space' },
+                        { kind: 'text.string' },
+                        { kind: 'space' }
+                    ]
+                }, {
+                    kind: 'text.string'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse x {a} { b }d', () => {
             const tex = 'x {a} { b }d'
             const doc = latexParser.parse(tex)
