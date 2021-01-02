@@ -1,5 +1,13 @@
 # Change Log
 
+## [4.0.0]
+
+### BREAKING CHANGES
+
+- Spaces parsed as `Space`.
+- `\\` parsed as `Linebreak`.
+- `\n` parsed as `Softbreak`.
+
 ## [3.0.0] (2021-01-01)
 
 - `latexParser.parse` accepts `enableMathCharacterLocation` as an option.
