@@ -6,7 +6,7 @@ function stringifyArray(arry: lp.Node[], options: { lineBreak: string }): string
     for (let i = 0; i < len; i++) {
         const cur = arry[i]
         ret += stringify(cur, options)
-        if (lp.isCommandParameter(cur) || lp.isSubscript(cur) || lp.isSuperscript(cur)) {
+        if (lp.isSpace(cur) || lp.isSoftbreak(cur) || lp.isCommandParameter(cur) || lp.isSubscript(cur) || lp.isSuperscript(cur)) {
             continue
         }
         if (i + 1 < len && lp.isTextString(arry[i + 1])) {
@@ -74,6 +74,15 @@ export function stringify(
     }
     if (lp.isParbreak(node)) {
         return '\\par' + lineBreak
+    }
+    if (lp.isSpace(node)) {
+        return ' '
+    }
+    if (lp.isSoftbreak(node)) {
+        return '\n'
+    }
+    if (lp.isLinebreak(node)) {
+        return '\\\\'
     }
     if (lp.isSuperscript(node)) {
         if (node.arg) {

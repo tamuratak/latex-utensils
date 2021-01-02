@@ -143,6 +143,35 @@ export function isParbreak(node: Node | undefined): node is Parbreak {
     return !!node && node.kind === 'parbreak'
 }
 
+export type Space = {
+    kind: 'space';
+    location: undefined;
+}
+
+export function isSpace(node: Node | undefined): node is Space {
+    return !!node && node.kind === 'space'
+}
+
+export type Softbreak = {
+    kind: 'softbreak';
+    location: undefined;
+}
+
+export function isSoftbreak(node: Node | undefined): node is Softbreak {
+    return !!node && node.kind === 'softbreak'
+}
+
+export type Linebreak = {
+    kind: 'linebreak';
+    name: '\\' | '\\*' | 'newline' | 'newline*' | 'linebreak'
+    arg: OptionalArg | undefined;
+    location: Location;
+}
+
+export function isLinebreak(node: Node | undefined): node is Linebreak {
+    return !!node && node.kind === 'linebreak'
+}
+
 export type Superscript = {
     kind: 'superscript';
     arg: Node | undefined;
@@ -315,7 +344,6 @@ export function hasArgsArray(node: Node | undefined): node is Extract<Node, {arg
     return !!node && node.hasOwnProperty('args') && Array.isArray((node as any)['args'])
 }
 
-
 export type Node
 = TextString
 | Command
@@ -335,6 +363,9 @@ export type Node
 | MathEnv
 | MathEnvAligned
 | Parbreak
+| Space
+| Softbreak
+| Linebreak
 | Superscript
 | Subscript
 | AlignmentTab
@@ -345,6 +376,12 @@ export type Node
 | Verbatim
 | Minted
 | Lstlisting
+
+export type Element = Exclude<Node, Space | Softbreak>
+
+export function isElement(node: Node): node is Element {
+    return !!node && !isSpace(node) && !isSoftbreak(node)
+}
 
 export type Comment = {
     kind: 'comment';
