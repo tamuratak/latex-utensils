@@ -91,8 +91,8 @@ MathElement_p
   / MathGroup
   / AlignmentTab
   / CommandParameterWithNumber
-  / Superscript skip_space x:MathElement { return { kind: "superscript", arg: x, location: location() }; }
-  / Subscript skip_space x:MathElement { return { kind: "subscript", arg: x, location: location() }; }
+  / SuperscriptWithArg
+  / SubscriptWithArg
   / ActiveCharacter
   / ignore
   / c:$(!nonMathcharToken .) {
@@ -489,10 +489,22 @@ AlignmentTab                                      // catcode 4
 
 commandParameter = "#"                            // catcode 6
 
+SuperscriptWithArg
+  = Superscript skip_space x:MathElement
+  {
+    return { kind: "superscript", arg: x, location: location() };
+  }
+
 Superscript                            // catcode 7
   = "^"
   {
     return { kind: "superscript", arg: undefined, location: location() };
+  }
+
+SubscriptWithArg
+  = Subscript skip_space x:MathElement
+  {
+    return { kind: "subscript", arg: x, location: location() };
   }
 
 Subscript                             // catcode 8
