@@ -847,19 +847,31 @@ a
     })
 
     suite('stringify', () => {
-        test('test latexParser.stringify', () => {
+        test('test latexParser.stringify a b', () => {
+            const tex = 'a b'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
+        test('test latexParser.stringify a\\nb', () => {
+            const tex = 'a\nb'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
+        test('test latexParser.stringify newcommand 01', () => {
             const tex = '\\newcommand{\\ABC}{ABC}'
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content), tex)
         })
 
-        test('test latexParser.stringify', () => {
+        test('test latexParser.stringify newcommand 02', () => {
             const tex = '\\newcommand{\\cmark}[1][Green]{\\textcolor{#1!60!text}{\\ding{51}}}'
             const doc = latexParser.parse(tex)
             assert.strictEqual(latexParser.stringify(doc.content), tex)
         })
 
-        test('test latexParser.stringify', () => {
+        test('test latexParser.stringify newcommand 03', () => {
             const tex = `
 \\newcommand{\\topic}[1]{%
     \\needspace{5\\baselineskip}%
@@ -870,7 +882,14 @@ a
             assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '' }), expected)
         })
 
-        test('test latexParser.stringify with lineBreak', () => {
+        test('test latexParser.stringify with lineBreak 01', () => {
+            const tex = '\\begin{center} a \\\\ b \\end{center}'
+            const actualTeX = '\\begin{center}\na\\\\ b\n\\end{center}\n'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content, { lineBreak : '\n' }), actualTeX)
+        })
+
+        test('test latexParser.stringify with lineBreak 02', () => {
             const tex = '\\begin{align} a \\\\ b \\end{align}'
             const actualTeX = '\\begin{align}\na\\\\ b\n\\end{align}\n'
             const doc = latexParser.parse(tex)
