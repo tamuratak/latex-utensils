@@ -58,7 +58,7 @@ Element
 
 Element_p
   = SpecialCommand
-  / break { return { kind: "parbreak", location: location() }; }
+  / break
   / DefCommand
   / Command
   / Group
@@ -371,7 +371,7 @@ argsToken
   / Group
   / InlineMathShift
   / AlignmentTab
-  / sp* nl sp* nl+ sp* { return {kind:"parbreak", location: location()}; }
+  / sp* nl sp* nl+ sp* { return { kind:"parbreak", location: location() }; }
   / CommandParameterWithNumber
   / Superscript
   / Subscript
@@ -591,11 +591,11 @@ skip_all_space
 break
   = (skip_all_space escape "par" !char skip_all_space)+
   {
-    return true;
+    return { kind: "parbreak", location: location() };
   }
   / sp* (nl skip_comment* / skip_comment+) (sp* nl)+ (sp / nl / skip_comment)*
   {
-    return true;
+    return { kind: "parbreak", location: location() };
   }
 
 EOF = !.
