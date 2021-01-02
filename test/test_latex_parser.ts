@@ -910,6 +910,13 @@ a
             assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
         })
 
+        test('test stringify $ \\sin x$', () => {
+            const tex = '$ \\sin x$'
+            const actualTeX = '$\\sin x$'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), actualTeX)
+        })
+
         test('test stringify \\def\\abc [#1]#2 {#2#1abc}', () => {
             const tex = '\\def\\abc [#1]#2 {#2#1abc}'
             const actualTeX = '\\def\\abc[#1]#2{#2#1abc}'
