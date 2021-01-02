@@ -6,7 +6,7 @@
 
 - Spaces parsed as `Space`.
 - `\\` parsed as `Linebreak`.
-- `\n` parsed as `Softbreak`.
+- Single `\n` parsed as `Softbreak`.
 
 ## [3.0.0] (2021-01-01)
 
