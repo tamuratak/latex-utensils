@@ -5,11 +5,19 @@ import {ParserOptions} from '../pegjs/pegjs_types'
 import {TimeKeeper} from '../pegjs/timeout'
 
 export {find, findAll, findAllSequences, findNodeAt} from './find_all'
+export type {FindResult, Position, PositionLc, PositionOs, Typeguard} from './find_all'
 export {pattern} from './matcher'
+export type {Pattern} from './matcher'
 export {stringify} from './stringify'
 export * from './latex_parser_types'
-export {isSyntaxError, Location, ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
+export {isSyntaxError} from '../pegjs/pegjs_types'
+export type {Location, ParserOptions, SyntaxError} from '../pegjs/pegjs_types'
 
+/**
+ *
+ * @param texString
+ * @param optArg
+ */
 export function parse(
     texString: string,
     optArg?: ParserOptions
@@ -27,7 +35,12 @@ export function parse(
     }
 }
 
-export function parsePreamble(s: string, option?: { timeout: number }): lp.AstPreamble {
-    const timeout = option && option.timeout
-    return parse(s, {startRule: 'Preamble', timeout}) as lp.AstPreamble
+/**
+ *
+ * @param texString
+ * @param optArg
+ */
+export function parsePreamble(texString: string, optArg?: { timeout: number }): lp.AstPreamble {
+    const timeout = optArg && optArg.timeout
+    return parse(texString, {startRule: 'Preamble', timeout}) as lp.AstPreamble
 }

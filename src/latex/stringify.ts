@@ -25,6 +25,11 @@ function stringifyArray(arry: lp.Node[], options: { lineBreak: string }): string
     return ret
 }
 
+/**
+ *
+ * @param node
+ * @param options
+ */
 export function stringify(
     node: lp.Node | lp.Node[],
     options = { lineBreak: '' }

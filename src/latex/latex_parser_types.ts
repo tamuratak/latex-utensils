@@ -344,6 +344,9 @@ export function hasArgsArray(node: Node | undefined): node is Extract<Node, {arg
     return !!node && node.hasOwnProperty('args') && Array.isArray((node as any)['args'])
 }
 
+/**
+ * The union type of all the node types of LaTeX AST.
+ */
 export type Node
 = TextString
 | Command

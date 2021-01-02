@@ -1,7 +1,7 @@
 import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
-type Typeguard<T extends Node> = ((x: Node) => x is T) | ((x: Node) => boolean)
+export type Typeguard<T extends Node> = ((x: Node) => x is T) | ((x: Node) => boolean)
 
 export function getChildNodes(node: Node): Node[] {
     let results: Node[] = []
@@ -17,22 +17,22 @@ export function getChildNodes(node: Node): Node[] {
     return results
 }
 
-type FindResult<T extends Node, P extends Node = Node> = {
+export type FindResult<T extends Node, P extends Node = Node> = {
     /**
-     * The matched node
+     * The matched node.
      */
     node: T;
     /**
-     * The parent node of the matched node
+     * The parent node of the matched node.
      */
     parent?: FindResult<P>;
 }
 
 /**
  * Find a node satisfying `typeguard` in `nodes` traversely.
- * @param nodes The array of nodes where to be searched
+ * @param nodes The array of nodes where to be searched.
  * @param typeguard If this is actually a type guard, the matched result will be typed.
- * @param parent internal-use only
+ * @param parent internal-use only.
  */
 export function find<T extends Node>(
     nodes: Node[],
@@ -54,9 +54,9 @@ export function find<T extends Node>(
 
 /**
  * Find all the nodes satisfying `typeguard` in `nodes` traversely.
- * @param nodes The array of nodes where to be searched
+ * @param nodes The array of nodes where to be searched.
  * @param typeguard If this is actually a type guard, the matched result will be typed.
- * @param parent internal-use only
+ * @param parent internal-use only.
  */
 export function findAll<T extends Node>(
     nodes: Node[],
@@ -84,10 +84,10 @@ type SequenceResult<Ts extends Node[], P extends Node = Node> = {
 
 /**
  * Find the sequence of nodes satisfying `typeguard[]` in `nodes` traversely.
- * @param nodes The array of nodes where to be searched
+ * @param nodes The array of nodes where to be searched.
  * @param typeguards The array of `typeguard`s. Each node must satisfy each `typeguard`, respectively.
  *                   If this is actually a type guard, the matched result will be typed.
- * @param parent
+ * @param parent internal-use only.
  */
 export function findAllSequences<T extends Node>(
     nodes: Node[],
@@ -152,7 +152,9 @@ export function findAllSequences(
     return ret
 }
 
-type Position = {
+export type Position = PositionLc | PositionOs
+
+export type PositionLc = {
     /**
      * The one-based line value.
      */
@@ -167,7 +169,9 @@ type Position = {
     offset?: number;
     includeStart?: boolean;
     includeEnd?: boolean;
-} | {
+}
+
+export type PositionOs = {
     /**
      * The one-based line value.
      */

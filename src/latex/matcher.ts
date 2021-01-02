@@ -7,17 +7,26 @@ type MatchResult<T extends Node, P extends Pattern<Node, any> | undefined> = {
     parent: P extends undefined ? undefined : MatchResult<NonNullable<P>['target'], NonNullable<P>['parentPattern']>;
 }
 
-class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefined = undefined > {
-    parentPattern: ParentPattern
+export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefined = undefined > {
+    /** @ignore */
+    readonly parentPattern: ParentPattern
+    /** @ignore */
     target: T
 
+    /**
+     * @ignore
+     */
     constructor(
-        readonly typeguard: ((x: Node) => x is T) | ((x: Node) => boolean),
-        parentPattern?: ParentPattern
+        private readonly typeguard: ((x: Node) => x is T) | ((x: Node) => boolean),
+        parentPattern: ParentPattern
     ) {
-        this.parentPattern = parentPattern || this.parentPattern
+        this.parentPattern = parentPattern
     }
 
+    /**
+     *
+     * @param typeguard
+     */
     child<C extends Node>(
         typeguard: ((x: Node) => x is C) | ((x: Node) => boolean)
     ): Pattern<C, Pattern<T, ParentPattern>> {
@@ -25,6 +34,11 @@ class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefin
         return childMatcher
     }
 
+    /**
+     *
+     * @param nodes
+     * @param opt
+     */
     match(
         nodes: Node[],
         opt: { traverseAll: boolean } = { traverseAll: false }
@@ -57,6 +71,11 @@ class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefin
         return undefined
     }
 
+    /**
+     *
+     * @param nodes
+     * @param opt
+     */
     matchAll(
         nodes: Node[],
         opt: { traverseAll: boolean } = { traverseAll: false }
@@ -92,5 +111,5 @@ class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | undefin
 }
 
 export function pattern<T extends Node>(typeguard: ((x: Node) => x is T) | ((x: Node) => boolean)) {
-    return new Pattern(typeguard)
+    return new Pattern(typeguard, undefined)
 }
