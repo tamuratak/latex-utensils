@@ -1,0 +1,5 @@
+{
+    "entryPoints": ["src/main.ts", "src/latex/latex_parser_types.ts", "src/pegjs/pegjs_types.ts"],
+    "out": "docs",
+    "includeVersion": true
+}

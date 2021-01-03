@@ -1,3 +1,10 @@
+/**
+ * Defines node types of LaTeX AST.
+ *
+ * Users don't have to import this module directly.
+ */
+
+/** */
 import {Location} from '../pegjs/pegjs_types'
 
 export type TextString = {
@@ -394,7 +401,9 @@ export type Comment = {
 
 export type AstRoot = {
     kind: 'ast.root';
+    /** Nodes of the parsed document. */
     content: Node[];
+    /** Comments in the document. */
     comment?: Comment[];
 }
 
@@ -404,8 +413,11 @@ export function isAstRoot(ast: LatexAst): ast is AstRoot {
 
 export type AstPreamble = {
     kind: 'ast.preamble';
+    /** Nodes of the parsed preamble. */
     content: Node[];
+    /** Comments in the document. */
     comment?: Comment[];
+    /** The rest of the document after the preamble. */
     rest: string;
 }
 

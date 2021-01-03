@@ -1,3 +1,11 @@
+/**
+ * Defines classes and types for PEG.js.
+ *
+ * Users don't have to import this module directly.
+ *
+ */
+
+/** */
 import { TimeKeeper } from './timeout'
 
 export type Location = {
@@ -57,11 +65,9 @@ export function isSyntaxError(x: any): x is SyntaxError {
     return ret
 }
 
-export type ParserOptions = {
+export interface ParserOptions {
     startRule?: string;
     tracer?: Tracer;
-    enableComment?: boolean;
-    enableMathCharacterLocation?: boolean;
     timeout?: number | TimeKeeper;
 }
 

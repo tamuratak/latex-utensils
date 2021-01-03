@@ -77,43 +77,48 @@ export function findAll<T extends Node>(
     return ret
 }
 
-type SequenceResult<Ts extends Node[], P extends Node = Node> = {
+export type SequenceResult<Ts extends Node[], P extends Node = Node> = {
     nodes: Ts;
     parent?: FindResult<P>;
 }
 
-/**
- * Find the sequence of nodes satisfying `typeguard[]` in `nodes` traversely.
- * @param nodes The array of nodes where to be searched.
- * @param typeguards The array of `typeguard`s. Each node must satisfy each `typeguard`, respectively.
- *                   If this is actually a type guard, the matched result will be typed.
- * @param parent internal-use only.
- */
+/** @ignore */
 export function findAllSequences<T extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T>],
     parent?: FindResult<Node>
 ): SequenceResult<[T]>[]
+/** @ignore */
 export function findAllSequences<T1 extends Node, T2 extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T1>, Typeguard<T2>],
     parent?: FindResult<Node>
 ): SequenceResult<[T1, T2]>[]
+/** @ignore */
 export function findAllSequences<T1 extends Node, T2 extends Node, T3 extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T1>, Typeguard<T2>, Typeguard<T3>],
     parent?: FindResult<Node>
 ): SequenceResult<[T1, T2, T3]>[]
+/** @ignore */
 export function findAllSequences<T1 extends Node, T2 extends Node, T3 extends Node, T4 extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T1>, Typeguard<T2>, Typeguard<T3>, Typeguard<T4>],
     parent?: FindResult<Node>
 ): SequenceResult<[T1, T2, T3, T4]>[]
+/** @ignore */
 export function findAllSequences<T1 extends Node, T2 extends Node, T3 extends Node, T4 extends Node, T5 extends Node>(
     nodes: Node[],
     typeguards: [Typeguard<T1>, Typeguard<T2>, Typeguard<T3>, Typeguard<T4>, Typeguard<T5>],
     parent?: FindResult<Node>
 ): SequenceResult<[T1, T2, T3, T4, T5]>[]
+/**
+ * Find all the sequences of nodes satisfying `typeguard[]` in `nodes` traversely.
+ * @param nodes The array of nodes where to be searched.
+ * @param typeguards The array of `typeguard`s. Each node must satisfy each `typeguard`, respectively.
+ *                   If this is actually a type guard, the matched result will be typed.
+ * @param parent internal-use only.
+ */
 export function findAllSequences(
     nodes: Node[],
     typeguards: Typeguard<Node>[],
@@ -152,6 +157,9 @@ export function findAllSequences(
     return ret
 }
 
+/**
+ * Gives priority to line and column over offset.
+ */
 export type Position = PositionLc | PositionOs
 
 export type PositionLc = {
