@@ -2,6 +2,8 @@
 
 ## [4.0.0]
 
+- Use `typedoc` to generate https://tamuratak.github.io/latex-utensils/.
+
 ### BREAKING CHANGES
 
 - Spaces parsed as `Space`.
