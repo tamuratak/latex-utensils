@@ -1,4 +1,4 @@
-# latex-utensils v4.0.0-beta.1
+# latex-utensils v4.0.0-beta.2
 
 [![latex-utensils](https://img.shields.io/npm/v/latex-utensils)](https://www.npmjs.com/package/latex-utensils)
 [![CI Tests](https://github.com/tamuratak/latex-utensils/workflows/CI%20Tests/badge.svg)](https://github.com/tamuratak/latex-utensils/actions)
@@ -106,7 +106,7 @@ A typical usage is calling [`latexParser.parse`](https://tamuratak.github.io/lat
 
 ```typescript
 import {latexParser} from 'latex-utensils';
-const texString = '\\begin{document}abc\\end{document}';
+const texString = 'a $x+y$ b';
 const ast = latexParser.parse(texString);
 console.log(JSON.stringify(ast, undefined, '  '));
 ```
@@ -124,6 +124,10 @@ type AstRoot = {
 ## Docs
 
 - https://tamuratak.github.io/latex-utensils/
+
+## Repository
+
+- https://github.com/tamuratak/latex-utensils
 
 ## Development
 
