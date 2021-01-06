@@ -17,13 +17,16 @@ export function getChildNodes(node: Node): Node[] {
     return results
 }
 
+/**
+ * A finder result.
+ */
 export type FindResult<T extends Node, P extends Node = Node> = {
     /**
-     * The matched node.
+     * The found node.
      */
     node: T;
     /**
-     * The parent node of the matched node.
+     * The parent node of the found node.
      */
     parent?: FindResult<P>;
 }
@@ -162,6 +165,9 @@ export function findAllSequences(
  */
 export type Position = PositionLc | PositionOs
 
+/**
+ * Line and column-based position.
+ */
 export type PositionLc = {
     /**
      * The one-based line value.
@@ -179,6 +185,9 @@ export type PositionLc = {
     includeEnd?: boolean;
 }
 
+/**
+ * Offset-based position.
+ */
 export type PositionOs = {
     /**
      * The one-based line value.

@@ -8,6 +8,9 @@
 /** */
 import { TimeKeeper } from './timeout'
 
+/**
+ * The location of a node.
+ */
 export type Location = {
     start: {
         /**

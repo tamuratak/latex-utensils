@@ -26,8 +26,8 @@ function stringifyArray(arry: lp.Node[], options: { lineBreak: string }): string
 }
 
 /**
- *
- * @param node
+ * Converts nodes to a LaTeX string.
+ * @param node Nodes to be converted to a LaTeX string.
  * @param options
  */
 export function stringify(
