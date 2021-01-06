@@ -1,6 +1,6 @@
 {
   "name": "latex-utensils",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "tag": "canary",
   "license": "MIT",
   "description": "A LaTeX parser and utilities",

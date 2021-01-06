@@ -1,4 +1,4 @@
-# latex-utensils v4.0.0-beta.2
+# latex-utensils v4.0.0-beta.3
 
 [![latex-utensils](https://img.shields.io/npm/v/latex-utensils)](https://www.npmjs.com/package/latex-utensils)
 [![CI Tests](https://github.com/tamuratak/latex-utensils/workflows/CI%20Tests/badge.svg)](https://github.com/tamuratak/latex-utensils/actions)
@@ -20,7 +20,7 @@ $ cat sample/t.tex
 \usepackage{amsmath}
 \begin{document}
 ab c
-d $x+y$ e
+d $x + y$ e
 \begin{align}
     i + j
 \end{align}
