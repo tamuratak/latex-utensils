@@ -17,7 +17,7 @@
 import * as lp from './latex_parser_types'
 import * as lpSimple from './latex_parser_simple'
 import * as lpWithTrace from './latex_parser_trace'
-import {ParserOptions} from '../pegjs/pegjs_types'
+import {ParserOptions as ParserOptionsBase} from '../pegjs/pegjs_types'
 import {TimeKeeper} from '../pegjs/timeout'
 
 export {find, findAll, findAllSequences, findNodeAt} from './find_all'
@@ -32,7 +32,7 @@ export type {Location, SyntaxError} from '../pegjs/pegjs_types'
 /**
  * LaTeX parser options.
  */
-export interface LatexParserOptions extends ParserOptions {
+export interface ParserOptions extends ParserOptionsBase {
     /**
      * Specifies a rule with which the parser begins. If `'Root'` is set, the whole document is parsed.
      * If `'Preamble'` is set, only the preamble is parsed.
@@ -68,7 +68,7 @@ export interface LatexParserOptions extends ParserOptions {
  */
 export function parse(
     texString: string,
-    optArg?: LatexParserOptions
+    optArg?: ParserOptions
 ): lp.LatexAst {
     const option = optArg ? Object.assign({}, optArg) : undefined
     if (option && option.timeout) {
