@@ -111,7 +111,7 @@ const ast = latexParser.parse(texString);
 console.log(JSON.stringify(ast, undefined, '  '));
 ```
 
-[`latexParser.parse`](https://tamuratak.github.io/latex-utensils/modules/main.latexparser.html#parse) returns an [`AstRoot`](https://tamuratak.github.io/latex-utensils/modules/latex_latex_parser_types.html#astroot) object if [`startRule`](https://tamuratak.github.io/latex-utensils/interfaces/main.latexparser.latexparseroptions.html#startrule) is `'Root'`, 
+[`latexParser.parse`](https://tamuratak.github.io/latex-utensils/modules/main.latexparser.html#parse) returns an [`AstRoot`](https://tamuratak.github.io/latex-utensils/modules/latex_latex_parser_types.html#astroot) object if [`startRule`](https://tamuratak.github.io/latex-utensils/interfaces/main.latexparser.parseroptions.html#startrule) is `'Root'`,
 
 ```typescript
 type AstRoot = {
