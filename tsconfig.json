@@ -16,6 +16,7 @@
         "outDir": "out",
         "declarationDir": "out/types",
         "rootDir": ".",
+        "skipLibCheck": true,
         "sourceMap": true,
         "strictNullChecks": true,
         "target": "es2017",
