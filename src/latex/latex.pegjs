@@ -141,6 +141,7 @@ SpecialCommand "special command"
   / Verbatim
   / Minted
   / Lstlisting
+  / CodeEnv
   / commentenv
   / DisplayMath
   / InlineMathParen
@@ -241,13 +242,46 @@ Lstlisting_p
     return { kind: "env.lstlisting", name: "lstlisting", arg: arg, content: x, location: location() };
   }
 
+CodeEnv
+  = skip_space x:CodeEnv_p skip_space
+  {
+    return x;
+  }
+
+CodeEnv_p
+  = beginEnv name:groupedCodeEnvname args:(ArgumentList / Group)*
+      x:$((!(endEnv n:groupedCodeEnvname &{ return name === n; }) . )*)
+    endEnv n:groupedCodeEnvname &{ return name === n; }
+  {
+    return { kind: "env.code", name, args, content: x, location: location() };
+  }
+
+// return only envname without { and }
+groupedCodeEnvname
+  = skip_space beginGroup x:$(codeEnvname "*"?) endGroup
+  {
+    return x;
+  }
+
+codeEnvname
+  = "asy"
+  / "cppcode"
+  / "dot2tex"
+  / "gnuplot"
+  / "hscode"
+  / "juliacode" / "jlcode"
+  / "luacode"
+  / $( ("pylab" / "py" / "sympy" ) ("code" / "verbatim" / "block" / "concode" / "console" / "converbatim") )
+  / "sageblock" / "sagesilent" / "sageverbatim" / "sageexample" / "sagecommandline"
+  / "scalacode"
+
 // comment environment provided by \usepackage{verbatim}
 commentenv
   = beginEnv beginGroup "comment" endGroup
       x:$((!(endEnv beginGroup "comment" endGroup) . )*)
     endEnv beginGroup "comment" endGroup skip_space
   {
-    return { kind: "env.comment", content: x, location: location() };
+    return { kind: "env.comment", name: "comment", content: x, location: location() };
   }
 
 // inline math $...$
