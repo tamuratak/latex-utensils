@@ -14,6 +14,6 @@ declare class Tracer {
             matchesNode?: any;
         }
     )
-    trace(arg: any): any;
-    getBacktraceString(): string;
+    trace(arg: any): any
+    getBacktraceString(): string
 }
