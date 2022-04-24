@@ -1,10 +1,14 @@
 # Change Log
 
-## [4.1.0]
+## [4.1.1] (2022-03-27)
 
 - Update packages.
 
-## [4.0.0]
+## [4.1.0] (2021-05-09)
+
+- Update packages.
+
+## [4.0.0] (2021-02-14)
 
 - Use `typedoc` to generate https://tamuratak.github.io/latex-utensils/.
 
