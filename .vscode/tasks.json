@@ -4,33 +4,99 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "task-test",
+            "dependsOn": [
+                "task-test-xunit",
+                "task-test-spec",
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "task-test-xunit",
             "type": "npm",
-            "script": "watch",
-            "group": "build",
-            "isBackground": true,
+            "script": "test:xunit",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
             "problemMatcher": [
                 {
-                    "base": "$tsc",
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": "^> tsc -p",
-                        "endsPattern": "^(> mocha |> run-p |npm ERR)"
-                    }
-                },
-                {
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": "testsuite name=\"Mocha Tests\"",
-                        "endsPattern": "/testsuite"
-                    },
                     "pattern": {
                         "regexp": "(test/test_.*?.ts):(\\d+):(\\d+)",
                         "file": 1,
                         "location": 2,
                         "message": 3
-                    }
+                    },
+                    "owner": "task-test-xunit"
                 }
             ]
+        },
+        {
+            "label": "task-test-spec",
+            "type": "npm",
+            "script": "test:spec",
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "task-watch-all",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "task-build",
+                "task-watch-ts",
+                "task-watch-pegjs",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "task-watch-ts",
+            "type": "npm",
+            "script": "watch:ts",
+            "group": {
+                "kind": "build"
+            },
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "task-watch-pegjs",
+            "type": "npm",
+            "script": "watch:pegjs",
+            "group": {
+                "kind": "build"
+            },
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "label": "task-build",
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "isBackground": true,
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
         }
     ]
 }
