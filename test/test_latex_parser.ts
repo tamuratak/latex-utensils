@@ -446,6 +446,34 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\newlineMyCommand', () => {
+            const tex = '\\newlineMyCommand'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    {
+                        kind: 'command',
+                        name: 'newlineMyCommand'
+                    }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\linebreakMyCommand', () => {
+            const tex = '\\linebreakMyCommand'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    {
+                        kind: 'command',
+                        name: 'linebreakMyCommand'
+                    }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\label{a_b}', () => {
             const tex = '\\label{a_b}'
             const doc = latexParser.parse(tex)
