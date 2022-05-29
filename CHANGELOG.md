@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.2.0] (2022-05-29)
+
+- Fix parsing commands beginning with `\newline` and `\linebreak`
+
 ## [4.1.1] (2022-03-27)
 
 - Update packages.
