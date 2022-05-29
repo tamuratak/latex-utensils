@@ -641,7 +641,7 @@ Linebreak
   }
 
 Linebreak_p
-  = escape n:"linebreak" arg:ArgumentList?
+  = escape n:"linebreak" arg:ArgumentList? !char
   {
     return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
   }
@@ -649,7 +649,7 @@ Linebreak_p
   {
     return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
   }
-  / escape n:("newline*" / "newline")
+  / escape n:("newline*" / "newline") !char
   {
     return { kind: "linebreak", name: n, arg: undefined, location: location() }
   }
