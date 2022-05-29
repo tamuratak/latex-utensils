@@ -649,7 +649,7 @@ Linebreak_p
   {
     return { kind: "linebreak", name: n, arg: arg || undefined, location: location() };
   }
-  / escape n:("newline*" / "newline") !char
+  / escape n:"newline" !char
   {
     return { kind: "linebreak", name: n, arg: undefined, location: location() }
   }
