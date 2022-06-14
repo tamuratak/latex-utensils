@@ -327,6 +327,19 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse optional arguments having a tilde', () => {
+            const tex = '\\newcommand{\\Hi}[ a~b ][ ]{Hi}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'newcommand',
+                    args: [ {kind: 'arg.group'}, {kind: 'arg.optional'}, {kind: 'arg.optional'}, {kind: 'arg.group'} ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\node[label={abc}, efg]', () => {
             const tex = '\\node[label={abc}, efg]'
             const doc = latexParser.parse(tex)

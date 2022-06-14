@@ -445,6 +445,7 @@ argsToken
   / CommandParameterWithNumber
   / Superscript
   / Subscript
+  / ActiveCharacter
   / ignore
   / c:$((!(noncharToken / "," / "]") . )+) { return { kind: "text.string", content: c, location: location() }; }
 
