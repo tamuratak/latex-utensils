@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.3.0] (2022-06-18)
+
+- Fix parsing optional arguments including a tilde.
+
 ## [4.2.1] (2022-05-29)
 
 - Fix parsing `\newline`
