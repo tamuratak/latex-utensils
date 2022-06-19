@@ -1,250 +1,57 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>latex-utensils - v4.1.0</title>
-	<meta name="description" content="Documentation for latex-utensils - v4.1.0">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">latex-utensils - v4.1.0</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>latex-utensils - v4.1.0</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#latex-utensils" id="latex-utensils" style="color: inherit; text-decoration: none;">
-					<h1>latex-utensils</h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/latex-utensils"><img src="https://img.shields.io/npm/v/latex-utensils" alt="latex-utensils"></a>
-				<a href="https://github.com/tamuratak/latex-utensils/actions"><img src="https://github.com/tamuratak/latex-utensils/workflows/CI%20Tests/badge.svg" alt="CI Tests"></a></p>
-				<p>A LaTeX parser and utilities.</p>
-				<p>The parser is based on the following libraries:</p>
-				<ul>
-					<li><a href="https://github.com/michael-brade/LaTeX.js">https://github.com/michael-brade/LaTeX.js</a></li>
-					<li><a href="https://github.com/siefkenj/latex-parser">https://github.com/siefkenj/latex-parser</a></li>
-				</ul>
-				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
-					<h2>Getting started</h2>
-				</a>
-				<p>You can see LaTeX AST calling the <code>luparse</code> command. Without the option <code>-i</code>, you can obtain the output as JSON format.</p>
-				<pre><code><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">cat</span><span style="color: #000000"> </span><span style="color: #001080">sample</span><span style="color: #000000">/</span><span style="color: #001080">t</span><span style="color: #000000">.</span><span style="color: #001080">tex</span>
-<span style="color: #000000">\</span><span style="color: #001080">documentclass</span><span style="color: #000000">{</span><span style="color: #001080">article</span><span style="color: #000000">}</span>
-<span style="color: #000000">\</span><span style="color: #001080">usepackage</span><span style="color: #000000">{</span><span style="color: #001080">amsmath</span><span style="color: #000000">}</span>
-<span style="color: #000000">\</span><span style="color: #001080">begin</span><span style="color: #000000">{</span><span style="color: #001080">document</span><span style="color: #000000">}</span>
-<span style="color: #001080">ab</span><span style="color: #000000"> </span><span style="color: #001080">c</span>
-<span style="color: #001080">d</span><span style="color: #000000"> </span><span style="color: #001080">$x</span><span style="color: #000000"> + </span><span style="color: #001080">y$</span><span style="color: #000000"> </span><span style="color: #001080">e</span>
-<span style="color: #000000">\</span><span style="color: #001080">begin</span><span style="color: #000000">{</span><span style="color: #001080">align</span><span style="color: #000000">}</span>
-<span style="color: #000000">    </span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #001080">j</span>
-<span style="color: #000000">\</span><span style="color: #001080">end</span><span style="color: #000000">{</span><span style="color: #001080">align</span><span style="color: #000000">}</span>
-<span style="color: #000000">\</span><span style="color: #001080">end</span><span style="color: #000000">{</span><span style="color: #001080">document</span><span style="color: #000000">}</span>
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>latex-utensils - v4.3.0</title><meta name="description" content="Documentation for latex-utensils - v4.3.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">latex-utensils - v4.3.0</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> latex-utensils - v4.3.0 </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#latex-utensils" id="latex-utensils" style="color: inherit; text-decoration: none;">
+  <h1>latex-utensils</h1>
+</a>
+<p><a href="https://www.npmjs.com/package/latex-utensils"><img src="https://img.shields.io/npm/v/latex-utensils" alt="latex-utensils"></a>
+<a href="https://github.com/tamuratak/latex-utensils/actions"><img src="https://github.com/tamuratak/latex-utensils/workflows/CI%20Tests/badge.svg" alt="CI Tests"></a></p>
+<p>A LaTeX parser and utilities.</p>
+<p>The parser is based on the following libraries:</p>
+<ul>
+<li><a href="https://github.com/michael-brade/LaTeX.js">https://github.com/michael-brade/LaTeX.js</a></li>
+<li><a href="https://github.com/siefkenj/latex-parser">https://github.com/siefkenj/latex-parser</a></li>
+</ul>
 
-<span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">luparse</span><span style="color: #000000"> --</span><span style="color: #001080">color</span><span style="color: #000000"> -</span><span style="color: #001080">i</span><span style="color: #000000"> </span><span style="color: #001080">sample</span><span style="color: #000000">/</span><span style="color: #001080">t</span><span style="color: #000000">.</span><span style="color: #001080">tex</span>
-<span style="color: #000000">{</span>
-<span style="color: #000000">  kind: </span><span style="color: #A31515">&#039;ast.root&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">  content: [</span>
-<span style="color: #000000">    {</span>
-<span style="color: #000000">      </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;command&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;documentclass&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      </span><span style="color: #001080">args:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">        {</span>
-<span style="color: #000000">          </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;arg.group&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">          </span><span style="color: #001080">content:</span><span style="color: #000000"> [ { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;text.string&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;article&#039;</span><span style="color: #000000"> } ]</span>
-<span style="color: #000000">        }</span>
-<span style="color: #000000">      ]</span>
-<span style="color: #000000">    },</span>
-<span style="color: #000000">    { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;softbreak&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">    {</span>
-<span style="color: #000000">      </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;command&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;usepackage&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      </span><span style="color: #001080">args:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">        {</span>
-<span style="color: #000000">          </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;arg.group&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">          </span><span style="color: #001080">content:</span><span style="color: #000000"> [ { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;text.string&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;amsmath&#039;</span><span style="color: #000000"> } ]</span>
-<span style="color: #000000">        }</span>
-<span style="color: #000000">      ]</span>
-<span style="color: #000000">    },</span>
-<span style="color: #000000">    {</span>
-<span style="color: #000000">      </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;env&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;document&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">      </span><span style="color: #001080">args:</span><span style="color: #000000"> [],</span>
-<span style="color: #000000">      </span><span style="color: #001080">content:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;text.string&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ab&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;space&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;text.string&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;c&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;softbreak&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;text.string&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;d&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;space&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        {</span>
-<span style="color: #000000">          </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;inlineMath&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">          </span><span style="color: #001080">content:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">            { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;math.character&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;x&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">            { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;math.character&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;+&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">            { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;math.character&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;y&#039;</span><span style="color: #000000"> }</span>
-<span style="color: #000000">          ]</span>
-<span style="color: #000000">        },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;space&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;text.string&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;e&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">        {</span>
-<span style="color: #000000">          </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;env.math.align&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">          </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;align&#039;</span><span style="color: #000000">,</span>
-<span style="color: #000000">          </span><span style="color: #001080">args:</span><span style="color: #000000"> [],</span>
-<span style="color: #000000">          </span><span style="color: #001080">content:</span><span style="color: #000000"> [</span>
-<span style="color: #000000">            { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;math.character&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;i&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">            { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;math.character&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;+&#039;</span><span style="color: #000000"> },</span>
-<span style="color: #000000">            { </span><span style="color: #001080">kind:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;math.character&#039;</span><span style="color: #000000">, </span><span style="color: #001080">content:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;j&#039;</span><span style="color: #000000"> }</span>
-<span style="color: #000000">          ]</span>
-<span style="color: #000000">        }</span>
-<span style="color: #000000">      ]</span>
-<span style="color: #000000">    }</span>
-<span style="color: #000000">  ],</span>
-<span style="color: #000000">  comment: </span><span style="color: #0000FF">undefined</span>
-<span style="color: #000000">}</span>
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h2>Getting started</h2>
+</a>
+<p>You can see LaTeX AST calling the <code>luparse</code> command. Without the option <code>-i</code>, you can obtain the output as JSON format.</p>
+<pre><code><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">cat</span><span class="hl-1"> </span><span class="hl-0">sample</span><span class="hl-1">/</span><span class="hl-0">t</span><span class="hl-1">.</span><span class="hl-0">tex</span><br/><span class="hl-1">\</span><span class="hl-0">documentclass</span><span class="hl-1">{</span><span class="hl-0">article</span><span class="hl-1">}</span><br/><span class="hl-1">\</span><span class="hl-0">usepackage</span><span class="hl-1">{</span><span class="hl-0">amsmath</span><span class="hl-1">}</span><br/><span class="hl-1">\</span><span class="hl-0">begin</span><span class="hl-1">{</span><span class="hl-0">document</span><span class="hl-1">}</span><br/><span class="hl-0">ab</span><span class="hl-1"> </span><span class="hl-0">c</span><br/><span class="hl-0">d</span><span class="hl-1"> </span><span class="hl-0">$x</span><span class="hl-1"> + </span><span class="hl-0">y$</span><span class="hl-1"> </span><span class="hl-0">e</span><br/><span class="hl-1">\</span><span class="hl-0">begin</span><span class="hl-1">{</span><span class="hl-0">align</span><span class="hl-1">}</span><br/><span class="hl-1">    </span><span class="hl-0">i</span><span class="hl-1"> + </span><span class="hl-0">j</span><br/><span class="hl-1">\</span><span class="hl-0">end</span><span class="hl-1">{</span><span class="hl-0">align</span><span class="hl-1">}</span><br/><span class="hl-1">\</span><span class="hl-0">end</span><span class="hl-1">{</span><span class="hl-0">document</span><span class="hl-1">}</span><br/><br/><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">luparse</span><span class="hl-1"> --</span><span class="hl-0">color</span><span class="hl-1"> -</span><span class="hl-0">i</span><span class="hl-1"> </span><span class="hl-0">sample</span><span class="hl-1">/</span><span class="hl-0">t</span><span class="hl-1">.</span><span class="hl-0">tex</span><br/><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-2">kind</span><span class="hl-1">: </span><span class="hl-3">&#39;ast.root&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-2">content</span><span class="hl-1">: [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">      </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;command&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;documentclass&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">args:</span><span class="hl-1"> [</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">          </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;arg.group&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">          </span><span class="hl-0">content:</span><span class="hl-1"> [ { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;text.string&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;article&#39;</span><span class="hl-1"> } ]</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">      ]</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;softbreak&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">      </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;command&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;usepackage&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">args:</span><span class="hl-1"> [</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">          </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;arg.group&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">          </span><span class="hl-0">content:</span><span class="hl-1"> [ { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;text.string&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;amsmath&#39;</span><span class="hl-1"> } ]</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">      ]</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">      </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;env&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;document&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-0">args:</span><span class="hl-1"> [],</span><br/><span class="hl-1">      </span><span class="hl-0">content:</span><span class="hl-1"> [</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;text.string&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;ab&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;space&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;text.string&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;c&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;softbreak&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;text.string&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;d&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;space&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">          </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;inlineMath&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">          </span><span class="hl-0">content:</span><span class="hl-1"> [</span><br/><span class="hl-1">            { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;math.character&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;x&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">            { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;math.character&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;+&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">            { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;math.character&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;y&#39;</span><span class="hl-1"> }</span><br/><span class="hl-1">          ]</span><br/><span class="hl-1">        },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;space&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;text.string&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;e&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">          </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;env.math.align&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">          </span><span class="hl-0">name:</span><span class="hl-1"> </span><span class="hl-3">&#39;align&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">          </span><span class="hl-0">args:</span><span class="hl-1"> [],</span><br/><span class="hl-1">          </span><span class="hl-0">content:</span><span class="hl-1"> [</span><br/><span class="hl-1">            { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;math.character&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;i&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">            { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;math.character&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;+&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">            { </span><span class="hl-0">kind:</span><span class="hl-1"> </span><span class="hl-3">&#39;math.character&#39;</span><span class="hl-1">, </span><span class="hl-0">content:</span><span class="hl-1"> </span><span class="hl-3">&#39;j&#39;</span><span class="hl-1"> }</span><br/><span class="hl-1">          ]</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">      ]</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">  </span><span class="hl-2">comment</span><span class="hl-1">: </span><span class="hl-4">undefined</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-0">luparse</span><span class="hl-1"> --</span><span class="hl-0">help</span><br/><span class="hl-2">Usage</span><span class="hl-1">: </span><span class="hl-0">luparse</span><span class="hl-1"> [</span><span class="hl-0">options</span><span class="hl-1">]</span><br/><br/><span class="hl-2">Options</span><span class="hl-1">:</span><br/><span class="hl-1">  -</span><span class="hl-0">i</span><span class="hl-1">, --</span><span class="hl-0">inspect</span><span class="hl-1">            </span><span class="hl-0">use</span><span class="hl-1"> </span><span class="hl-0">util</span><span class="hl-1">.</span><span class="hl-0">inspect</span><span class="hl-1"> </span><span class="hl-0">to</span><span class="hl-1"> </span><span class="hl-0">output</span><span class="hl-1"> </span><span class="hl-5">AST</span><br/><span class="hl-1">  --</span><span class="hl-0">color</span><span class="hl-1">                  </span><span class="hl-0">turn</span><span class="hl-1"> </span><span class="hl-0">on</span><span class="hl-1"> </span><span class="hl-0">the</span><span class="hl-1"> </span><span class="hl-0">color</span><span class="hl-1"> </span><span class="hl-0">option</span><span class="hl-1"> </span><span class="hl-4">of</span><span class="hl-1"> </span><span class="hl-0">util</span><span class="hl-1">.</span><span class="hl-0">inspect</span><br/><span class="hl-1">  -</span><span class="hl-0">l</span><span class="hl-1">, --</span><span class="hl-0">location</span><span class="hl-1">           </span><span class="hl-0">enable</span><span class="hl-1"> </span><span class="hl-0">location</span><br/><span class="hl-1">  -</span><span class="hl-0">c</span><span class="hl-1">, --</span><span class="hl-0">comment</span><span class="hl-1">            </span><span class="hl-0">enable</span><span class="hl-1"> </span><span class="hl-0">comment</span><br/><span class="hl-1">  -</span><span class="hl-0">s</span><span class="hl-1">, --</span><span class="hl-0">start</span><span class="hl-1">-</span><span class="hl-0">rule</span><span class="hl-1"> [</span><span class="hl-0">rule</span><span class="hl-1">]  </span><span class="hl-0">set</span><span class="hl-1"> </span><span class="hl-0">start</span><span class="hl-1"> </span><span class="hl-0">rule</span><span class="hl-1">. </span><span class="hl-0">default</span><span class="hl-1"> </span><span class="hl-0">is</span><span class="hl-1"> </span><span class="hl-3">&quot;Root&quot;</span><span class="hl-1">.</span><br/><span class="hl-1">  -</span><span class="hl-0">h</span><span class="hl-1">, --</span><span class="hl-0">help</span><span class="hl-1">               </span><span class="hl-0">output</span><span class="hl-1"> </span><span class="hl-0">usage</span><span class="hl-1"> </span><span class="hl-0">information</span>
+</code></pre>
 
-<span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">luparse</span><span style="color: #000000"> --</span><span style="color: #001080">help</span>
-<span style="color: #000000">Usage: </span><span style="color: #001080">luparse</span><span style="color: #000000"> [</span><span style="color: #001080">options</span><span style="color: #000000">]</span>
+<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+  <h2>Usage</h2>
+</a>
+<p>A typical usage is calling <a href="https://tamuratak.github.io/latex-utensils/modules/main.latexparser.html#parse"><code>latexParser.parse</code></a> to parse LaTeX documents.</p>
+<pre><code class="language-typescript"><span class="hl-6">import</span><span class="hl-1"> {</span><span class="hl-0">latexParser</span><span class="hl-1">} </span><span class="hl-6">from</span><span class="hl-1"> </span><span class="hl-3">&#39;latex-utensils&#39;</span><span class="hl-1">;</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">texString</span><span class="hl-1"> = </span><span class="hl-3">&#39;a $x+y$ b&#39;</span><span class="hl-1">;</span><br/><span class="hl-4">const</span><span class="hl-1"> </span><span class="hl-5">ast</span><span class="hl-1"> = </span><span class="hl-0">latexParser</span><span class="hl-1">.</span><span class="hl-7">parse</span><span class="hl-1">(</span><span class="hl-0">texString</span><span class="hl-1">);</span><br/><span class="hl-0">console</span><span class="hl-1">.</span><span class="hl-7">log</span><span class="hl-1">(</span><span class="hl-8">JSON</span><span class="hl-1">.</span><span class="hl-7">stringify</span><span class="hl-1">(</span><span class="hl-0">ast</span><span class="hl-1">, </span><span class="hl-4">undefined</span><span class="hl-1">, </span><span class="hl-3">&#39;  &#39;</span><span class="hl-1">));</span>
+</code></pre>
+<p><a href="https://tamuratak.github.io/latex-utensils/modules/main.latexparser.html#parse"><code>latexParser.parse</code></a> returns an <a href="https://tamuratak.github.io/latex-utensils/modules/latex_latex_parser_types.html#astroot"><code>AstRoot</code></a> object if <a href="https://tamuratak.github.io/latex-utensils/interfaces/main.latexparser.parseroptions.html#startrule"><code>startRule</code></a> is <code>&#39;Root&#39;</code>,</p>
+<pre><code class="language-typescript"><span class="hl-4">type</span><span class="hl-1"> </span><span class="hl-8">AstRoot</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-0">kind</span><span class="hl-1">: </span><span class="hl-3">&#39;ast.root&#39;</span><span class="hl-1">;</span><br/><span class="hl-1">    </span><span class="hl-0">content</span><span class="hl-1">: </span><span class="hl-8">Node</span><span class="hl-1">[];</span><br/><span class="hl-1">    </span><span class="hl-0">comment</span><span class="hl-1">?: </span><span class="hl-8">Comment</span><span class="hl-1">[];</span><br/><span class="hl-1">}</span>
+</code></pre>
 
-<span style="color: #000000">Options:</span>
-<span style="color: #000000">  -</span><span style="color: #001080">i</span><span style="color: #000000">, --</span><span style="color: #001080">inspect</span><span style="color: #000000">            </span><span style="color: #001080">use</span><span style="color: #000000"> </span><span style="color: #001080">util</span><span style="color: #000000">.</span><span style="color: #001080">inspect</span><span style="color: #000000"> </span><span style="color: #001080">to</span><span style="color: #000000"> </span><span style="color: #001080">output</span><span style="color: #000000"> </span><span style="color: #0070C1">AST</span>
-<span style="color: #000000">  --</span><span style="color: #001080">color</span><span style="color: #000000">                  </span><span style="color: #001080">turn</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000"> </span><span style="color: #001080">the</span><span style="color: #000000"> </span><span style="color: #001080">color</span><span style="color: #000000"> </span><span style="color: #001080">option</span><span style="color: #000000"> </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">util</span><span style="color: #000000">.</span><span style="color: #001080">inspect</span>
-<span style="color: #000000">  -</span><span style="color: #001080">l</span><span style="color: #000000">, --</span><span style="color: #001080">location</span><span style="color: #000000">           </span><span style="color: #001080">enable</span><span style="color: #000000"> </span><span style="color: #001080">location</span>
-<span style="color: #000000">  -</span><span style="color: #001080">c</span><span style="color: #000000">, --</span><span style="color: #001080">comment</span><span style="color: #000000">            </span><span style="color: #001080">enable</span><span style="color: #000000"> </span><span style="color: #001080">comment</span>
-<span style="color: #000000">  -</span><span style="color: #001080">s</span><span style="color: #000000">, --</span><span style="color: #001080">start</span><span style="color: #000000">-</span><span style="color: #001080">rule</span><span style="color: #000000"> [</span><span style="color: #001080">rule</span><span style="color: #000000">]  </span><span style="color: #001080">set</span><span style="color: #000000"> </span><span style="color: #001080">start</span><span style="color: #000000"> </span><span style="color: #001080">rule</span><span style="color: #000000">. </span><span style="color: #001080">default</span><span style="color: #000000"> </span><span style="color: #001080">is</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Root&quot;</span><span style="color: #000000">.</span>
-<span style="color: #000000">  -</span><span style="color: #001080">h</span><span style="color: #000000">, --</span><span style="color: #001080">help</span><span style="color: #000000">               </span><span style="color: #001080">output</span><span style="color: #000000"> </span><span style="color: #001080">usage</span><span style="color: #000000"> </span><span style="color: #001080">information</span>
+<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
+  <h2>Docs</h2>
+</a>
+<ul>
+<li><a href="https://tamuratak.github.io/latex-utensils/">https://tamuratak.github.io/latex-utensils/</a></li>
+</ul>
+
+<a href="#repository" id="repository" style="color: inherit; text-decoration: none;">
+  <h2>Repository</h2>
+</a>
+<ul>
+<li><a href="https://github.com/tamuratak/latex-utensils">https://github.com/tamuratak/latex-utensils</a></li>
+</ul>
+
+<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+  <h2>Development</h2>
+</a>
+<p>To lint changes, run</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">run</span><span class="hl-1"> </span><span class="hl-0">lint</span>
 </code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<p>A typical usage is calling <a href="https://tamuratak.github.io/latex-utensils/modules/main.latexparser.html#parse"><code>latexParser.parse</code></a> to parse LaTeX documents.</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> {</span><span style="color: #001080">latexParser</span><span style="color: #000000">} </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;latex-utensils&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">texString</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;a $x+y$ b&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">ast</span><span style="color: #000000"> = </span><span style="color: #001080">latexParser</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">texString</span><span style="color: #000000">);</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">stringify</span><span style="color: #000000">(</span><span style="color: #001080">ast</span><span style="color: #000000">, </span><span style="color: #0000FF">undefined</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;  &#039;</span><span style="color: #000000">));</span>
+<p>To build, run</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">run</span><span class="hl-1"> </span><span class="hl-0">build</span>
 </code></pre>
-				<p><a href="https://tamuratak.github.io/latex-utensils/modules/main.latexparser.html#parse"><code>latexParser.parse</code></a> returns an <a href="https://tamuratak.github.io/latex-utensils/modules/latex_latex_parser_types.html#astroot"><code>AstRoot</code></a> object if <a href="https://tamuratak.github.io/latex-utensils/interfaces/main.latexparser.parseroptions.html#startrule"><code>startRule</code></a> is <code>&#39;Root&#39;</code>,</p>
-				<pre><code class="language-typescript"><span style="color: #0000FF">type</span><span style="color: #000000"> </span><span style="color: #267F99">AstRoot</span><span style="color: #000000"> = {</span>
-<span style="color: #000000">    </span><span style="color: #001080">kind</span><span style="color: #000000">: </span><span style="color: #A31515">&#039;ast.root&#039;</span><span style="color: #000000">;</span>
-<span style="color: #000000">    </span><span style="color: #001080">content</span><span style="color: #000000">: </span><span style="color: #267F99">Node</span><span style="color: #000000">[];</span>
-<span style="color: #000000">    </span><span style="color: #001080">comment</span><span style="color: #000000">?: </span><span style="color: #267F99">Comment</span><span style="color: #000000">[];</span>
-<span style="color: #000000">}</span>
+<p>To test, run</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">run</span><span class="hl-1"> </span><span class="hl-0">test</span>
 </code></pre>
-				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
-					<h2>Docs</h2>
-				</a>
-				<ul>
-					<li><a href="https://tamuratak.github.io/latex-utensils/">https://tamuratak.github.io/latex-utensils/</a></li>
-				</ul>
-				<a href="#repository" id="repository" style="color: inherit; text-decoration: none;">
-					<h2>Repository</h2>
-				</a>
-				<ul>
-					<li><a href="https://github.com/tamuratak/latex-utensils">https://github.com/tamuratak/latex-utensils</a></li>
-				</ul>
-				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
-					<h2>Development</h2>
-				</a>
-				<p>To lint changes, run</p>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">lint</span>
-</code></pre>
-				<p>To build, run</p>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">build</span>
-</code></pre>
-				<p>To test, run</p>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">run</span><span style="color: #000000"> </span><span style="color: #001080">test</span>
-</code></pre>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/latex_latex_parser_types.html">latex/latex_<wbr>parser_<wbr>types</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/main.html">main</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/pegjs_pegjs_types.html">pegjs/pegjs_<wbr>types</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/latex_latex_parser_types.html">latex/latex_<wbr/>parser_<wbr/>types</a></li><li class=" tsd-kind-module"><a href="modules/main.html">main</a></li><li class=" tsd-kind-module"><a href="modules/pegjs_pegjs_types.html">pegjs/pegjs_<wbr/>types</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
