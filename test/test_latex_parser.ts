@@ -894,6 +894,18 @@ a
             assert.strictEqual(latexParser.stringify(doc.content), tex)
         })
 
+        test('test latexParser.stringify a  b', () => {
+            const tex = 'a  b'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), 'a b')
+        })
+
+        test('test latexParser.stringify a_b', () => {
+            const tex = 'a_b'
+            const doc = latexParser.parse(tex)
+            assert.strictEqual(latexParser.stringify(doc.content), tex)
+        })
+
         test('test latexParser.stringify a\\nb', () => {
             const tex = 'a\nb'
             const doc = latexParser.parse(tex)
