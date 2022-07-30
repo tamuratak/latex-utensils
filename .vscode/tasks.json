@@ -20,10 +20,11 @@
             "type": "npm",
             "script": "test:xunit",
             "group": {
-                "kind": "build"
+                "kind": "test"
             },
             "presentation": {
-                "reveal": "silent"
+                "reveal": "silent",
+                "group": "testWatch"
             },
             "problemMatcher": [
                 {
@@ -42,10 +43,11 @@
             "type": "npm",
             "script": "test:spec",
             "group": {
-                "kind": "build"
+                "kind": "test"
             },
             "presentation": {
-                "reveal": "silent"
+                "reveal": "silent",
+                "group": "testWatch"
             },
             "problemMatcher": []
         },
@@ -71,7 +73,8 @@
             },
             "isBackground": true,
             "presentation": {
-                "reveal": "silent"
+                "reveal": "silent",
+                "group": "taskWatch"
             },
             "problemMatcher": "$tsc-watch"
         },
@@ -84,7 +87,8 @@
             },
             "isBackground": true,
             "presentation": {
-                "reveal": "silent"
+                "reveal": "silent",
+                "group": "taskWatch"
             }
         },
         {
