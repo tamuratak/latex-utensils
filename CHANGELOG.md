@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.4.0] (2022-08-23)
+
+- Fix parsing \verbatimfont{\small}
+
 ## [4.3.0] (2022-06-18)
 
 - (#31) Fix parsing optional arguments including a tilde.
