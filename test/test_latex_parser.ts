@@ -167,6 +167,18 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\verbatimfont{\\small}', () => {
+            const tex = '\\verbatimfont{\\small}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'command',
+                    name: 'verbatimfont'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\begin{verbatim}...', () => {
             const tex = '\\begin{verbatim}1\\end{verbatim}'
             const doc = latexParser.parse(tex)

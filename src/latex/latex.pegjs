@@ -182,7 +182,7 @@ pairedCurly
 
 // \verb|xxx|
 Verb
-  = escape name:("verb*" / "verb") e:.
+  = escape name:("verb*" / "verb") e:[^a-zA-Z]
       x:$((!(end:. & {return end === e;}) . )*)
     (end:. & {return end === e;})
   {
