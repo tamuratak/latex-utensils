@@ -81,16 +81,16 @@ Element_p
   / Space
 
 TypicalChar
-  = c:$([a-zA-Z0-9,.;]+) & Space
+  = c:$([a-zA-Z0-9,.;]+) & " "
   {
     timeKeeper && timeKeeper.check();
     return { kind: "text.string", content: c, location: location() };
   }
 
 TypicalSpace
-  = c:Space & TypicalChar
+  = c:$([ ]+) & TypicalChar
   {
-    return c
+    return { kind: "space" };
   }
 
 MathElement =
