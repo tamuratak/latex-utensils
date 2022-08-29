@@ -23,8 +23,7 @@
                 "kind": "test"
             },
             "presentation": {
-                "reveal": "silent",
-                "group": "testWatch"
+                "reveal": "never"
             },
             "problemMatcher": [
                 {
@@ -47,7 +46,6 @@
             },
             "presentation": {
                 "reveal": "silent",
-                "group": "testWatch"
             },
             "problemMatcher": []
         },
@@ -99,7 +97,7 @@
             "isBackground": true,
             "presentation": {
                 "reveal": "silent",
-                "close": true
+                "group": "taskWatch"
             }
         }
     ]
