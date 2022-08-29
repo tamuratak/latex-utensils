@@ -57,7 +57,9 @@ Element
   }
 
 Element_p
-  = SpecialCommand
+  = TypicalChar
+  / TypicalSpace
+  / SpecialCommand
   / break
   / Linebreak
   / DefCommand
@@ -77,6 +79,19 @@ Element_p
     return { kind: "text.string", content: c, location: location() };
   }
   / Space
+
+TypicalChar
+  = c:$([a-zA-Z0-9,.;]+) & Space
+  {
+    timeKeeper && timeKeeper.check();
+    return { kind: "text.string", content: c, location: location() };
+  }
+
+TypicalSpace
+  = c:Space & TypicalChar
+  {
+    return c
+  }
 
 MathElement =
   x:MathElement_p skip_space
