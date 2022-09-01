@@ -23,8 +23,7 @@
                 "kind": "test"
             },
             "presentation": {
-                "reveal": "silent",
-                "group": "testWatch"
+                "reveal": "never"
             },
             "problemMatcher": [
                 {
@@ -46,8 +45,7 @@
                 "kind": "test"
             },
             "presentation": {
-                "reveal": "silent",
-                "group": "testWatch"
+                "reveal": "silent"
             },
             "problemMatcher": []
         },
