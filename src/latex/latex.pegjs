@@ -81,14 +81,14 @@ Element_p
   / Space
 
 TypicalChar
-  = c:$([a-zA-Z0-9,.;?"'()-]+) & [ \n]
+  = c:$([a-zA-Z0-9,.;:?"'()-]+) & [ \n]
   {
     timeKeeper && timeKeeper.check();
     return { kind: "text.string", content: c, location: location() };
   }
 
 TypicalSpace
-  = c:$([ ]+) & [a-zA-Z0-9,.;?"'()-]
+  = c:$([ ]+) & [a-zA-Z0-9,.;:?"'()-]
   {
     return { kind: "space" };
   }
