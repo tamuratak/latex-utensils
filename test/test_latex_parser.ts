@@ -192,6 +192,22 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\begin{verbatim}... 02', () => {
+            const tex = 'a\n\\begin{verbatim}1\\end{verbatim}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    {},
+                    {
+                        kind: 'env.verbatim',
+                        name: 'verbatim',
+                        content: '1'
+                    }
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\begin{verbatim*}...', () => {
             const tex = '\\begin{verbatim*}1\\end{verbatim*}'
             const doc = latexParser.parse(tex)
