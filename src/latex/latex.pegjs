@@ -57,7 +57,9 @@ Element
   }
 
 Element_p
-  = SpecialCommand
+  = TypicalChar
+  / TypicalSpace
+  / SpecialCommand
   / break
   / Linebreak
   / DefCommand
@@ -77,6 +79,19 @@ Element_p
     return { kind: "text.string", content: c, location: location() };
   }
   / Space
+
+TypicalChar
+  = c:$([^\\%{}$&~\r\n\u2028\u2029#^_\0 \t\[\]]+) & [ \r\n]
+  {
+    timeKeeper && timeKeeper.check();
+    return { kind: "text.string", content: c, location: location() };
+  }
+
+TypicalSpace
+  = c:$([ ]+) & [^\\%{}$&~\r\n\u2028\u2029#^_\0 \t\[\]]
+  {
+    return { kind: "space" };
+  }
 
 MathElement =
   x:MathElement_p skip_space
@@ -111,6 +126,7 @@ nonMathcharToken
   = mathShift
   / escape
 
+// [\\%{}$&~\r\n\u2028\u2029#^_\0 \t]
 noncharToken
   = escape
   / "%"
