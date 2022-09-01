@@ -57,7 +57,9 @@ Element
   }
 
 Element_p
-  = SpecialCommand
+  = TypicalWord     // fast match optimization
+  / TypicalSpace    // fast match optimization
+  / SpecialCommand
   / break
   / Linebreak
   / DefCommand
@@ -77,6 +79,25 @@ Element_p
     return { kind: "text.string", content: c, location: location() };
   }
   / Space
+
+TypicalWord
+  = c:$(charTokenOptm+) &specialTokenOptm
+  {
+    timeKeeper && timeKeeper.check();
+    return { kind: "text.string", content: c, location: location() };
+  }
+
+TypicalSpace
+  = c:$([ ]+) &charTokenOptm
+  {
+    return { kind: "space" };
+  }
+
+charTokenOptm
+  = [^\\%{}$&~\r\n\u2028\u2029#^_\0 \t\[\]]
+
+specialTokenOptm
+  = [\\%{}$&~\r\n\u2028\u2029#^_\0 \t\[\]]
 
 MathElement =
   x:MathElement_p skip_comment*
@@ -111,6 +132,7 @@ nonMathcharToken
   = mathShift
   / escape
 
+// [\\%{}$&~\r\n\u2028\u2029#^_\0 \t]
 noncharToken
   = escape
   / "%"
@@ -682,7 +704,9 @@ nl
 sp = [ \t]
 
 skip_space "spaces"
-  = (!break (nl / sp / skip_comment))*
+  = &[^ \r\n\t%\u2028\u2029]   // matching empty, fast match optimization
+  / [ ]+ &charTokenOptm        // matching typical spaces, fast match optimization
+  / (!break (nl / sp / skip_comment))*
 
 skip_comment
   = c:comment
