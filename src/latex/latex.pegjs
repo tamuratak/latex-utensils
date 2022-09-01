@@ -697,7 +697,8 @@ nl
 sp = [ \t]
 
 skip_space "spaces"
-  = (!break (nl / sp / skip_comment))*
+  = [ ]+ & [a-zA-Z0-9,.;:?"'()-]
+  / (!break (nl / sp / skip_comment))*
 
 skip_comment
   = c:comment
