@@ -44,8 +44,8 @@
     "parser"
   ],
   "scripts": {
-    "generate:latex:simple": "pegjs --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_simple.js src/latex/latex.pegjs",
-    "generate:latex:trace": "pegjs --trace --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_trace.js src/latex/latex.pegjs",
+    "generate:latex:simple": "pegjs --cache --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_simple.js src/latex/latex.pegjs",
+    "generate:latex:trace": "pegjs --cache --trace --allowed-start-rules Root,Preamble -o out/src/latex/latex_parser_trace.js src/latex/latex.pegjs",
     "generate:latex": "npm run generate:latex:simple && npm run generate:latex:trace",
     "generate:bibtex:simple": "pegjs -o out/src/bibtex/bibtex_parser_simple.js src/bibtex/bibtex.pegjs",
     "generate:bibtex:trace": "pegjs -o out/src/bibtex/bibtex_parser_trace.js src/bibtex/bibtex.pegjs",
