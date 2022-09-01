@@ -191,7 +191,7 @@ Verb
 
 // verbatim environment
 Verbatim
-  = x:Verbatim_p skip_space
+  = skip_space x:Verbatim_p skip_space
   {
     return x;
   }
@@ -213,7 +213,7 @@ Verbatim_p
 
 // minted environment
 Minted
-  = x:Minted_p skip_space
+  = skip_space x:Minted_p skip_space
   {
     return x;
   }
@@ -228,7 +228,7 @@ Minted_p
 
 // lstlisting environment
 Lstlisting
-  = x:Lstlisting_p skip_space
+  = skip_space x:Lstlisting_p skip_space
   {
     return x;
   }
@@ -243,7 +243,7 @@ Lstlisting_p
 
 // comment environment provided by \usepackage{verbatim}
 commentenv
-  = beginEnv beginGroup "comment" endGroup
+  = skip_space beginEnv beginGroup "comment" endGroup
       x:$((!(endEnv beginGroup "comment" endGroup) . )*)
     endEnv beginGroup "comment" endGroup skip_space
   {
