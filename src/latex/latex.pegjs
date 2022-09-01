@@ -464,7 +464,7 @@ Environment
 
 Environment_p
   = beginEnv name:groupedEnvname args:(ArgumentList / Group)*
-      skip_space body:(!(skip_space endEnv) x:Element {return x;})* skip_space
+      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:Element {return x;})* skip_space
     endEnv n:groupedEnvname &{ return name === n; }
   {
     return { kind: "env", name, args, content: body, location: location() };
@@ -478,7 +478,7 @@ MathEnvironment
 
 MathEnvironment_p
   = beginEnv skip_space beginGroup name:mathEnvName endGroup
-      skip_space body:(!(skip_space endEnv) x:MathElement {return x;})* skip_space
+      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:MathElement {return x;})* skip_space
     endEnv skip_space beginGroup n:mathEnvName endGroup &{ return name === n; }
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
@@ -486,7 +486,7 @@ MathEnvironment_p
 
 MathAlignedEnvironment
   = beginEnv skip_space beginGroup name:mahtAlignedEnvName endGroup
-      skip_space body:(!endEnv x:MathElement {return x;})*
+      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:MathElement {return x;})*
     endEnv skip_space beginGroup n:mahtAlignedEnvName endGroup &{ return name === n; }
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };

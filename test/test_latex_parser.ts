@@ -25,6 +25,21 @@ lmn
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        test('parse \\begin{center}\\endcommand', () => {
+            const tex =
+`\\begin{center}
+\\endcommand
+\\end{center}`
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'env',
+                    name: 'center'
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\begin{center} \\begin{itemize}', () => {
             const tex =
 `\\begin {center}
@@ -289,6 +304,20 @@ Some sentences.
                     kind: 'env.math.align',
                     content: [ {
                         kind: 'math.character'
+                    } ]
+                } ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
+        test('parse \\begin{align}...', () => {
+            const tex = '\\begin{align}\n \\endcommand \n\\end{align}'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [ {
+                    kind: 'env.math.align',
+                    content: [ {
+                        kind: 'command'
                     } ]
                 } ]
             }
