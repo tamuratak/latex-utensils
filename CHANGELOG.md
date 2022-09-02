@@ -1,5 +1,10 @@
 # Change Log
 
+## [4.5.0] (2022-09-02)
+
+- Fix parsing environments. Thanks to @lyeyixian
+- Fix parsing the verbatim environment and others.
+
 ## [4.4.0] (2022-08-23)
 
 - Fix parsing \verbatimfont{\small}
