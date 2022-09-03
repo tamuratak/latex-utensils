@@ -698,7 +698,9 @@ nl
 sp = [ \t]
 
 skip_space "spaces"
-  = (!break (nl / sp / skip_comment))*
+  = & [^ \r\n\t%]
+  / [ ]+ &[^\\%{}$&~\r\n\u2028\u2029#^_\0 \t\[\]]
+  / (!break (nl / sp / skip_comment))*
 
 skip_comment
   = c:comment
