@@ -484,6 +484,22 @@ Some sentences.
             equalOnlyOnExpectedOwnedProperties(doc, expected)
         })
 
+        // We don't support parsing commands with Chinese characters.
+        test('parse \\漢字', () => {
+            const tex = '\\漢字'
+            const doc = latexParser.parse(tex)
+            const expected = {
+                content: [
+                    {
+                        kind: 'command',
+                        name: '漢'
+                    },
+                    {}
+                ]
+            }
+            equalOnlyOnExpectedOwnedProperties(doc, expected)
+        })
+
         test('parse \\part', () => {
             const tex = '\\part'
             const doc = latexParser.parse(tex)
