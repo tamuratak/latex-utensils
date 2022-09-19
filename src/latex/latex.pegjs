@@ -79,7 +79,7 @@ Element_p
   / Space
 
 MathElement =
-  x:MathElement_p skip_space
+  x:MathElement_p skip_comment*
   { 
     return x;
   }
@@ -253,13 +253,13 @@ commentenv
 // inline math $...$
 InlineMathShift
   = mathShift
-     skip_space eq:(!mathShift t:MathElement {return t;})+
+     skip_space eq:(!mathShift t:MathElement skip_space {return t;})+
     mathShift
   {
     return { kind: "inlineMath", content: eq, location: location() };
   }
   / mathShift
-     whitespace eq:(!mathShift t:MathElement {return t;})*
+     whitespace eq:(!mathShift t:MathElement skip_space {return t;})*
     mathShift
   {
     return { kind: "inlineMath", content: eq, location: location() };
@@ -268,7 +268,7 @@ InlineMathShift
 //inline math with \(\)
 InlineMathParen
   = beginInlineMath
-      skip_space x:(!endInlineMath x:MathElement {return x;})*
+      skip_space x:(!endInlineMath x:MathElement skip_space {return x;})*
     endInlineMath
   {
     return { kind: "inlineMath", content: x, location: location() };
@@ -281,7 +281,7 @@ DisplayMath
 
 displayMathSquareBracket
   = beginDisplayMath
-      skip_space x:(!endDisplayMath x:MathElement {return x;})*
+      skip_space x:(!endDisplayMath x:MathElement skip_space {return x;})*
     endDisplayMath
   {
     return { kind: "displayMath", content: x, location: location() };
@@ -289,7 +289,7 @@ displayMathSquareBracket
 
 displayMathShiftShift
   = mathShift mathShift
-      skip_space x:(!(mathShift mathShift) x:MathElement {return x;})*
+      skip_space x:(!(mathShift mathShift) x:MathElement skip_space {return x;})*
     mathShift mathShift
   {
     return { kind: "displayMath", content: x, location: location() };
@@ -366,7 +366,7 @@ MathGroup
   }
 
 MathGroup_p
-  = beginGroup skip_space x:(!endGroup c:MathElement {return c;})* endGroup
+  = beginGroup skip_space x:(!endGroup c:MathElement skip_space {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
   }
@@ -380,7 +380,7 @@ MatchingDelimiters
 
 MatchingDelimiters_p
   = escape "left" skip_space l:$mathDelimiter
-      skip_space x:(!(escape "right" mathDelimiter) c:MathElement {return c;})*
+      skip_space x:(!(escape "right" mathDelimiter) c:MathElement skip_space {return c;})*
     escape "right" skip_space r:$mathDelimiter
   {
     return { kind: "math.matching_delimiters", left: l, right: r, content: x, location: location() };
@@ -401,19 +401,19 @@ MathematicalDelimiters
 
 MathematicalDelimiters_p
   = l:$sizeCommand? skip_space "(" skip_space
-      x:(!(r:sizeCommand? ")") c:MathElement {return c;} )*
+      x:(!(r:sizeCommand? ")") c:MathElement skip_space {return c;} )*
     r:$sizeCommand? skip_space ")"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "(", right: ")", content: x, location: location() };
   }
   / l:$sizeCommand? skip_space "[" skip_space
-      x:(!(r:sizeCommand? "]") c:MathElement {return c;} )*
+      x:(!(r:sizeCommand? "]") c:MathElement skip_space {return c;} )*
     r:$sizeCommand? skip_space "]"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "[", right: "]", content: x, location: location() };
   }
   / l:$sizeCommand? skip_space "\\{" skip_space
-      x:(!(r:sizeCommand? "\\}") c:MathElement {return c;} )*
+      x:(!(r:sizeCommand? "\\}") c:MathElement skip_space {return c;} )*
     r:$sizeCommand? skip_space "\\}"
   {
     return { kind: "math.math_delimiters", lcommand: l, rcommand: r, left: "\\{", right: "\\}", content: x, location: location() };
@@ -478,7 +478,7 @@ MathEnvironment
 
 MathEnvironment_p
   = beginEnv skip_space beginGroup name:mathEnvName endGroup
-      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:MathElement {return x;})* skip_space
+      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:MathElement skip_space {return x;})* skip_space
     endEnv skip_space beginGroup n:mathEnvName endGroup &{ return name === n; }
   {
     return { kind: "env.math.align", name, args: [], content: body, location: location() };
@@ -486,7 +486,7 @@ MathEnvironment_p
 
 MathAlignedEnvironment
   = beginEnv skip_space beginGroup name:mahtAlignedEnvName endGroup
-      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:MathElement {return x;})*
+      skip_space body:(!(skip_space endEnv skip_space beginGroup) x:MathElement skip_space {return x;})*
     endEnv skip_space beginGroup n:mahtAlignedEnvName endGroup &{ return name === n; }
   {
     return { kind: "env.math.aligned", name, args: [], content: body, location: location() };
