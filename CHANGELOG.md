@@ -1,5 +1,9 @@
 # Change Log
 
+## [4.6.0] (2022-09-19)
+
+- Fix MathElement locations
+
 ## [4.5.0] (2022-09-02)
 
 - Fix parsing environments. Thanks to @lyeyixian
