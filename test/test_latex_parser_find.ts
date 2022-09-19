@@ -1,6 +1,6 @@
 import * as assert from 'assert'
-import {assertType, TypeEq} from 'typepark'
-import {latexParser as lp} from '../src/main'
+import { assertType, TypeEq } from 'typepark'
+import { latexParser, latexParser as lp } from '../src/main'
 
 
 suite('latexParser matchers', () => {
@@ -102,6 +102,9 @@ suite('latexParser matchers', () => {
                 2
             )
         })
+    })
+
+    suite('latexParser findNodeAt', () => {
 
         test('test latexParser.findNodeAt', () => {
             const tex = '{}'
@@ -109,6 +112,38 @@ suite('latexParser matchers', () => {
             assert.ok(!lp.findNodeAt(doc.content, {offset: 0}))
             assert.ok( lp.findNodeAt(doc.content, {offset: 1}))
             assert.ok(!lp.findNodeAt(doc.content, {offset: 2}))
+        })
+
+        test('test latexParser.findNodeAt', () => {
+            const tex = '$2^{b}$'
+            const doc = lp.parse(tex)
+            let result = lp.findNodeAt(doc.content, {offset: 3}) // $2^|{b}$
+            assert.ok(latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 4})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 5})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 6})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+        })
+
+        test('test latexParser.findNodeAt', () => {
+            const tex = '$2^{b} $'
+            const doc = lp.parse(tex)
+            let result = lp.findNodeAt(doc.content, {offset: 3}) // $2^|{b}$
+            assert.ok(latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 4})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 5})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 6})
+            assert.ok(!latexParser.isSuperscript(result?.node))
         })
 
         test('test latexParser.findNodeAt with line and column', () => {
