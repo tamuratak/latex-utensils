@@ -130,6 +130,22 @@ suite('latexParser matchers', () => {
             assert.ok(!latexParser.isSuperscript(result?.node))
         })
 
+        test('test latexParser.findNodeAt', () => {
+            const tex = '$2^{b} $'
+            const doc = lp.parse(tex)
+            let result = lp.findNodeAt(doc.content, {offset: 3}) // $2^|{b}$
+            assert.ok(latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 4})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 5})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+
+            result = lp.findNodeAt(doc.content, {offset: 6})
+            assert.ok(!latexParser.isSuperscript(result?.node))
+        })
+
         test('test latexParser.findNodeAt with line and column', () => {
             const tex =
 `
