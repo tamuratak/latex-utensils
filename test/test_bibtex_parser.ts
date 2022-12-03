@@ -4,6 +4,7 @@ import {equalOnlyOnExpectedOwnedProperties} from './assert_partially'
 
 
 suite('bibtexParser', () => {
+
     test('parse a simple bib file', () => {
         const bib = `
 @article{sample1,
@@ -22,12 +23,22 @@ title={sample title3}
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+
     test('parse fields ending ,', () => {
         const bib = `
         @Article{key1,
             file      = {aaa},
             publisher = {bbb},
         }`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ { entryType: 'article', internalKey: 'key1' } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
+    test('parse an entry with only key', () => {
+        const bib = '@Article{key1}'
         const doc = bibtexParser.parse(bib)
         const expected: any = {
             content: [ { entryType: 'article', internalKey: 'key1' } ]
@@ -49,6 +60,7 @@ title={sample title3}
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+
     test('parse only @comment', () => {
         const bib = '@Comment{ xxx }'
         const doc = bibtexParser.parse(bib)

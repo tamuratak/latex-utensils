@@ -3,7 +3,7 @@
 }
 
 Root
-  = content:(EachEntry)* Comment*
+  = __ content:(EachEntry)* Comment*
   {
       return { content };
   }
@@ -16,12 +16,7 @@ Comment
   / !Entry [^@]
 
 EachEntry
-  = x:Entry __
-  {
-      timeKeeper && timeKeeper.check();
-      return x;
-  }
-  / Comment+ x:Entry __
+  = Comment* x:Entry __
   {
       timeKeeper && timeKeeper.check();
       return x;
@@ -41,6 +36,10 @@ BasicEntry
     ')'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
+  }
+  / entryType:EntryType __ '{' __ internalKey:Name __ '}'
+  {
+      return { entryType, content: [], internalKey: internalKey || undefined, location: location() };
   }
 
 StringEntry
