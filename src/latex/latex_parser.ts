@@ -6,10 +6,10 @@
  * import {latexParser as lp} from 'latex-utensils'
  *
  * const ast = lp.parse('a $b+c$ d')
- * const pat = lp.pattern(lp.isInlienMath)
+ * const pat = lp.pattern(lp.isInlineMath)
  *               .child(lp.isMathCharacter)
  * const ret0 = pat.matchAll(ast.content)
- * const ret1 = lp.find(ast.content, lp.isInlienMath)
+ * const ret1 = lp.find(ast.content, lp.isInlineMath)
  * ```
  */
 

@@ -283,13 +283,13 @@ export function isLstlisting(node: Node | undefined): node is Lstlisting {
     return !!node && node.kind === 'env.lstlisting'
 }
 
-export type InlienMath = {
+export type InlineMath = {
     kind: 'inlineMath';
     content: Node[];
     location: Location;
 }
 
-export function isInlienMath(node: Node | undefined): node is InlienMath {
+export function isInlineMath(node: Node | undefined): node is InlineMath {
     return !!node && node.kind === 'inlineMath'
 }
 
@@ -365,7 +365,7 @@ export type Node
 | Environment
 | Group
 | OptionalArg
-| InlienMath
+| InlineMath
 | DisplayMath
 | MathCharacter
 | MatchingDelimiters

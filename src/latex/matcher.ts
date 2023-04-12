@@ -49,7 +49,7 @@ import {latexParser as lp} from 'latex-utensils'
 
 const texString = 'a $x + y$ b'
 const ast = lp.parse(texString)
-const childPat = lp.pattern(lp.isInlienMath).child(lp.isMathCharacter)
+const childPat = lp.pattern(lp.isInlineMath).child(lp.isMathCharacter)
 const result = childPat.match(ast.content)
 result?.node.content // 'x'
 ```

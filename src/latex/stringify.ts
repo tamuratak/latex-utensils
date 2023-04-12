@@ -129,7 +129,7 @@ export function stringify(
         const arg = node.arg ? stringify(node.arg) : ''
         return '\\begin{lstlisting}' + arg + node.content + '\\end{lstlisting}'
     }
-    if (lp.isInlienMath(node)) {
+    if (lp.isInlineMath(node)) {
         return '$' + stringifyArray(node.content, options) + '$'
     }
     if (lp.isDisplayMath(node)) {
