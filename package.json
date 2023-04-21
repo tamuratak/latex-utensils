@@ -1,6 +1,6 @@
 {
   "name": "latex-utensils",
-  "version": "4.6.0",
+  "version": "5.0.0",
   "license": "MIT",
   "description": "A LaTeX parser and utilities",
   "homepage": "https://github.com/tamuratak/latex-utensils",
@@ -20,17 +20,17 @@
   "devDependencies": {
     "@types/mocha": "^9",
     "@types/node": "^16",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1",
-    "eslint": "^8.23.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.39.0",
     "mocha": "^9",
     "onchange": "^6.1.0",
     "pegjs": "^0.10.0",
     "rimraf": "^3.0.2",
     "source-map-support": "^0.5.21",
-    "typedoc": "^0.22.17",
+    "typedoc": "^0.24.4",
     "typepark": "^0.8.0",
-    "typescript": "^4.7.4"
+    "typescript": "^5.0.4"
   },
   "files": [
     "bin/**/*",

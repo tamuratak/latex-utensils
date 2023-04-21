@@ -1,5 +1,13 @@
 # Change Log
 
+## [5.0.0] (2023-04-22)
+
+- Fast match optimization
+
+### BREAKING CHANGES
+
+- (#32) Fix isInlienMath to isInlineMath
+
 ## [4.6.0] (2022-09-19)
 
 - Fix MathElement locations
