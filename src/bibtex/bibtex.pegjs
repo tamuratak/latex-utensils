@@ -30,14 +30,14 @@ EachEntry
 Entry = StringEntry / PreambleEntry / BasicEntry
 
 BasicEntry
-  = entryType:EntryType __ '{' __ internalKey:InternalKey? __
-      fields:FieldArray? __
+  = entryType:EntryType __ '{' __ internalKey:InternalKey? skip_comment
+      fields:FieldArray? skip_comment
     '}'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
   }
-  / entryType:EntryType __ '(' __ internalKey:InternalKey? __
-      fields:FieldArray? __
+  / entryType:EntryType __ '(' __ internalKey:InternalKey? skip_comment
+      fields:FieldArray? skip_comment
     ')'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
@@ -88,7 +88,7 @@ InternalKey
   }
 
 FieldArray
-  = begin:Field fields:( __ ',' __ x:Field { return x; } )* __ ','?
+  = begin:Field fields:( skip_comment ',' skip_comment x:Field { return x; } )* skip_comment ','?
   {
       return [begin].concat(fields);
   }
@@ -116,7 +116,7 @@ CurlyBracketValue
   }
 
 QuotedValue
-  = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
+  = '"' content:$([^"]*) '"'
   {
       return { kind: 'text_string', content, location: location() };
   }
@@ -133,7 +133,7 @@ Number
       return { kind: 'number', content, location: location() };
   }
 
-AbbreviationName = $([a-zA-Z0-9_:-]+)
+AbbreviationName = Name
 
 NameToLowerCase
   = n:Name
@@ -141,6 +141,8 @@ NameToLowerCase
       return n.toLowerCase();
   }
 
-Name = $([^@={}", \t\r\n]+)
+Name = $([^%@={}()"'#, \t\r\n]+)
 
 __ = ('\r\n' / [ \t\n])*
+
+skip_comment = ('\r\n' / [ \t\n] / '%' [^\n]* '\n')*
