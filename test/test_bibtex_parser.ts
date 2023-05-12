@@ -187,4 +187,22 @@ Blah Blah
         }
     })
 
+    test('parse string entry', () => {
+        const bib = `
+@string{
+   a&b = "aaabbb"
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [{
+                entryType: 'string',
+                abbreviation: 'a&b',
+                value: {
+                    content: 'aaabbb'
+                },
+            }]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
 })

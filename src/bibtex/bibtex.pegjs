@@ -133,7 +133,7 @@ Number
       return { kind: 'number', content, location: location() };
   }
 
-AbbreviationName = $([a-zA-Z0-9_:-]+)
+AbbreviationName = Name
 
 NameToLowerCase
   = n:Name
@@ -141,6 +141,6 @@ NameToLowerCase
       return n.toLowerCase();
   }
 
-Name = $([^@={}", \t\r\n]+)
+Name = $([^%@={}()"'#, \t\r\n]+)
 
 __ = ('\r\n' / [ \t\n])*
