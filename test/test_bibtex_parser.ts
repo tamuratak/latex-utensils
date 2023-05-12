@@ -107,6 +107,127 @@ Blah Blah
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{
+   % name = value,
+   file = {aaa},
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{
+   %
+   file = {aaa},
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{key,
+   % name = value,
+   file = {aaa},
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: 'key'
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{
+   file = {aaa} % name = value,
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{
+   file = {aaa}, % name = value,
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{
+   file = {aaa},
+   % name = value,
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with percent value', () => {
+        const bib = `
+@Article{
+   file = {a%aa}
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                content: [{
+                    value: {
+                        content: 'a%aa'
+                    }
+                }],
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
     test('parse entry with command', () => {
         const bib = `
 @Article{
