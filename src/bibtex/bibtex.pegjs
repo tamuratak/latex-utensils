@@ -116,6 +116,7 @@ CurlyBracketValue
   }
 
 // Notice that bibtex doesn't allow escaped quotes, \", in quoted values.
+// We allow a single { or }, which bibtex doesn't allow.
 QuotedValue
   = '"' content:$([^"]*) '"'
   {
