@@ -115,6 +115,7 @@ CurlyBracketValue
       return { kind: 'text_string', content, location: location() };
   }
 
+// Notice that bibtex allows "abcd{"}efg".
 QuotedValue
   = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
   {
