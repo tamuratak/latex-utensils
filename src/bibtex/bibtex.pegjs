@@ -115,8 +115,9 @@ CurlyBracketValue
       return { kind: 'text_string', content, location: location() };
   }
 
+// Notice that bibtex doesn't allow escaped quotes, \", in quoted values.
 QuotedValue
-  = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
+  = '"' content:$([^"]*) '"'
   {
       return { kind: 'text_string', content, location: location() };
   }
