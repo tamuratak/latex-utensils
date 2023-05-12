@@ -143,6 +143,6 @@ NameToLowerCase
 
 Name = $([^%@={}()"'#, \t\r\n]+)
 
-__ = ('\r\n' / [ \t\n])*
+__ = [ \t\r\n]*
 
-skip_comment = ('\r\n' / [ \t\n] / '%' [^\n]* '\n')*
+skip_comment = ([ \t\r\n]+ / '%' [^\n]* '\n')*
