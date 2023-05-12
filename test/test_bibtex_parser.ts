@@ -165,6 +165,21 @@ Blah Blah
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
+    test('parse entry with quotes', () => {
+        const bib = `
+@article{
+    name="J{\\"u}rgensen"
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                content: [ { name: 'name', value: { content: 'J{\\"u}rgensen' } } ]
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
     test('should not throw SyntaxError', () => {
         const invalidBibs = ['@article{ isbn = 1-2-3 }']
         for (const bib of invalidBibs) {
