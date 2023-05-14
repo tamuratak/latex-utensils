@@ -110,14 +110,14 @@ Concat
 ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation
 
 CurlyBracketValue
-  = '{' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^}] )*) '}'
+  = '{' content:$(( [^\\{}]+ / '\\{' / '\\}' / CurlyBracketValue / [^}] )*) '}'
   {
       return { kind: 'text_string', content, location: location() };
   }
 
 // Notice that bibtex allows "abcd{"}efg".
 QuotedValue
-  = '"' content:$(( '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
+  = '"' content:$(( [^\\{}"]+ / '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
   {
       return { kind: 'text_string', content, location: location() };
   }
