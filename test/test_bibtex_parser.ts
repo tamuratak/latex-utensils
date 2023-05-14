@@ -258,6 +258,21 @@ Blah Blah
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
+    test('parse entry with command', () => {
+        const bib = `
+@Article{
+   file = {a {\\\\} b}
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                content: [ { name: 'file', value: { content: 'a {\\\\} b' } } ]
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+    })
+
     test('parse entry with concat', () => {
         const bib = `
 @Article{
