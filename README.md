@@ -5,7 +5,7 @@
 
 A LaTeX parser, a bibtex parser, and utilities.
 
-The parser is based on the following libraries:
+The LaTeX parser is based on the following libraries:
 
 - https://github.com/michael-brade/LaTeX.js
 - https://github.com/siefkenj/latex-parser
