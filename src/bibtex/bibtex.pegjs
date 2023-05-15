@@ -72,7 +72,7 @@ PreambleEntry
   }
 
 EntryType
-  = '@' type:$([a-zA-Z]+)
+  = '@' type:$([a-zA-Z_]+)
   {
       return type.toLowerCase();
   }
@@ -142,7 +142,7 @@ NameToLowerCase
       return n.toLowerCase();
   }
 
-Name = $([^%@={}()"'#, \t\r\n]+)
+Name = $([^%@={}()"#, \t\r\n]+)
 
 __ = [ \t\r\n]*
 

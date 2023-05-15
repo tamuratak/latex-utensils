@@ -373,4 +373,35 @@ Blah Blah
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
+    test('parse entry with a key', () => {
+        const bib = `
+@article{key'skey,
+   file = {aaa},
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: 'key\'skey'
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse entry with a key', () => {
+        const bib = `
+@book_section{
+   file = {aaa},
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'book_section',
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
 })
