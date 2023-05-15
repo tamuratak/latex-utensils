@@ -3,7 +3,7 @@
 [![latex-utensils](https://img.shields.io/npm/v/latex-utensils)](https://www.npmjs.com/package/latex-utensils)
 [![CI Tests](https://github.com/tamuratak/latex-utensils/workflows/CI%20Tests/badge.svg)](https://github.com/tamuratak/latex-utensils/actions)
 
-A LaTeX parser and utilities.
+A LaTeX parser, a bibtex parser, and utilities.
 
 The parser is based on the following libraries:
 
