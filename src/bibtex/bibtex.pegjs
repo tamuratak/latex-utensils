@@ -27,7 +27,12 @@ EachEntry
       return x;
   }
 
-Entry = StringEntry / PreambleEntry / BasicEntry
+FailToParse 
+  = entryType:EntryType __ '{' (!FailToParseEnd .)* FailToParseEnd __ &EachEntry
+
+FailToParseEnd = '\n' [ \t]* '}' [ \t]* '\n'
+
+Entry = StringEntry / PreambleEntry / BasicEntry / FailToParse
 
 BasicEntry
   = entryType:EntryType __ '{' __ internalKey:InternalKey? skip_comment
