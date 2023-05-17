@@ -49,6 +49,37 @@ title={sample title3}
         }
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
+
+    test('parse junk', () => {
+        const bib = `
+{
+@
+@comment a b c
+`
+        const doc = bibtexParser.parse(bib)
+        assert.strictEqual(doc.content.length, 0)
+    })
+
+    test('parse junk', () => {
+        const bib = `
+{
+@
+@comment a b c
+@article{
+    title = "aaa"
+}
+`
+        const doc = bibtexParser.parse(bib)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
+    test('parse junk', () => {
+        const bib = `
+@a{
+`
+        assert.throws(() => bibtexParser.parse(bib), Error)
+    })
+
     test('parse only @comment', () => {
         const bib = '@Comment{ xxx }'
         const doc = bibtexParser.parse(bib)

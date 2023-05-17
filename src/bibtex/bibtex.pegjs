@@ -11,9 +11,8 @@ Root
 Comment
   = '@comment'i __ '{' ( QuotedValue / CurlyBracketValue / [^}] )* '}'
   / '@comment'i __ '(' ( QuotedValue / CurlyBracketValue / [^}] )* ')'
-  / QuotedValue
-  / CurlyBracketValue
-  / !Entry [^@]
+  / [^@]+
+  / '@' !([a-zA-Z_]+ __ '{')
 
 EachEntry
   = x:Entry __
