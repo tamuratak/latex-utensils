@@ -72,6 +72,16 @@ Blah Blah
         equalOnlyOnExpectedOwnedProperties(doc, expected)
     })
 
+    test('parse a bracket-quoted comment', () => {
+        const bib = `
+{key1,
+   mail  = {user@example.com},
+   title = {@article{...} can be problematic},
+}`
+        const doc = bibtexParser.parse(bib)
+        assert.strictEqual(doc.content.length, 0)
+    })
+
     test('parse bib with abbreviation', () => {
         const bib = `
 @Article{key1,
