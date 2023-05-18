@@ -207,6 +207,23 @@ Blah Blah
         assert.strictEqual(doc.content.length, 1)
     })
 
+    test('parse entry with a comment', () => {
+        const bib = `
+@Article{
+   file = {aaa},
+   %name = value,
+}`
+        const doc = bibtexParser.parse(bib)
+        const expected: any = {
+            content: [ {
+                entryType: 'article',
+                internalKey: undefined
+            } ]
+        }
+        equalOnlyOnExpectedOwnedProperties(doc, expected)
+        assert.strictEqual(doc.content.length, 1)
+    })
+
     test('parse entry with percent value', () => {
         const bib = `
 @Article{
