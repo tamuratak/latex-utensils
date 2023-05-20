@@ -108,15 +108,16 @@ Concat
 
 ConcatElement = CurlyBracketValue / QuotedValue / Number / Abbreviation
 
+// Bibtex does NOT allow {\{}.
 CurlyBracketValue
-  = '{' content:$(( [^\\{}]+ / '\\\\' / '\\{' / '\\}' / CurlyBracketValue / [^}] )*) '}'
+  = '{' content:$(( [^{}]+ / CurlyBracketValue / [^}] )*) '}'
   {
       return { kind: 'text_string', content, location: location() };
   }
 
 // Notice that bibtex DOES allow "abcd{"}efg". Bibtex does NOT allow "abcd\"efg".
 QuotedValue
-  = '"' content:$(( [^\\{}"]+ / '\\{' / '\\}' / CurlyBracketValue / [^"] )*) '"'
+  = '"' content:$(( [^{}"]+ / CurlyBracketValue / [^"] )*) '"'
   {
       return { kind: 'text_string', content, location: location() };
   }
