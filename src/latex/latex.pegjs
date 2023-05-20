@@ -168,7 +168,38 @@ SpecialCommand "special command"
   / InlineMathParen
   / MathEnvironment
   / Environment
+  / Expl3
 
+Expl3 
+  = "\ExplSyntaxOn" skip_comment* content:(!"\ExplSyntaxOff" Expl3Command / !"\ExplSyntaxOff" Element)* skip_comment* "\ExplSyntaxOff"
+  {
+    return { kind: "expl3", content, location: location() };
+  }
+
+Expl3Command
+  = escape n:expl3CommandName args:(ArgumentList / Group)+
+  {
+    return { kind: "expl3.command", name: n, args: args, location: location() };
+  }
+  / escape n:expl3CommandName skip_space
+  {
+    return { kind: "expl3.command", name: n, args: [], location: location() };
+  }
+
+expl3CommandName
+  = [a-zA-Z_:]+
+  
+Expl3Group
+  = skip_space x:Expl3Group_p
+  {
+    return x;
+  }
+
+Expl3Group_p
+  = beginGroup skip_comment* x:(!endGroup c:(Element / Expl3Command / Expl3Group) {return c;})* endGroup
+  {
+    return { kind: "arg.group", content: x, location: location() };
+  }
 
 // \label{...} \ref{...}
 LabelCommand
