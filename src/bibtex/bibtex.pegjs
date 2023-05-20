@@ -29,14 +29,14 @@ EachEntry
 Entry = StringEntry / PreambleEntry / BasicEntry
 
 BasicEntry
-  = entryType:EntryType __ '{' __ internalKey:InternalKey? skip_comment
-      fields:FieldArray? skip_comment
+  = entryType:EntryType __ '{' __ internalKey:InternalKey? skip_comment_comma
+      fields:FieldArray? skip_comment_comma
     '}'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
   }
-  / entryType:EntryType __ '(' __ internalKey:InternalKey? skip_comment
-      fields:FieldArray? skip_comment
+  / entryType:EntryType __ '(' __ internalKey:InternalKey? skip_comment_comma
+      fields:FieldArray? skip_comment_comma
     ')'
   {
       return { entryType, content: fields || [], internalKey: internalKey || undefined, location: location() };
@@ -87,7 +87,7 @@ InternalKey
   }
 
 FieldArray
-  = begin:Field fields:( skip_comment ',' skip_comment x:Field { return x; } )* skip_comment ','?
+  = begin:Field fields:( skip_comment_comma x:Field { return x; } )*
   {
       return [begin].concat(fields);
   }
@@ -147,3 +147,5 @@ Name = $([^%@={}()"#, \t\r\n]+)
 __ = [ \t\r\n]*
 
 skip_comment = ([ \t\r\n]+ / '%' [^\n]* '\n')*
+
+skip_comment_comma = skip_comment (',' skip_comment)*
