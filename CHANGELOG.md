@@ -1,5 +1,11 @@
 # Change Log
 
+## [6.0.0] (2023-05-20)
+
+### BREAKING CHANGES
+
+- BibTeX parser allows %-style comments.
+
 ## [5.0.0] (2023-04-22)
 
 - Fast match optimization
