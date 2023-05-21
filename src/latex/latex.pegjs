@@ -287,7 +287,7 @@ InlineMathShift
     return { kind: "inlineMath", content: eq, location: location() };
   }
 
-//inline math with \(\)
+// inline math with \(\)
 InlineMathParen
   = beginInlineMath
       skip_space x:(!endInlineMath x:MathElement skip_space {return x;})*
@@ -296,7 +296,7 @@ InlineMathParen
     return { kind: "inlineMath", content: x, location: location() };
   }
 
-//display math, \[\] and $$ $$.
+// display math, \[\] and $$ $$.
 DisplayMath
   = displayMathSquareBracket
   / displayMathShiftShift
@@ -381,7 +381,7 @@ GroupIsolated
     return { kind: "arg.group", content: x, location: location() };
   }
 
-// group that assumes you're in math mode.
+// Group that assumes you're in math mode.
 MathGroup
   = skip_space x:MathGroup_p
   {
