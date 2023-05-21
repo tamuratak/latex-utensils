@@ -64,7 +64,7 @@ Element_p
   / Linebreak
   / DefCommand
   / Command
-  / Group_p
+  / GroupIsolated
   / InlineMathShift
   / AlignmentTab
   / CommandParameterWithNumber
@@ -369,12 +369,13 @@ DefCommand
   }
 
 Group
-  = skip_space x:Group_p
+  = skip_space x:GroupIsolated
   {
     return x;
   }
 
-Group_p
+// Group element that doesn't skip spaces ahead of it.
+GroupIsolated
   = beginGroup skip_comment* x:(!endGroup c:Element {return c;})* endGroup
   {
     return { kind: "arg.group", content: x, location: location() };
