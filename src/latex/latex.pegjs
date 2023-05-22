@@ -724,6 +724,7 @@ skip_comment
     }
   }
 
+// We should use skip_all_space ONLY for break, NOT for other elements.
 skip_all_space
   = (nl / sp / skip_comment)*
   {
