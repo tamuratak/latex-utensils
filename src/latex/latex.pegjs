@@ -705,7 +705,7 @@ nl
 sp = [ \t]
 
 // We should use skip_space only where we can ignore spaces.
-// Typically, inside math environments, we can ignore spaces.
+// For example, inside math environments, we can ignore spaces.
 skip_space "spaces"
   = &[^ \r\n\t%\u2028\u2029]   // matching empty, fast match optimization
   / [ ]+ &charTokenOptm        // matching typical spaces, fast match optimization
