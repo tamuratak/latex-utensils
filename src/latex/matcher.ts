@@ -79,13 +79,7 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
      * Returns a pattern whose parent pattern is `this`. The pattern matches if `typeguard` returns `true`.
      * @param typeguard A type guard of the child pattern.
      */
-    child<C extends Node>(typeguard: (x: Node) => x is C ): Pattern<C, Pattern<T, ParentPattern>>
-    /**
-     * Returns a pattern whose parent pattern is `this`. The pattern matches if `typeguard` returns `true`.
-     * @param typeguard A callback of the child pattern.
-     */
-    child(typeguard: (x: Node) => boolean ): Pattern<Node, Pattern<T, ParentPattern>>
-    child(typeguard: (x: Node) => boolean ): Pattern<Node, Pattern<T, ParentPattern>> {
+    child<C extends Node>(typeguard: (x: Node) => x is C ): Pattern<C, Pattern<T, ParentPattern>> {
         const childMatcher = new Pattern(typeguard, this)
         return childMatcher
     }
@@ -173,12 +167,6 @@ export class Pattern<T extends Node, ParentPattern extends Pattern<Node, any> | 
  * Returns a pattern. The pattern matches if `typeguard` returns `true`.
  * @param typeguard Type guard to check whether nodes match.
  */
-export function pattern<T extends Node>(typeguard: (x: Node) => x is T): Pattern<T, undefined>
-/**
- * Returns a pattern. The pattern matches if `typeguard` returns `true`.
- * @param typeguard Type guard to check whether nodes match.
- */
-export function pattern(typeguard: (x: Node) => boolean): Pattern<Node, undefined>
-export function pattern(typeguard: (x: Node) => boolean): Pattern<Node, undefined> {
+export function pattern<T extends Node>(typeguard: (x: Node) => x is T): Pattern<T, undefined> {
     return new Pattern(typeguard, undefined)
 }

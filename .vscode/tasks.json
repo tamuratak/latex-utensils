@@ -71,7 +71,7 @@
             },
             "isBackground": true,
             "presentation": {
-                "reveal": "silent",
+                "reveal": "never",
                 "group": "taskWatch"
             },
             "problemMatcher": "$tsc-watch"

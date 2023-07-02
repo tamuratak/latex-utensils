@@ -1,7 +1,7 @@
 import * as lp from './latex_parser_types'
 import {Node} from './latex_parser_types'
 
-export type Typeguard<T extends Node> = ((x: Node) => x is T) | ((x: Node) => boolean)
+export type Typeguard<T extends Node> = (x: Node) => x is T
 
 export function getChildNodes(node: Node): Node[] {
     let results: Node[] = []
@@ -39,7 +39,7 @@ export type FindResult<T extends Node, P extends Node = Node> = {
  */
 export function find<T extends Node>(
     nodes: Node[],
-    typeguard: Typeguard<T> = (_z: Node): _z is T => true,
+    typeguard: Typeguard<T>,
     parent?: FindResult<Node>
 ): FindResult<T> | undefined {
     for(const node of nodes) {
@@ -63,7 +63,7 @@ export function find<T extends Node>(
  */
 export function findAll<T extends Node>(
     nodes: Node[],
-    typeguard: Typeguard<T> = (_z: Node): _z is T => true,
+    typeguard: Typeguard<T>,
     parent?: FindResult<Node>
 ): FindResult<T>[] {
     let ret: FindResult<T>[] = []
