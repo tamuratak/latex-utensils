@@ -14,8 +14,8 @@
     "luparse": "./bin/luparse"
   },
   "optionalDependencies": {
-    "commander": "^2.20.0",
-    "pegjs-backtrace": "^0.2.0"
+    "commander": "^11.0.0",
+    "pegjs-backtrace": "^0.2.1"
   },
   "devDependencies": {
     "@types/mocha": "^10",
@@ -30,7 +30,7 @@
     "source-map-support": "^0.5.21",
     "typedoc": "^0.24.4",
     "typepark": "^0.8.0",
-    "typescript": "^5.0.4"
+    "typescript": "~5.0"
   },
   "files": [
     "bin/**/*",

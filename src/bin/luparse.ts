@@ -3,8 +3,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as util from 'util'
 import * as process from 'process'
-import * as commander from 'commander'
+import {program} from 'commander'
 import Tracer = require('pegjs-backtrace')
+
 
 function deleteLocation(node: any) {
     if (!node) {
@@ -21,7 +22,7 @@ function deleteLocation(node: any) {
     }
 }
 
-commander
+program
 .option('-i, --inspect', 'use util.inspect to output AST')
 .option('--color', 'turn on the color option of util.inspect')
 .option('-l, --location', 'enable location')
@@ -30,26 +31,27 @@ commander
 .option('-d, --debug', 'enable backtrace for debug')
 .option('--timeout [timeout]', 'set tiemout in milliseconds')
 .parse(process.argv)
-const filename = commander.args[0]
+const filename = program.args[0]
 if (!fs.existsSync(filename)) {
     console.error(`${filename} not found.`)
     process.exit(1)
 }
+const opts = program.opts()
 const s = fs.readFileSync(filename, {encoding: 'utf8'})
-const startRule = commander.startRule || 'Root'
+const startRule = opts.startRule || 'Root'
 const ext = path.extname(filename)
 let ret: latexParser.LatexAst | bibtexParser.BibtexAst | latexLogParser.LatexLogAst
-const useColor = commander.color ? true : false
-const tracer = commander.debug ? new Tracer(s, { showTrace: true, useColor, }) : undefined
-const timeout = Number(commander.timeout)
+const useColor = opts.color ? true : false
+const tracer = opts.debug ? new Tracer(s, { showTrace: true, useColor, }) : undefined
+const timeout = Number(opts.timeout)
 
 try {
     if (ext === '.tex') {
         ret = latexParser.parse(
             s,
-            {startRule, enableComment: commander.comment, tracer, timeout}
+            {startRule, enableComment: opts.comment, tracer, timeout}
         )
-        if (!commander.location) {
+        if (!opts.location) {
             deleteLocation(ret)
         }
     } else if (ext === '.bib') {
@@ -59,7 +61,6 @@ try {
     } else {
         console.error('The suffix of the file is unknown.')
         process.exit(1)
-        throw('')
     }
 } catch (e) {
     if (latexParser.isSyntaxError(e)) {
@@ -74,8 +75,8 @@ try {
     throw e
 }
 
-if (commander.inspect) {
-    const colors = commander.color
+if (opts.inspect) {
+    const colors = opts.color
     console.log(util.inspect(ret, {showHidden: false, depth: null, colors}))
 } else {
     console.log(JSON.stringify(ret, undefined, '  '))
