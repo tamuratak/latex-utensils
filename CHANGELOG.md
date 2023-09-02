@@ -1,5 +1,9 @@
 # Change Log
 
+## [6.2.0] (2023-09-03)
+
+- Update packages.
+
 ## [6.1.0] (2023-05-27)
 
 - Switch to Peggy from PEG.js
