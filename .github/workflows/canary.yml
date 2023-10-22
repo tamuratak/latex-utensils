@@ -1,4 +1,4 @@
-name: Publish package to npmjs as canary
+name: Publish Canary Release to npmjs
 on:
   release:
     types: [prereleased]
