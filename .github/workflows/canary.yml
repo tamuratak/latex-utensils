@@ -1,7 +1,7 @@
 name: Publish Package to npmjs
 on:
   release:
-    types: [released]
+    types: [prereleased]
 jobs:
   build:
     permissions:
@@ -16,6 +16,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run prerelease
-      - run: npm publish --provenance
+      - run: npm publish --provenance --tag=canary
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
