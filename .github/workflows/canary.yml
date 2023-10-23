@@ -2,6 +2,10 @@ name: Publish Canary Release to npmjs
 on:
   release:
     types: [prereleased]
+
+permissions:
+  contents: read
+
 jobs:
   build:
     permissions:
