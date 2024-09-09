@@ -3,7 +3,7 @@ declare class Tracer {
     constructor(
         text: string,
         options?: {
-            parent?: any;
+            parent?: unknown;
             useColor?: boolean;
             showSource?: boolean;
             maxSourceLines?: number;
@@ -11,9 +11,9 @@ declare class Tracer {
             showFullPath?: boolean;
             maxPathLength?: number;
             hiddenPaths?: string[];
-            matchesNode?: any;
+            matchesNode?: unknown;
         }
     )
-    trace(arg: any): any
+    trace(arg: unknown): unknown
     getBacktraceString(): string
 }
