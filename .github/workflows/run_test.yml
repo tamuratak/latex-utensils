@@ -1,7 +1,7 @@
 name: CI Tests
 on: [push]
 env:
-  cache-version: v2
+  cache-version: v3
 
 permissions:
   contents: read
@@ -21,7 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Cache npm
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.npm
         key: ${{ env.cache-version }}-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles(format('{0}{1}', github.workspace, '/package-lock.json')) }}
