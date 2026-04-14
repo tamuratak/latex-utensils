@@ -1,5 +1,10 @@
 # Change Log
 
+## [7.0.0] (2026-04-14)
+
+- Use a new workflow to publish.
+- Tweak for \cref
+
 ## [6.2.0] (2023-09-03)
 
 - Update packages.
