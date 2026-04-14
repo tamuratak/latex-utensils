@@ -76,7 +76,7 @@ export function isHrefCommand(node: Node | undefined): node is HrefCommand {
 
 export type LabelCommand = {
     kind: 'command.label';
-    name: 'label' | 'ref' | 'eqref' | 'autoref';
+    name: 'label' | 'ref' | 'eqref' | 'autoref' | 'cref';
     label: string;
     location: Location;
 }

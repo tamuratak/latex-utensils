@@ -172,7 +172,7 @@ SpecialCommand "special command"
 
 // \label{...} \ref{...}
 LabelCommand
-  = escape name:("label" / "ref" / "eqref" / "autoref") skip_space beginGroup label:labelString endGroup
+  = escape name:("label" / "ref" / "eqref" / "autoref"/ "cref") skip_space beginGroup label:labelString endGroup
   {
     return { kind: "command.label", name, label: label.join(''), location: location() };
   }
