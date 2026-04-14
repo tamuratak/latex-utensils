@@ -1,7 +1,7 @@
 name: Publish Package to npmjs
 on:
   release:
-    types: [released]
+    types: [released, prereleased]
 
 permissions:
   id-token: write  # Required for OIDC
@@ -19,4 +19,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run prerelease
-      - run: npm publish
+      - name: Publish canary
+        if: github.event.release.prerelease == true
+        run: npm publish --provenance --tag=canary
+
+      - name: Publish stable
+        if: github.event.release.prerelease == false
+        run: npm publish --provenance
