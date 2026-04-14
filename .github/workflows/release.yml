@@ -21,8 +21,8 @@ jobs:
       - run: npm run prerelease
       - name: Publish canary
         if: github.event.release.prerelease == true
-        run: npm publish --provenance --tag=canary
+        run: npm publish --tag=canary
 
       - name: Publish stable
         if: github.event.release.prerelease == false
-        run: npm publish --provenance
+        run: npm publish
