@@ -18,11 +18,10 @@
     "pegjs-backtrace": "^0.2.1"
   },
   "devDependencies": {
+    "@eslint/js": "9.39.0",
     "@types/mocha": "^10",
-    "@types/node": "^18",
-    "@typescript-eslint/eslint-plugin": "^6.4.0",
-    "@typescript-eslint/parser": "^6.4.0",
-    "eslint": "^8.47.0",
+    "@types/node": "~22.15",
+    "eslint": "9.39.0",
     "mocha": "^10",
     "onchange": "^6.1.0",
     "peggy": "3.0.2",
@@ -30,7 +29,8 @@
     "source-map-support": "^0.5.21",
     "typedoc": "^0.24.4",
     "typepark": "^0.8.0",
-    "typescript": "~5.0"
+    "typescript": "~5.0",
+    "typescript-eslint": "8.46.2"
   },
   "files": [
     "bin/**/*",
